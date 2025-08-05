@@ -14,6 +14,7 @@ set(dependencies_pkgs
   moveit_ros_planning_interface
   tl_expected
   controller_manager
+  behaviortree_ros2
 )
 
 # find dependencies
@@ -23,7 +24,11 @@ foreach(pkg IN LISTS dependencies_pkgs)
   find_package(${pkg} REQUIRED)
 endforeach()
 
-add_library(edmt_application src/edmt_application.cpp)
+set(behavior_cpp_files
+  src/behaviors/tf_lookup.cpp
+)
+
+add_library(edmt_application src/edmt_application.cpp src/edmt_application_btcpp_executor.cpp ${behavior_cpp_files})
 target_compile_features(edmt_application PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 target_include_directories(edmt_application PUBLIC
 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

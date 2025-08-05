@@ -1,0 +1,78 @@
+// behavior trees / ROS
+#include "rclcpp/rclcpp.hpp"
+#include "behaviortree_cpp/bt_factory.h"
+#include "behaviortree_ros2/bt_executor_parameters.hpp"
+#include "behaviortree_ros2/bt_utils.hpp"
+
+// messages
+#include "std_srvs/srv/set_bool.hpp"
+
+// behaviors
+#include "edmt_application/behaviors/tf_lookup.hpp"
+
+// local
+#include "edmt_application/edmt_application_btcpp_executor.hpp"
+
+
+EdmtApplicationBtcppExecutor::EdmtApplicationBtcppExecutor(const rclcpp::NodeOptions& options)
+    : BT::TreeExecutionServer(options)
+{
+    list_trees_service =
+        node()->create_service<std_srvs::srv::SetBool>("~/list_behavior_trees", std::bind(&EdmtApplicationBtcppExecutor::get_behavior_trees, this, std::placeholders::_1, std::placeholders::_2));
+}
+
+void EdmtApplicationBtcppExecutor::onTreeCreated(BT::Tree& tree)
+{
+    // avoid unused parameter warning
+    (void)tree;
+
+    // put move group interface node on the blackboard
+    globalBlackboard()->set("edmt_application_node", edmt_application_node_);
+    // // put robot description and planning group on blackboard
+    // globalBlackboard()->set("robot_description_topic", robot_description_topic_);
+    // globalBlackboard()->set("default_planning_group", default_planning_group_);
+    // globalBlackboard()->set("full_robot_planning_group", full_robot_planning_group_);
+    // allows all nodes in the tree to access
+
+    // note that move group cannot be placed on blackboard
+    // because it is not copy-constructable
+    // instead, each node will create its own move group instance
+
+    return;
+}
+
+void EdmtApplicationBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory& factory)
+{
+    // initialize ROS node parameters
+    BT::RosNodeParams params;
+    // set ROS node
+    params.nh = node(); // register with TreeExecutionServer's node
+
+    // register BT node with factory
+    factory.registerNodeType<TfLookup>("TfLookup");
+
+    return;
+}
+
+void EdmtApplicationBtcppExecutor::get_behavior_trees(const std::shared_ptr<std_srvs::srv::SetBool::Request> request,
+        std::shared_ptr<std_srvs::srv::SetBool::Response>      response)
+{
+
+    auto param_listener = std::make_shared<bt_server::ParamListener>(node());
+    auto params = param_listener->get_params();
+    // executeRegistration();
+    factory().clearRegisteredBehaviorTrees();
+    RegisterBehaviorTrees(params, factory(), node());
+
+    response->success = true;
+    
+    auto tree_names = factory().registeredBehaviorTrees();
+    RCLCPP_INFO_STREAM(rclcpp::get_logger("test_logger"), "Here");
+    std::string trees = "";
+    for (const auto& name : tree_names)
+    {
+    RCLCPP_INFO_STREAM(rclcpp::get_logger("test_logger"), "Available tree: " << name << std::endl);
+    trees += name + "\n";
+    }
+    response->message = trees;
+}

@@ -302,8 +302,6 @@ void EdmtApplication::initialize()
   planning_scene_interface_ = std::make_unique<moveit::planning_interface::PlanningSceneInterface>();
 
   load_configs();
-
-  register_behaviors();
 }
 
 std::pair<bool, std::string> EdmtApplication::call_behavior(std::string behavior_name)

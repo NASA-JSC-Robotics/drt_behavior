@@ -106,8 +106,6 @@ public:
 
   void publish_instruction_text_nb(std::string prompt);
 
-  virtual void register_behaviors() = 0;
-
   void printTree(const std::shared_ptr<BehaviorItem>& item, const std::string& prefix = "", bool isLast = true);
 
   void make_behavior_tree();
