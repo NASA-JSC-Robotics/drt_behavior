@@ -33,8 +33,8 @@ target_compile_features(edmt_application PUBLIC c_std_99 cxx_std_17)  # Require 
 target_include_directories(edmt_application PUBLIC
 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 $<INSTALL_INTERFACE:include>)
-target_link_libraries(edmt_application ${dependencies_pkgs})
-ament_target_dependencies(edmt_application ${dependencies_pkgs})
+# target_link_libraries(edmt_application PUBLIC ${dependencies_pkgs})
+ament_target_dependencies(edmt_application PUBLIC ${dependencies_pkgs})
 
 install(
   DIRECTORY include/
@@ -70,6 +70,6 @@ ament_export_targets(
   export_${PROJECT_NAME}
 )
 
-ament_export_dependencies(${dependencies_pkgs})
+# ament_export_dependencies(${dependencies_pkgs})
 
 ament_package()
