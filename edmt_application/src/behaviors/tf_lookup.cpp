@@ -27,7 +27,7 @@ BT::NodeStatus TfLookup::tick()
     if (!getInput("edmt_application_node", edmt_application_node_)) {
         throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
     }
-
+    
     std::string base_frame, target_frame;
     if (!getInput("base_frame", base_frame)) {
         throw BT::RuntimeError("Could not access global blackboard input [base_frame]");
@@ -35,7 +35,7 @@ BT::NodeStatus TfLookup::tick()
     if (!getInput("target_frame", target_frame)) {
         throw BT::RuntimeError("Could not access global blackboard input [target_frame]");
     }
-
+    
     auto result = edmt_application_node_->tf_lookup(base_frame, target_frame);
 
     setOutput("tf", result);

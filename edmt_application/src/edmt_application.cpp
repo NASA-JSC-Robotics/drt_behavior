@@ -394,6 +394,8 @@ bool EdmtApplication::load_configs()
   std::string edmt_application_config;
   this->get_parameter("edmt_application_config", edmt_application_config);
 
+  RCLCPP_INFO(rclcpp::get_logger("test"), "%s", edmt_application_config.c_str());
+
   config_yaml = YAML::LoadFile(edmt_application_config);
   return true;
 }
