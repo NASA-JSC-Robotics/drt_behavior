@@ -8,6 +8,10 @@
 #include "std_srvs/srv/set_bool.hpp"
 
 // behaviors
+#include "edmt_application/behaviors/create_collision_object.hpp"
+#include "edmt_application/behaviors/plan_joint_states.hpp"
+#include "edmt_application/behaviors/plan_relative_move.hpp"
+#include "edmt_application/behaviors/prompt_and_execute.hpp"
 #include "edmt_application/behaviors/tf_lookup.hpp"
 
 // local
@@ -48,8 +52,11 @@ void EdmtApplicationBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFact
     // set ROS node
     params.nh = node(); // register with TreeExecutionServer's node
 
-    // register BT node with factory
     factory.registerNodeType<TfLookup>("TfLookup");
+    factory.registerNodeType<CreateCollisionObject>("CreateCollisionObject");
+    factory.registerNodeType<PlanJointStates>("PlanJointStates");
+    factory.registerNodeType<PlanRelativeMove>("PlanRelativeMove");
+    factory.registerNodeType<PromptAndExecute>("PromptAndExecute");
 
     return;
 }

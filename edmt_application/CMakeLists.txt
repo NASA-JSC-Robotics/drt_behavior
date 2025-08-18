@@ -26,6 +26,10 @@ endforeach()
 
 set(behavior_cpp_files
   src/behaviors/tf_lookup.cpp
+  src/behaviors/plan_joint_states.cpp
+  src/behaviors/plan_relative_move.cpp
+  src/behaviors/prompt_and_execute.cpp
+  src/behaviors/create_collision_object.cpp
 )
 
 add_library(edmt_application src/edmt_application.cpp src/edmt_application_btcpp_executor.cpp ${behavior_cpp_files})

@@ -436,8 +436,9 @@ tl::expected<void, std::string> EdmtApplication::create_collision_object(std::st
   return {};
 }
 
-tl::expected<void, std::string> EdmtApplication::create_collision_object(YAML::Node node)
+tl::expected<void, std::string> EdmtApplication::create_collision_object(std::string collision_object_name)
 {
+  auto node = config_yaml["meshes"][collision_object_name];
   geometry_msgs::msg::Pose pose;
   auto tf = get_tf_from_yaml(node);
   if (!tf.has_value())

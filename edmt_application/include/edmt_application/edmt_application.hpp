@@ -79,7 +79,7 @@ public:
                                                           const Eigen::Vector3d& scale = Eigen::Vector3d(1.0, 1.0,
                                                                                                          1.0));
 
-  tl::expected<void, std::string> create_collision_object(YAML::Node node);
+  tl::expected<void, std::string> create_collision_object(std::string collision_object_name);
 
   tl::expected<void, std::string> update_collision_matrix(std::string scene_object, std::string robot_link, CollisionType allow_collisions);
 
