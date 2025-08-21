@@ -27,8 +27,40 @@ EdmtApplicationBtcppExecutor::EdmtApplicationBtcppExecutor(const rclcpp::NodeOpt
 
 void EdmtApplicationBtcppExecutor::onTreeCreated(BT::Tree& tree)
 {
-    // avoid unused parameter warning
-    (void)tree;
+    // logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree);
+    logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree);
+    
+    for (auto& subtree : tree.subtrees)
+    {
+        for (auto& btnode : subtree->nodes)
+        {
+            std::string msg = btnode->fullPath();
+            RCLCPP_INFO(node()->get_logger(), msg.c_str());
+        }
+    }
+
+    // first_timestamp_ = std::chrono::high_resolution_clock::now();
+
+    // auto subscribeCallback = [this](TimePoint timestamp, const TreeNode& node,
+    //                                 NodeStatus prev, NodeStatus status) {
+    //     if(enabled_ && (status != NodeStatus::IDLE || show_transition_to_idle_))
+    //     {
+    //     if(type_ == TimestampType::absolute)
+    //     {
+    //         this->callback(timestamp.time_since_epoch(), node, prev, status);
+    //     }
+    //     else
+    //     {
+    //         this->callback(timestamp - first_timestamp_, node, prev, status);
+    //     }
+    //     }
+    // };
+
+    // auto visitor = [this, subscribeCallback](TreeNode* node) {
+    //     subscribers_.push_back(node->subscribeToStatusChange(std::move(subscribeCallback)));
+    // };
+
+    // applyRecursiveVisitor(root_node, visitor);
 
     // put move group interface node on the blackboard
     globalBlackboard()->set("edmt_application_node", edmt_application_node_);
@@ -43,6 +75,13 @@ void EdmtApplicationBtcppExecutor::onTreeCreated(BT::Tree& tree)
     // instead, each node will create its own move group instance
 
     return;
+}
+
+void EdmtApplicationBtcppExecutor::statusChangeCallback(BT::TimePoint timestamp, const BT::TreeNode& btnode, BT::NodeStatus prev, BT::NodeStatus status)
+{
+    // std::unique_lock lk(callback_mutex_);
+    std::string msg = "[TICKED] " + btnode.name() + " from " + BT::toStr(prev) + " → " + BT::toStr(status); 
+    RCLCPP_INFO(node()->get_logger(), msg.c_str());
 }
 
 void EdmtApplicationBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory& factory)
