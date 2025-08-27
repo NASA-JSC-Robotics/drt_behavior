@@ -10,7 +10,7 @@ class TfLookup : public BT::SyncActionNode
 {
 public:
   /**
-   * @brief Constructor for CreateCollisionObject behavior
+   * @brief Constructor for TfLookup behavior
    *
    * @param name Name of behavior
    * @param config BTCPP node config

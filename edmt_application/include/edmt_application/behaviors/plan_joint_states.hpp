@@ -10,7 +10,7 @@ class PlanJointStates : public BT::SyncActionNode
 {
 public:
   /**
-   * @brief Constructor for CreateCollisionObject behavior
+   * @brief Constructor for PlanJointStates behavior
    *
    * @param name Name of behavior
    * @param config BTCPP node config
