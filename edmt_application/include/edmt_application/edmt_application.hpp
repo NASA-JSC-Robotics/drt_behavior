@@ -1,33 +1,37 @@
 #pragma once
 
-#include <moveit/move_group_interface/move_group_interface.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
-#include <memory>
-#include <rclcpp/rclcpp.hpp>
-#include <tf2_eigen/tf2_eigen.hpp>
-#include <unistd.h>
-#include <moveit_visual_tools/moveit_visual_tools.h>
-#include <yaml-cpp/yaml.h>
-#include <controller_manager/controller_manager.hpp>
-#include <std_srvs/srv/trigger.hpp>
-#include <rcl_interfaces/srv/set_parameters_atomically.hpp>
-#include <moveit/trajectory_processing/iterative_time_parameterization.h>
-#include <geometry_msgs/msg/wrench.hpp>
-#include <std_msgs/msg/int64.hpp>
-#include <atomic>
-#include "tf2_ros/static_transform_broadcaster.h"
-#include <sstream>
-#include <moveit_msgs/srv/get_planning_scene.h>
-#include <moveit_msgs/srv/apply_planning_scene.hpp>
 #include <geometry_msgs/msg/pose.h>
 #include <geometry_msgs/msg/pose_stamped.h>
 #include <geometry_msgs/msg/transform_stamped.h>
+#include <moveit/move_group_interface/move_group_interface.h>
+#include <moveit/planning_scene_interface/planning_scene_interface.h>
+#include <moveit/trajectory_processing/iterative_time_parameterization.h>
+#include <moveit_msgs/srv/get_planning_scene.h>
+#include <moveit_visual_tools/moveit_visual_tools.h>
+#include <unistd.h>
+#include <yaml-cpp/yaml.h>
+#include <atomic>
+#include <controller_manager/controller_manager.hpp>
 #include <functional>
+#include <geometry_msgs/msg/wrench.hpp>
+#include <memory>
+#include <moveit_msgs/srv/apply_planning_scene.hpp>
+#include <rcl_interfaces/srv/set_parameters_atomically.hpp>
+#include <rclcpp/rclcpp.hpp>
+#include <sstream>
+#include <std_msgs/msg/int64.hpp>
+#include <std_srvs/srv/trigger.hpp>
+#include <tf2_eigen/tf2_eigen.hpp>
 #include <tl_expected/expected.hpp>
+#include "tf2_ros/static_transform_broadcaster.h"
 
 class EdmtApplication : public rclcpp::Node
 {
 public:
+  /**
+   * @brief
+   *
+   */
   enum CollisionType
   {
     Disallow,
@@ -48,14 +52,17 @@ public:
     Failure
   };
 
-  class BehaviorItem {
+  class BehaviorItem
+  {
   public:
-      std::string name;
-      std::shared_ptr<BehaviorItem> parent;
-      std::vector<std::shared_ptr<BehaviorItem>> children;
-      BehaviorStatus status;
+    std::string name;
+    std::shared_ptr<BehaviorItem> parent;
+    std::vector<std::shared_ptr<BehaviorItem>> children;
+    BehaviorStatus status;
 
-      BehaviorItem(std::string name) : name(name), parent(nullptr), status(BehaviorStatus::Active) {}
+    BehaviorItem(std::string name) : name(name), parent(nullptr), status(BehaviorStatus::Active)
+    {
+    }
   };
   std::shared_ptr<BehaviorItem> tree_head;
   std::shared_ptr<BehaviorItem> current_node;
@@ -74,14 +81,14 @@ public:
 
   bool load_configs();
 
-  tl::expected<void, std::string> create_collision_object(std::string object_id, std::string reference_frame,
-                                                          std::string mesh_filepath, geometry_msgs::msg::Pose pose,
-                                                          const Eigen::Vector3d& scale = Eigen::Vector3d(1.0, 1.0,
-                                                                                                         1.0));
+  tl::expected<void, std::string>
+  create_collision_object(std::string object_id, std::string reference_frame, std::string mesh_filepath,
+                          geometry_msgs::msg::Pose pose, const Eigen::Vector3d& scale = Eigen::Vector3d(1.0, 1.0, 1.0));
 
   tl::expected<void, std::string> create_collision_object(std::string collision_object_name);
 
-  tl::expected<void, std::string> update_collision_matrix(std::string scene_object, std::string robot_link, CollisionType allow_collisions);
+  tl::expected<void, std::string> update_collision_matrix(std::string scene_object, std::string robot_link,
+                                                          CollisionType allow_collisions);
 
   tl::expected<geometry_msgs::msg::Transform, std::string> get_tf_from_yaml(YAML::Node node);
 
@@ -91,16 +98,15 @@ public:
   tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
   plan_joint_waypoint_pose(geometry_msgs::msg::Pose waypoints, float speed_scale = 1.0);
 
-  tl::expected<moveit_msgs::msg::RobotTrajectory, std::string> plan_relative_move(std::string relative_move_name,
-                                                                                  PlanType move_type,
-                                                                                  float speed_scale = 1.0);
+  tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
+  plan_relative_move(std::string relative_move_name, PlanType move_type, float speed_scale = 1.0);
 
   tl::expected<moveit_msgs::msg::RobotTrajectory, std::string> plan_joint_states(std::string joint_state_name,
                                                                                  float speed_scale = 1.0);
 
-  tl::expected<void,std::string> prompt_and_execute(moveit_msgs::msg::RobotTrajectory trajectory, std::string prompt);
+  tl::expected<void, std::string> prompt_and_execute(moveit_msgs::msg::RobotTrajectory trajectory, std::string prompt);
 
-  tl::expected<void,std::string> execute_movement(moveit_msgs::msg::RobotTrajectory trajectory);
+  tl::expected<void, std::string> execute_movement(moveit_msgs::msg::RobotTrajectory trajectory);
 
   void publish_instruction_text(std::string prompt);
 

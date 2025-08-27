@@ -1,17 +1,16 @@
-#include <edmt_application/edmt_application.hpp>
 #include <geometric_shapes/mesh_operations.h>
-#include <geometric_shapes/shape_operations.h>
 #include <geometric_shapes/shape_messages.h>
+#include <geometric_shapes/shape_operations.h>
 #include <moveit_msgs/msg/planning_scene.h>
+#include <edmt_application/edmt_application.hpp>
 
 using std::placeholders::_1;
 using std::placeholders::_2;
 
 auto const logger = rclcpp::get_logger("edmt_application");
 
-EdmtApplication::EdmtApplication(std::string default_planning_group, rclcpp::NodeOptions node_options) : 
-Node("edmt_application", node_options),
-active_planning_group(default_planning_group)
+EdmtApplication::EdmtApplication(std::string default_planning_group, rclcpp::NodeOptions node_options)
+  : Node("edmt_application", node_options), active_planning_group(default_planning_group)
 {
   // update_acm_client_ = this->create_client<edmt_application_msgs::srv::UpdateAcm>("/update_acm");
 
@@ -25,7 +24,8 @@ active_planning_group(default_planning_group)
 void EdmtApplication::set_move_group(std::string move_group_name)
 {
   active_planning_group = move_group_name;
-  move_group_ = std::make_unique<moveit::planning_interface::MoveGroupInterface>(shared_from_this(), active_planning_group);
+  move_group_ =
+      std::make_unique<moveit::planning_interface::MoveGroupInterface>(shared_from_this(), active_planning_group);
 
   move_group_->setPlannerId("RRTstarkConfigDefault");
   move_group_->setPlanningTime(5.0);
@@ -91,9 +91,11 @@ tl::expected<geometry_msgs::msg::Transform, std::string> EdmtApplication::get_tf
   tf.rotation.z = node["qz"].as<double>();
   tf.rotation.w = node["qw"].as<double>();
 
-  if (node["modifier"]){
+  if (node["modifier"])
+  {
     auto modifier_string = node["modifier"].as<std::string>();
-    if (!config_yaml["modifiers"][modifier_string]){
+    if (!config_yaml["modifiers"][modifier_string])
+    {
       return tl::make_unexpected("Could not find the modifier " + modifier_string +
                                  " in the config `modifiers` section");
     }
@@ -145,9 +147,8 @@ EdmtApplication::plan_cartesian_waypoint_pose(geometry_msgs::msg::Pose waypoint,
   if (!success)
   {
     std::stringstream percent_formatted;
-    percent_formatted << std::fixed << std::setprecision(2) << fraction*100.0;
-    return tl::make_unexpected("Cartesian path only computed " + percent_formatted.str() +
-                               "%% percent of the path");
+    percent_formatted << std::fixed << std::setprecision(2) << fraction * 100.0;
+    return tl::make_unexpected("Cartesian path only computed " + percent_formatted.str() + "%% percent of the path");
   }
   return trajectory;
 }
@@ -214,7 +215,7 @@ EdmtApplication::plan_joint_states(std::string joint_state_name, float speed_sca
   set_move_group(config_yaml["joint_states"][joint_state_name]["move_group"].as<std::string>());
 
   std::vector<double> joint_group_positions;
-  for (const auto &joint_data : config_yaml["joint_states"][joint_state_name]["positions"])
+  for (const auto& joint_data : config_yaml["joint_states"][joint_state_name]["positions"])
   {
     joint_group_positions.push_back(joint_data.as<double>());
   }
@@ -232,7 +233,8 @@ EdmtApplication::plan_joint_states(std::string joint_state_name, float speed_sca
   return joint_space_plan.trajectory_;
 }
 
-tl::expected<void,std::string> EdmtApplication::prompt_and_execute(moveit_msgs::msg::RobotTrajectory trajectory, std::string prompt)
+tl::expected<void, std::string> EdmtApplication::prompt_and_execute(moveit_msgs::msg::RobotTrajectory trajectory,
+                                                                    std::string prompt)
 {
   if (cancel_behaviors)
   {
@@ -240,14 +242,16 @@ tl::expected<void,std::string> EdmtApplication::prompt_and_execute(moveit_msgs::
   }
   visual_tools_->deleteAllMarkers();
   visual_tools_->trigger();
-  visual_tools_->publishTrajectoryLine(trajectory, move_group_->getCurrentState()->getJointModelGroup(active_planning_group));
+  visual_tools_->publishTrajectoryLine(trajectory,
+                                       move_group_->getCurrentState()->getJointModelGroup(active_planning_group));
   visual_tools_->trigger();
   publish_instruction_text(prompt);
   execute_movement(trajectory);
   return {};
 }
 
-tl::expected<void,std::string> EdmtApplication::execute_movement(moveit_msgs::msg::RobotTrajectory trajectory){
+tl::expected<void, std::string> EdmtApplication::execute_movement(moveit_msgs::msg::RobotTrajectory trajectory)
+{
   if (cancel_behaviors)
   {
     return tl::make_unexpected("Not executing the move because the STOP flag was set.");
@@ -256,7 +260,8 @@ tl::expected<void,std::string> EdmtApplication::execute_movement(moveit_msgs::ms
   return {};
 }
 
-void EdmtApplication::publish_instruction_text(std::string prompt){
+void EdmtApplication::publish_instruction_text(std::string prompt)
+{
   {
     std::lock_guard<std::mutex> lock(instruction_mutex);
     instruction.first = ++instruction_counter;
@@ -266,15 +271,17 @@ void EdmtApplication::publish_instruction_text(std::string prompt){
   publish_instruction_text_nb("Continuing...");
 }
 
-void EdmtApplication::publish_instruction_text_nb(std::string prompt){
-    std::lock_guard<std::mutex> lock(instruction_mutex);
-    instruction.first = ++instruction_counter;
-    instruction.second = prompt;
-    RCLCPP_INFO(logger,"%s",prompt.c_str());
+void EdmtApplication::publish_instruction_text_nb(std::string prompt)
+{
+  std::lock_guard<std::mutex> lock(instruction_mutex);
+  instruction.first = ++instruction_counter;
+  instruction.second = prompt;
+  RCLCPP_INFO(logger, "%s", prompt.c_str());
 }
 
-tl::expected<void, std::string> EdmtApplication::update_collision_matrix(std::string scene_object, std::string robot_link,
-                                                 CollisionType allow_collisions)
+tl::expected<void, std::string> EdmtApplication::update_collision_matrix(std::string scene_object,
+                                                                         std::string robot_link,
+                                                                         CollisionType allow_collisions)
 {
   // auto acm_request = std::make_shared<edmt_application_msgs::srv::UpdateAcm::Request>();
   // acm_request->object1 = scene_object;
@@ -285,7 +292,8 @@ tl::expected<void, std::string> EdmtApplication::update_collision_matrix(std::st
 
   // Wait for the result with timeout
   // if (result.wait_for(std::chrono::milliseconds(500)) != std::future_status::ready) {
-  //   return tl::make_unexpected("Failed to get service call response for collision matrix update for " + scene_object + " and " + robot_link + ". Make sure that the collision_manager launch was started");
+  //   return tl::make_unexpected("Failed to get service call response for collision matrix update for " + scene_object
+  //   + " and " + robot_link + ". Make sure that the collision_manager launch was started");
   // }
   return {};
 }
@@ -306,85 +314,104 @@ void EdmtApplication::initialize()
 
 std::pair<bool, std::string> EdmtApplication::call_behavior(std::string behavior_name)
 {
-  if (!function_registry.count(behavior_name)){
+  if (!function_registry.count(behavior_name))
+  {
     std::string available_behaviors = "";
-    for(auto const& behaviors: function_registry)
+    for (auto const& behaviors : function_registry)
       available_behaviors += "\n\t" + behaviors.first;
-    
-    std::string error_message = red + "Behavior " + behavior_name + " does not exist. Available behaviors are:" + available_behaviors + end_color;
-    RCLCPP_ERROR(logger,"%s", error_message.c_str());
-    return std::pair<bool, std::string> (false, error_message);
+
+    std::string error_message = red + "Behavior " + behavior_name +
+                                " does not exist. Available behaviors are:" + available_behaviors + end_color;
+    RCLCPP_ERROR(logger, "%s", error_message.c_str());
+    return std::pair<bool, std::string>(false, error_message);
   }
 
-  if (!current_node) {
+  if (!current_node)
+  {
     tree_head = std::make_shared<BehaviorItem>(behavior_name);
     current_node = tree_head;
   }
-  else{
+  else
+  {
     current_node->children.push_back(std::make_shared<BehaviorItem>(behavior_name));
-    current_node->children[current_node->children.size()-1]->parent = current_node;
-    current_node = current_node->children[current_node->children.size()-1];
+    current_node->children[current_node->children.size() - 1]->parent = current_node;
+    current_node = current_node->children[current_node->children.size() - 1];
     current_node->parent->status = BehaviorStatus::Pending;
   }
 
   make_behavior_tree();
 
-  auto result = std::pair<bool, std::string> (false, "default_message");
+  auto result = std::pair<bool, std::string>(false, "default_message");
 
-  if(cancel_behaviors){
-    std::string error_message = red + "Behavior " + behavior_name + " was skipped because the STOP flag was set." + end_color;
-    RCLCPP_ERROR(logger,"%s", error_message.c_str());
-    result = std::pair<bool, std::string> (false, error_message);
+  if (cancel_behaviors)
+  {
+    std::string error_message =
+        red + "Behavior " + behavior_name + " was skipped because the STOP flag was set." + end_color;
+    RCLCPP_ERROR(logger, "%s", error_message.c_str());
+    result = std::pair<bool, std::string>(false, error_message);
   }
-  else{
+  else
+  {
     std::string message = green + "Running behavior: " + behavior_name + end_color;
-    RCLCPP_INFO(logger,"%s",message.c_str());
+    RCLCPP_INFO(logger, "%s", message.c_str());
     result = function_registry[behavior_name]();
-    if (!result.first){
+    if (!result.first)
+    {
       std::string error_message = red + "Behavior " + behavior_name + " failed. Reason: " + result.second + end_color;
       result.second = error_message;
-      RCLCPP_ERROR(logger,"%s", error_message.c_str());
+      RCLCPP_ERROR(logger, "%s", error_message.c_str());
     }
   }
 
   current_node->status = result.first ? BehaviorStatus::Success : BehaviorStatus::Failure;
 
-  if (current_node->parent){
+  if (current_node->parent)
+  {
     current_node = current_node->parent;
   }
-  else{
+  else
+  {
     current_node = nullptr;
     make_behavior_tree();
   }
   return result;
 };
 
-void EdmtApplication::printTree(const std::shared_ptr<BehaviorItem>& item, const std::string& prefix, bool isLast) {
-    std::string color_string = "";
-    if (item->status == BehaviorStatus::Active) color_string = blue;
-    if (item->status == BehaviorStatus::Success) color_string = green;
-    if (item->status == BehaviorStatus::Failure) color_string = red;
-    std::string end_color_string = (item->status != BehaviorStatus::Pending) ? end_color : "";
-    local_behavior_tree += prefix + (isLast ? "└── " : "├── ") + color_string + item->name + end_color_string + '\n';
+void EdmtApplication::printTree(const std::shared_ptr<BehaviorItem>& item, const std::string& prefix, bool isLast)
+{
+  std::string color_string = "";
+  if (item->status == BehaviorStatus::Active)
+    color_string = blue;
+  if (item->status == BehaviorStatus::Success)
+    color_string = green;
+  if (item->status == BehaviorStatus::Failure)
+    color_string = red;
+  std::string end_color_string = (item->status != BehaviorStatus::Pending) ? end_color : "";
+  local_behavior_tree += prefix + (isLast ? "└── " : "├── ") + color_string + item->name + end_color_string + '\n';
 
-    std::string newPrefix = prefix + (isLast ? "    " : "│   ");
-    auto it = item->children.begin();
-    auto end = item->children.end();
-    for (auto i = it; i != end; ++i) {
-        if (i + 1 == end) {
-            printTree(*i, newPrefix, true);
-        } else {
-            printTree(*i, newPrefix, false);
-        }
+  std::string newPrefix = prefix + (isLast ? "    " : "│   ");
+  auto it = item->children.begin();
+  auto end = item->children.end();
+  for (auto i = it; i != end; ++i)
+  {
+    if (i + 1 == end)
+    {
+      printTree(*i, newPrefix, true);
     }
+    else
+    {
+      printTree(*i, newPrefix, false);
+    }
+  }
 }
 
-void EdmtApplication::make_behavior_tree(){
+void EdmtApplication::make_behavior_tree()
+{
   local_behavior_tree = "";
   printTree(tree_head);
   {
-    std::lock_guard<std::mutex> lock(behavior_tree_mutex); 
-    behavior_tree = local_behavior_tree; 
+    std::lock_guard<std::mutex> lock(behavior_tree_mutex);
+    behavior_tree = local_behavior_tree;
   }
 }
 
@@ -400,15 +427,14 @@ bool EdmtApplication::load_configs()
   return true;
 }
 
-tl::expected<void, std::string> EdmtApplication::create_collision_object(std::string object_id,
-                                                                            std::string reference_frame,
-                                                                            std::string mesh_filepath,
-                                                                            geometry_msgs::msg::Pose pose,
-                                                                            const Eigen::Vector3d& scale)
+tl::expected<void, std::string>
+EdmtApplication::create_collision_object(std::string object_id, std::string reference_frame, std::string mesh_filepath,
+                                         geometry_msgs::msg::Pose pose, const Eigen::Vector3d& scale)
 {
   bool valid_transform = tf_buffer_->canTransform("base_link", reference_frame, tf2::TimePointZero);
-  if (!valid_transform) return tl::make_unexpected("was not able to find the transform for: " + reference_frame);
-  
+  if (!valid_transform)
+    return tl::make_unexpected("was not able to find the transform for: " + reference_frame);
+
   moveit_msgs::msg::CollisionObject collision_object;
   collision_object.header.frame_id = reference_frame;
   collision_object.id = object_id;
@@ -429,10 +455,11 @@ tl::expected<void, std::string> EdmtApplication::create_collision_object(std::st
   color.color.g = 0.5;
   color.color.b = 0.5;
   color.color.a = 0.5;
-  planning_scene_interface_->applyCollisionObjects({ collision_object }, {color});
+  planning_scene_interface_->applyCollisionObjects({ collision_object }, { color });
   auto object_names = planning_scene_interface_->getKnownObjectNames();
   auto result = std::count(object_names.begin(), object_names.end(), object_id) > 0;
-  if (!result) return tl::make_unexpected("was not able to apply collision object: " + object_id);
+  if (!result)
+    return tl::make_unexpected("was not able to apply collision object: " + object_id);
   return {};
 }
 

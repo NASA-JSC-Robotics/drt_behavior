@@ -14,4 +14,9 @@ public:
 private:
   virtual void callback(BT::Duration timestamp, const BT::TreeNode& node, BT::NodeStatus prev_status,
                         BT::NodeStatus status) override;
+
+  void printTree(const BT::TreeNode* node,
+                       const std::map<std::string, const BT::Tree::Subtree*>& subtree_map,
+                       int& counter,
+                       int indent = 0);
 };
