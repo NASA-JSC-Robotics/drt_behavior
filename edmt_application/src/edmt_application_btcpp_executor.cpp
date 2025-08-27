@@ -30,14 +30,14 @@ void EdmtApplicationBtcppExecutor::onTreeCreated(BT::Tree& tree)
   // logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree);
   logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree);
 
-  for (auto& subtree : tree.subtrees)
-  {
-    for (auto& btnode : subtree->nodes)
-    {
-      std::string msg = btnode->fullPath();
-      RCLCPP_INFO(node()->get_logger(), msg.c_str());
-    }
-  }
+  // for (auto& subtree : tree.subtrees)
+  // {
+  //   for (auto& btnode : subtree->nodes)
+  //   {
+  //     std::string msg = btnode->fullPath();
+  //     RCLCPP_INFO(node()->get_logger(), msg.c_str());
+  //   }
+  // }
 
   // first_timestamp_ = std::chrono::high_resolution_clock::now();
 
