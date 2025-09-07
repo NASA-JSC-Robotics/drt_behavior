@@ -60,6 +60,11 @@ public:
     std::vector<std::shared_ptr<BehaviorItem>> children;
     BehaviorStatus status;
 
+    /**
+     * @brief Construct a new Behavior Item object, which stores the name, parent, and children
+     *
+     * @param name name of the behavior
+     */
     BehaviorItem(std::string name) : name(name), parent(nullptr), status(BehaviorStatus::Active)
     {
     }
@@ -69,14 +74,35 @@ public:
 
   EdmtApplication(std::string default_planning_group, rclcpp::NodeOptions node_options);
 
+  /**
+   * @brief Set the currently active move group of the context
+   *
+   * @param move_group_name the name of the move group that we will use
+   */
   void set_move_group(std::string move_group_name);
 
-  // look up a frame and convert it to a pose for cartesian move
+  /**
+   * @brief look up a frame and convert it to a transform stamped for cartesian move
+   *
+   * @param target_frame the target frame to convert to from base_frame
+   * @param base_frame the base_frame to convert from (Defaults to base_link)
+   * @return geometry_msgs::msg::TransformStamped
+   */
   geometry_msgs::msg::TransformStamped tf_lookup(std::string target_frame, std::string base_frame = "base_link");
 
-  // convert tf output into move_groupo cartesian move data structure
+  /**
+   * @brief look up a frame and convert it to a pose for cartesian move
+   *
+   * @param target_frame the target frame to convert to from base_frame
+   * @param base_frame the base_frame to convert from (Defaults to base_link)
+   * @return * geometry_msgs::msg::Pose
+   */
   geometry_msgs::msg::Pose tf_lookup_converted(std::string target_frame, std::string base_frame = "base_link");
 
+  /**
+   * @brief special function to run once at the beginning to initialze the context
+   *
+   */
   virtual void initialize();
 
   bool load_configs();
@@ -101,8 +127,48 @@ public:
   tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
   plan_relative_move(std::string relative_move_name, PlanType move_type, float speed_scale = 1.0);
 
+  /**
+   * @brief generic synchronous call to a ros service
+   *
+   * @tparam ClientType type of client
+   * @param client the client to call
+   * @param request the request to send
+   * @return Response
+   */
+  template <typename ClientType>
+  std::shared_ptr<typename ClientType::Response> request_response(std::shared_ptr<rclcpp::Client<ClientType>> client,
+                                                                  std::shared_ptr<typename ClientType::Request> request)
+  {
+    auto future = client->async_send_request(request);
+    // Wait for the result.
+    while (future.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready)
+    {
+      RCLCPP_INFO_THROTTLE(rclcpp::get_logger("edmt_application"), *this->get_clock(), 1000,
+                           "Waiting for service response...");
+    }
+    return future.get();
+  }
+
+  /**
+   * @brief plan to a joint state defined in the config file provided for the application
+   *
+   * @param joint_state_name the name of the joint state in the srdf
+   * @param speed_scale the speed scale to move at
+   * @return tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
+   */
   tl::expected<moveit_msgs::msg::RobotTrajectory, std::string> plan_joint_states(std::string joint_state_name,
                                                                                  float speed_scale = 1.0);
+
+  /**
+   * @brief plan to a named state as described in the srdf predefined joint states
+   *
+   * @param move_group the move group to plan for
+   * @param state_name the name of the joint state in the srdf
+   * @param speed_scale the speed scale to move at
+   * @return tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
+   */
+  tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
+  plan_named_state(std::string move_group, std::string state_name, float speed_scale);
 
   tl::expected<void, std::string> prompt_and_execute(moveit_msgs::msg::RobotTrajectory trajectory, std::string prompt);
 

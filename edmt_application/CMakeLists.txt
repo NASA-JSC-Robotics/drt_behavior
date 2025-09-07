@@ -25,11 +25,14 @@ foreach(pkg IN LISTS dependencies_pkgs)
 endforeach()
 
 set(behavior_cpp_files
-  src/behaviors/tf_lookup.cpp
+  src/behaviors/create_collision_object.cpp
   src/behaviors/plan_joint_states.cpp
+  src/behaviors/plan_named_state.cpp
   src/behaviors/plan_relative_move.cpp
   src/behaviors/prompt_and_execute.cpp
-  src/behaviors/create_collision_object.cpp
+  src/behaviors/publish_instruction_text.cpp
+  src/behaviors/tf_lookup.cpp
+  src/behaviors/update_collision_matrix.cpp
 )
 
 add_library(edmt_application 

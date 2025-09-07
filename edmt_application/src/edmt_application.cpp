@@ -172,7 +172,7 @@ EdmtApplication::plan_joint_waypoint_pose(geometry_msgs::msg::Pose waypoint, flo
   RCLCPP_INFO(logger, "Joint space computation: %s", success ? "SUCCESS!" : "FAILED!");
 
   if (!success)
-    return tl::make_unexpected("Joint space move failed. See moveit terminal for error");
+    return tl::make_unexpected("Joint space plan failed. See moveit terminal for error");
   return joint_space_plan.trajectory_;
 }
 
@@ -229,8 +229,27 @@ EdmtApplication::plan_joint_states(std::string joint_state_name, float speed_sca
   RCLCPP_INFO(logger, "Joint space computation: %s", success ? "SUCCESS!" : "FAILED!");
 
   if (!success)
-    return tl::make_unexpected("Joint space move failed. See moveit terminal for error");
+    return tl::make_unexpected("Joint space plan failed. See moveit terminal for error");
   return joint_space_plan.trajectory_;
+}
+
+tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
+EdmtApplication::plan_named_state(std::string move_group, std::string state_name, float speed_scale)
+{
+  set_move_group(move_group);
+  move_group_->setMaxVelocityScalingFactor(speed_scale);
+  move_group_->setMaxAccelerationScalingFactor(speed_scale);
+
+  moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+  move_group_ee_->setNamedTarget("open");
+  auto success = (move_group_ee_->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+
+  RCLCPP_INFO(logger, "Named state computation: %s", success ? "SUCCESS!" : "FAILED!");
+
+  if (!success)
+    return tl::make_unexpected("Named state plan failed. See moveit terminal for error");
+
+  return my_plan.trajectory_;
 }
 
 tl::expected<void, std::string> EdmtApplication::prompt_and_execute(moveit_msgs::msg::RobotTrajectory trajectory,
@@ -283,18 +302,45 @@ tl::expected<void, std::string> EdmtApplication::update_collision_matrix(std::st
                                                                          std::string robot_link,
                                                                          CollisionType allow_collisions)
 {
-  // auto acm_request = std::make_shared<edmt_application_msgs::srv::UpdateAcm::Request>();
-  // acm_request->object1 = scene_object;
-  // acm_request->object2 = robot_link;
+  // convert enum to bool to use
+  bool allowed = (allow_collisions == CollisionType::Allow);
 
-  // acm_request->enable_collision = static_cast<int>(allow_collisions);
-  // auto result = update_acm_client_->async_send_request(acm_request);
+  // Get planning scene
+  RCLCPP_INFO(logger, "Requesting planning scene.");
+  auto get_planning_scene_req = std::make_shared<moveit_msgs::srv::GetPlanningScene::Request>();
+  auto response =
+      this->request_response<moveit_msgs::srv::GetPlanningScene>(get_planning_scene_client_, get_planning_scene_req);
 
-  // Wait for the result with timeout
-  // if (result.wait_for(std::chrono::milliseconds(500)) != std::future_status::ready) {
-  //   return tl::make_unexpected("Failed to get service call response for collision matrix update for " + scene_object
-  //   + " and " + robot_link + ". Make sure that the collision_manager launch was started");
-  // }
+  // Modify ACM
+  auto acm = collision_detection::AllowedCollisionMatrix(response->scene.allowed_collision_matrix);
+  if (robot_link == "")
+  {
+    acm.setEntry(scene_object, allowed);
+  }
+  else
+  {
+    acm.setEntry(scene_object, robot_link, allowed);
+  }
+  auto apply_planning_scene_req = std::make_shared<moveit_msgs::srv::ApplyPlanningScene::Request>();
+  moveit_msgs::msg::AllowedCollisionMatrix acm_msg;
+  acm.getMessage(acm_msg);
+  apply_planning_scene_req->scene.allowed_collision_matrix = acm_msg;
+  apply_planning_scene_req->scene.is_diff = true;
+  // Apply planning scene
+  RCLCPP_INFO(logger, "Applying planning scene.");
+  auto apply_response = this->request_response<moveit_msgs::srv::ApplyPlanningScene>(apply_planning_scene_client_,
+                                                                                     apply_planning_scene_req);
+  if (!apply_response->success)
+  {
+    if (robot_link == "")
+    {
+      return tl::make_unexpected("Failed to disable collisions with " + scene_object + ".");
+    }
+    else
+    {
+      return tl::make_unexpected("Failed to disable collisions between " + scene_object + " and " + robot_link + ".");
+    }
+  }
   return {};
 }
 
