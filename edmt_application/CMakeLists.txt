@@ -25,6 +25,7 @@ foreach(pkg IN LISTS dependencies_pkgs)
 endforeach()
 
 set(behavior_cpp_files
+  src/behaviors/attach_object.cpp
   src/behaviors/create_collision_object.cpp
   src/behaviors/plan_joint_states.cpp
   src/behaviors/plan_named_state.cpp

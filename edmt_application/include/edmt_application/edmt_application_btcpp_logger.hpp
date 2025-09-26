@@ -50,4 +50,5 @@ private:
 
   std::unordered_map<uint16_t, NodeLogStatus> log_statuses_;
   std::vector<uint16_t> log_order_;
+  bool done = false;
 };

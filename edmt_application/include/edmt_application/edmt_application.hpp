@@ -107,10 +107,27 @@ public:
 
   bool load_configs();
 
+  /**
+   * @brief Create a collision object
+   *
+   * @param object_id the name of the object that you are creating a collion object for
+   * @param reference_frame the reference frame that the pose should be attached to
+   * @param mesh_filepath the filepath of the mesh that you are loading
+   * @param pose the pose of the object with respect to the reference frame
+   * @param scale the scale to apply to the mesh (defaults to normal scale)
+   * @return tl::expected<void, std::string> success of the application
+   */
   tl::expected<void, std::string>
   create_collision_object(std::string object_id, std::string reference_frame, std::string mesh_filepath,
                           geometry_msgs::msg::Pose pose, const Eigen::Vector3d& scale = Eigen::Vector3d(1.0, 1.0, 1.0));
 
+  /**
+   * @brief Create a collision object
+   *
+   * @param collision_object_name the name of the string that the collision object is being created for, as
+   * referenced in the config file
+   * @return tl::expected<void, std::string> success of the application
+   */
   tl::expected<void, std::string> create_collision_object(std::string collision_object_name);
 
   tl::expected<void, std::string> update_collision_matrix(std::string scene_object, std::string robot_link,

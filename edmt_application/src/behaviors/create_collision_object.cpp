@@ -41,6 +41,7 @@ BT::NodeStatus CreateCollisionObject::tick()
   }
   else
   {
+    RCLCPP_FATAL(rclcpp::get_logger("create_collision_object"), result.error().c_str());
     return BT::NodeStatus::FAILURE;
   }
 }

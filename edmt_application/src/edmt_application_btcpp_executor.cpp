@@ -8,11 +8,15 @@
 #include "std_srvs/srv/set_bool.hpp"
 
 // behaviors
+#include "edmt_application/behaviors/attach_object.hpp"
 #include "edmt_application/behaviors/create_collision_object.hpp"
 #include "edmt_application/behaviors/plan_joint_states.hpp"
+#include "edmt_application/behaviors/plan_named_state.hpp"
 #include "edmt_application/behaviors/plan_relative_move.hpp"
 #include "edmt_application/behaviors/prompt_and_execute.hpp"
+#include "edmt_application/behaviors/publish_instruction_text.hpp"
 #include "edmt_application/behaviors/tf_lookup.hpp"
+#include "edmt_application/behaviors/update_collision_matrix.hpp"
 
 // local
 #include "edmt_application/edmt_application_btcpp_executor.hpp"
@@ -84,11 +88,15 @@ void EdmtApplicationBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFact
   // set ROS node
   params.nh = node();  // register with TreeExecutionServer's node
 
-  factory.registerNodeType<TfLookup>("TfLookup");
+  factory.registerNodeType<AttachObject>("AttachObject");
   factory.registerNodeType<CreateCollisionObject>("CreateCollisionObject");
   factory.registerNodeType<PlanJointStates>("PlanJointStates");
+  factory.registerNodeType<PlanNamedState>("PlanNamedState");
   factory.registerNodeType<PlanRelativeMove>("PlanRelativeMove");
   factory.registerNodeType<PromptAndExecute>("PromptAndExecute");
+  factory.registerNodeType<PublishInstructionText>("PublishInstructionText");
+  factory.registerNodeType<TfLookup>("TfLookup");
+  factory.registerNodeType<UpdateCollisionMatrix>("UpdateCollisionMatrix");
 
   return;
 }

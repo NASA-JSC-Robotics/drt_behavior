@@ -241,7 +241,7 @@ EdmtApplication::plan_named_state(std::string move_group, std::string state_name
   move_group_->setMaxAccelerationScalingFactor(speed_scale);
 
   moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-  move_group_ee_->setNamedTarget("open");
+  move_group_ee_->setNamedTarget(state_name);
   auto success = (move_group_ee_->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
 
   RCLCPP_INFO(logger, "Named state computation: %s", success ? "SUCCESS!" : "FAILED!");
@@ -502,10 +502,12 @@ EdmtApplication::create_collision_object(std::string object_id, std::string refe
   color.color.b = 0.5;
   color.color.a = 0.5;
   planning_scene_interface_->applyCollisionObjects({ collision_object }, { color });
+  rclcpp::Rate sleep_hz(2.0);
+  sleep_hz.sleep();
   auto object_names = planning_scene_interface_->getKnownObjectNames();
   auto result = std::count(object_names.begin(), object_names.end(), object_id) > 0;
   if (!result)
-    return tl::make_unexpected("was not able to apply collision object: " + object_id);
+    RCLCPP_WARN(logger, "Unsure if the collision object %s was applied", object_id.c_str());
   return {};
 }
 

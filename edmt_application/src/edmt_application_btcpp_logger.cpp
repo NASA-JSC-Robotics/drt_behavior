@@ -20,6 +20,10 @@ EdmtApplicationBtcppLogger::~EdmtApplicationBtcppLogger()
 void EdmtApplicationBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::TreeNode& node,
                                           BT::NodeStatus /*prev_status*/, BT::NodeStatus status)
 {
+  // if we have failed, return early
+  if (done)
+    return;
+
   log_statuses_[node.UID()].status = status;
 
   // should be print tree function
@@ -29,6 +33,8 @@ void EdmtApplicationBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::
     std::string logmsg = indent_string + log_statuses_[id].name + ": " + toStr(log_statuses_[id].status, true);
     RCLCPP_INFO(kLogger, logmsg.c_str());
   }
+  // we don't want to print anymore if we have failed
+  done = (status == BT::NodeStatus::FAILURE);
 }
 
 void EdmtApplicationBtcppLogger::generateTree(const BT::TreeNode* node, int indent)
