@@ -27,11 +27,15 @@ endforeach()
 set(behavior_cpp_files
   src/behaviors/attach_object.cpp
   src/behaviors/create_collision_object.cpp
+  src/behaviors/detach_object.cpp
+  src/behaviors/execute_trajectory.cpp
   src/behaviors/plan_joint_states.cpp
   src/behaviors/plan_named_state.cpp
   src/behaviors/plan_relative_move.cpp
   src/behaviors/prompt_and_execute.cpp
   src/behaviors/publish_instruction_text.cpp
+  src/behaviors/publish_trajectory.cpp
+  src/behaviors/remove_collision_objects.cpp
   src/behaviors/tf_lookup.cpp
   src/behaviors/update_collision_matrix.cpp
 )

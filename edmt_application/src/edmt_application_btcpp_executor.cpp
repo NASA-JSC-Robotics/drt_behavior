@@ -10,11 +10,15 @@
 // behaviors
 #include "edmt_application/behaviors/attach_object.hpp"
 #include "edmt_application/behaviors/create_collision_object.hpp"
+#include "edmt_application/behaviors/detach_object.hpp"
+#include "edmt_application/behaviors/execute_trajectory.hpp"
 #include "edmt_application/behaviors/plan_joint_states.hpp"
 #include "edmt_application/behaviors/plan_named_state.hpp"
 #include "edmt_application/behaviors/plan_relative_move.hpp"
 #include "edmt_application/behaviors/prompt_and_execute.hpp"
 #include "edmt_application/behaviors/publish_instruction_text.hpp"
+#include "edmt_application/behaviors/publish_trajectory.hpp"
+#include "edmt_application/behaviors/remove_collision_objects.hpp"
 #include "edmt_application/behaviors/tf_lookup.hpp"
 #include "edmt_application/behaviors/update_collision_matrix.hpp"
 
@@ -90,11 +94,15 @@ void EdmtApplicationBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFact
 
   factory.registerNodeType<AttachObject>("AttachObject");
   factory.registerNodeType<CreateCollisionObject>("CreateCollisionObject");
+  factory.registerNodeType<DetachObject>("DetachObject");
+  factory.registerNodeType<ExecuteTrajectory>("ExecuteTrajectory");
   factory.registerNodeType<PlanJointStates>("PlanJointStates");
   factory.registerNodeType<PlanNamedState>("PlanNamedState");
   factory.registerNodeType<PlanRelativeMove>("PlanRelativeMove");
   factory.registerNodeType<PromptAndExecute>("PromptAndExecute");
   factory.registerNodeType<PublishInstructionText>("PublishInstructionText");
+  factory.registerNodeType<PublishTrajectory>("PublishTrajectory");
+  factory.registerNodeType<RemoveCollisionObjects>("RemoveCollisionObjects");
   factory.registerNodeType<TfLookup>("TfLookup");
   factory.registerNodeType<UpdateCollisionMatrix>("UpdateCollisionMatrix");
 
@@ -113,7 +121,6 @@ void EdmtApplicationBtcppExecutor::get_behavior_trees(const std::shared_ptr<std_
   response->success = true;
 
   auto tree_names = factory().registeredBehaviorTrees();
-  RCLCPP_INFO_STREAM(rclcpp::get_logger("test_logger"), "Here");
   std::string trees = "";
   for (const auto& name : tree_names)
   {

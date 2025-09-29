@@ -28,7 +28,7 @@ void EdmtApplication::set_move_group(std::string move_group_name)
       std::make_unique<moveit::planning_interface::MoveGroupInterface>(shared_from_this(), active_planning_group);
 
   move_group_->setPlannerId("RRTstarkConfigDefault");
-  move_group_->setPlanningTime(5.0);
+  move_group_->setPlanningTime(1.0);
 
   move_group_->setNumPlanningAttempts(5);
 
@@ -195,7 +195,7 @@ EdmtApplication::plan_relative_move(std::string relative_move_name, PlanType mov
 
   auto target_tf = tf2::eigenToTransform(final_pose);
   target_tf.header.stamp = rclcpp::Clock(RCL_ROS_TIME).now();
-  target_tf.header.frame_id = "base_link";
+  target_tf.header.frame_id = "world";
   target_tf.child_frame_id = "target_pose";
   tf_static_broadcaster_->sendTransform(target_tf);
 
@@ -241,8 +241,8 @@ EdmtApplication::plan_named_state(std::string move_group, std::string state_name
   move_group_->setMaxAccelerationScalingFactor(speed_scale);
 
   moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-  move_group_ee_->setNamedTarget(state_name);
-  auto success = (move_group_ee_->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+  move_group_->setNamedTarget(state_name);
+  auto success = (move_group_->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
 
   RCLCPP_INFO(logger, "Named state computation: %s", success ? "SUCCESS!" : "FAILED!");
 
@@ -500,7 +500,7 @@ EdmtApplication::create_collision_object(std::string object_id, std::string refe
   color.color.r = 0.5;
   color.color.g = 0.5;
   color.color.b = 0.5;
-  color.color.a = 0.5;
+  color.color.a = 1.0;
   planning_scene_interface_->applyCollisionObjects({ collision_object }, { color });
   rclcpp::Rate sleep_hz(2.0);
   sleep_hz.sleep();

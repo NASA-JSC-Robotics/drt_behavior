@@ -12,6 +12,7 @@ BT::PortsList AttachObject::providedPorts()
            BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
 
            // input params
+           BT::InputPort<std::string>("move_group", std::string{ "" }, "default is empty string"),
            BT::InputPort<std::string>("object", std::string{ "" }, "default is empty string"),
            BT::InputPort<std::string>("link", std::string{ "" }, "default is empty string"),
            BT::InputPort<std::vector<std::string>>("touch_links", std::vector<std::string>{}, "default is empty vector")
@@ -27,8 +28,12 @@ BT::NodeStatus AttachObject::tick()
     throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
   }
 
-  std::string object, link;
+  std::string move_group, object, link;
   std::vector<std::string> touch_links;
+  if (!getInput("move_group", move_group))
+  {
+    throw BT::RuntimeError("Could not access blackboard input [move_group]");
+  }
   if (!getInput("object", object))
   {
     throw BT::RuntimeError("Could not access blackboard input [object]");
@@ -42,6 +47,7 @@ BT::NodeStatus AttachObject::tick()
     throw BT::RuntimeError("Could not access blackboard input [touch_links]");
   }
 
+  edmt_application_node_->set_move_group(move_group);
   auto result = edmt_application_node_->move_group_->attachObject(object, link, touch_links);
 
   if (result)

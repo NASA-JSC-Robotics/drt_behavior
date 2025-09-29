@@ -88,7 +88,7 @@ public:
    * @param base_frame the base_frame to convert from (Defaults to base_link)
    * @return geometry_msgs::msg::TransformStamped
    */
-  geometry_msgs::msg::TransformStamped tf_lookup(std::string target_frame, std::string base_frame = "base_link");
+  geometry_msgs::msg::TransformStamped tf_lookup(std::string target_frame, std::string base_frame = "world");
 
   /**
    * @brief look up a frame and convert it to a pose for cartesian move
@@ -97,7 +97,7 @@ public:
    * @param base_frame the base_frame to convert from (Defaults to base_link)
    * @return * geometry_msgs::msg::Pose
    */
-  geometry_msgs::msg::Pose tf_lookup_converted(std::string target_frame, std::string base_frame = "base_link");
+  geometry_msgs::msg::Pose tf_lookup_converted(std::string target_frame, std::string base_frame = "world");
 
   /**
    * @brief special function to run once at the beginning to initialze the context
@@ -221,7 +221,6 @@ public:
   std::atomic<bool> cancel_behaviors = false;
 
   std::unique_ptr<moveit::planning_interface::MoveGroupInterface> move_group_;
-  std::unique_ptr<moveit::planning_interface::MoveGroupInterface> move_group_ee_;
   std::unique_ptr<moveit_visual_tools::MoveItVisualTools> visual_tools_;
   std::unique_ptr<moveit::planning_interface::PlanningSceneInterface> planning_scene_interface_;
   std::shared_ptr<planning_scene_monitor::PlanningSceneMonitor> planning_scene_monitor_;
@@ -239,5 +238,5 @@ public:
 
   YAML::Node config_yaml;
 
-  bool sim;
+  bool sim = true;
 };
