@@ -4,9 +4,6 @@
 #include "behaviortree_ros2/bt_utils.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-// messages
-#include "std_srvs/srv/set_bool.hpp"
-
 // behaviors
 #include "edmt_application/behaviors/attach_object.hpp"
 #include "edmt_application/behaviors/create_collision_object.hpp"
@@ -28,7 +25,7 @@
 EdmtApplicationBtcppExecutor::EdmtApplicationBtcppExecutor(const rclcpp::NodeOptions& options)
   : BT::TreeExecutionServer(options)
 {
-  list_trees_service = node()->create_service<std_srvs::srv::SetBool>(
+  list_trees_service = node()->create_service<edmt_application_msgs::srv::GetBehaviorTrees>(
       "~/list_behavior_trees",
       std::bind(&EdmtApplicationBtcppExecutor::get_behavior_trees, this, std::placeholders::_1, std::placeholders::_2));
 }
@@ -36,7 +33,7 @@ EdmtApplicationBtcppExecutor::EdmtApplicationBtcppExecutor(const rclcpp::NodeOpt
 void EdmtApplicationBtcppExecutor::onTreeCreated(BT::Tree& tree)
 {
   // logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree);
-  logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree);
+  logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree, node());
 
   // for (auto& subtree : tree.subtrees)
   // {
@@ -109,8 +106,9 @@ void EdmtApplicationBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFact
   return;
 }
 
-void EdmtApplicationBtcppExecutor::get_behavior_trees(const std::shared_ptr<std_srvs::srv::SetBool::Request> request,
-                                                      std::shared_ptr<std_srvs::srv::SetBool::Response> response)
+void EdmtApplicationBtcppExecutor::get_behavior_trees(
+    const std::shared_ptr<edmt_application_msgs::srv::GetBehaviorTrees::Request> request,
+    std::shared_ptr<edmt_application_msgs::srv::GetBehaviorTrees::Response> response)
 {
   auto param_listener = std::make_shared<bt_server::ParamListener>(node());
   auto params = param_listener->get_params();
@@ -118,14 +116,12 @@ void EdmtApplicationBtcppExecutor::get_behavior_trees(const std::shared_ptr<std_
   factory().clearRegisteredBehaviorTrees();
   RegisterBehaviorTrees(params, factory(), node());
 
-  response->success = true;
-
   auto tree_names = factory().registeredBehaviorTrees();
-  std::string trees = "";
+  std::vector<std::string> trees;
   for (const auto& name : tree_names)
   {
-    RCLCPP_INFO_STREAM(rclcpp::get_logger("test_logger"), "Available tree: " << name << std::endl);
-    trees += name + "\n";
+    trees.push_back(name);
   }
-  response->message = trees;
+  RCLCPP_INFO(node()->get_logger(), "Responding with available behavior trees");
+  response->behavior_trees = trees;
 }

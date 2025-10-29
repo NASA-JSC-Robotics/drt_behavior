@@ -12,13 +12,24 @@ auto const logger = rclcpp::get_logger("edmt_application");
 EdmtApplication::EdmtApplication(std::string default_planning_group, rclcpp::NodeOptions node_options)
   : Node("edmt_application", node_options), active_planning_group(default_planning_group)
 {
-  // update_acm_client_ = this->create_client<edmt_application_msgs::srv::UpdateAcm>("/update_acm");
+  logger_publisher_ = this->create_publisher<std_msgs::msg::String>("/application_logger", 10);
 
   get_planning_scene_client_ = this->create_client<moveit_msgs::srv::GetPlanningScene>("/get_planning_scene");
   apply_planning_scene_client_ = this->create_client<moveit_msgs::srv::ApplyPlanningScene>("/apply_planning_scene");
 
   switch_controller_client_ =
       this->create_client<controller_manager_msgs::srv::SwitchController>("/controller_manager/switch_controller");
+
+  stop_service_ = this->create_service<std_srvs::srv::Trigger>("edmt_application_stop",
+                                                               std::bind(&EdmtApplication::stop_callback, this,
+                                                                         std::placeholders::_1, std::placeholders::_2));
+}
+
+void EdmtApplication::stop_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+                                    std::shared_ptr<std_srvs::srv::Trigger::Response> response)
+{
+  cancel_behaviors = true;
+  response->success = true;
 }
 
 void EdmtApplication::set_move_group(std::string move_group_name)
@@ -257,6 +268,7 @@ tl::expected<void, std::string> EdmtApplication::prompt_and_execute(moveit_msgs:
 {
   if (cancel_behaviors)
   {
+    cancel_behaviors = false;
     return tl::make_unexpected("Not planning the next move because the STOP flag was set.");
   }
   visual_tools_->deleteAllMarkers();
@@ -265,7 +277,9 @@ tl::expected<void, std::string> EdmtApplication::prompt_and_execute(moveit_msgs:
                                        move_group_->getCurrentState()->getJointModelGroup(active_planning_group));
   visual_tools_->trigger();
   publish_instruction_text(prompt);
-  execute_movement(trajectory);
+  auto result = execute_movement(trajectory);
+  if (!result.has_value())
+    return tl::make_unexpected(result.error());
   return {};
 }
 
@@ -273,6 +287,7 @@ tl::expected<void, std::string> EdmtApplication::execute_movement(moveit_msgs::m
 {
   if (cancel_behaviors)
   {
+    cancel_behaviors = false;
     return tl::make_unexpected("Not executing the move because the STOP flag was set.");
   }
   move_group_->execute(trajectory);
@@ -281,20 +296,24 @@ tl::expected<void, std::string> EdmtApplication::execute_movement(moveit_msgs::m
 
 void EdmtApplication::publish_instruction_text(std::string prompt)
 {
-  {
-    std::lock_guard<std::mutex> lock(instruction_mutex);
-    instruction.first = ++instruction_counter;
-    instruction.second = prompt + blue + " Press next to continue." + end_color;
-  }
+  std::string instruction_text = prompt + blue + " Press next to continue." + end_color;
+
+  std_msgs::msg::String msg;
+  msg.data = instruction_text;
+  logger_publisher_->publish(msg);
+
   visual_tools_->prompt(prompt + " Press next to continue.");
   publish_instruction_text_nb("Continuing...");
 }
 
 void EdmtApplication::publish_instruction_text_nb(std::string prompt)
 {
-  std::lock_guard<std::mutex> lock(instruction_mutex);
-  instruction.first = ++instruction_counter;
-  instruction.second = prompt;
+  std::string instruction_text = prompt;
+
+  std_msgs::msg::String msg;
+  msg.data = instruction_text;
+  logger_publisher_->publish(msg);
+
   RCLCPP_INFO(logger, "%s", prompt.c_str());
 }
 
@@ -313,14 +332,32 @@ tl::expected<void, std::string> EdmtApplication::update_collision_matrix(std::st
 
   // Modify ACM
   auto acm = collision_detection::AllowedCollisionMatrix(response->scene.allowed_collision_matrix);
+
+  // if the scene object doesn't exist yet, add it
+  if (!acm.hasEntry(scene_object)){
+    RCLCPP_INFO(logger, "The entry %s does not exist. Adding it.", scene_object.c_str());
+    acm.setEntry(scene_object, false);
+  }
   if (robot_link == "")
   {
     acm.setEntry(scene_object, allowed);
   }
   else
   {
+    // if the robot link doesn't exist, add it. This can be because it has recently been attached
+    if (!acm.hasEntry(robot_link)){
+      RCLCPP_INFO(logger, "The entry %s does not exist. Adding it.", robot_link.c_str());
+      acm.setEntry(robot_link, false);
+    }
     acm.setEntry(scene_object, robot_link, allowed);
   }
+  std::vector<std::string> names;
+  acm.getAllEntryNames(names);
+  for (auto &name : names)
+  {
+    RCLCPP_INFO(logger, "entry: %s", name.c_str());
+  }
+  
   auto apply_planning_scene_req = std::make_shared<moveit_msgs::srv::ApplyPlanningScene::Request>();
   moveit_msgs::msg::AllowedCollisionMatrix acm_msg;
   acm.getMessage(acm_msg);
@@ -391,6 +428,7 @@ std::pair<bool, std::string> EdmtApplication::call_behavior(std::string behavior
 
   if (cancel_behaviors)
   {
+    cancel_behaviors = false;
     std::string error_message =
         red + "Behavior " + behavior_name + " was skipped because the STOP flag was set." + end_color;
     RCLCPP_ERROR(logger, "%s", error_message.c_str());

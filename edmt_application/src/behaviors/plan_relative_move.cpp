@@ -54,6 +54,9 @@ BT::NodeStatus PlanRelativeMove::tick()
     setOutput("trajectory", trajectory.value());
     return BT::NodeStatus::SUCCESS;
   }
-
-  return BT::NodeStatus::FAILURE;
+  else
+  {
+    throw BT::RuntimeError(trajectory.error());
+    return BT::NodeStatus::FAILURE;
+  }
 }

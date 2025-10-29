@@ -6,7 +6,7 @@
 #include "rclcpp/rclcpp.hpp"
 
 // messages
-#include "std_srvs/srv/set_bool.hpp"
+#include "edmt_application_msgs/srv/get_behavior_trees.hpp"
 
 // application node
 #include "edmt_application/edmt_application.hpp"
@@ -41,10 +41,10 @@ public:
    * @param request Request of the setbool service
    * @param response Response of the setbool service
    */
-  void get_behavior_trees(const std::shared_ptr<std_srvs::srv::SetBool::Request> request,
-                          std::shared_ptr<std_srvs::srv::SetBool::Response> response);
+  void get_behavior_trees(const std::shared_ptr<edmt_application_msgs::srv::GetBehaviorTrees::Request> request,
+                          std::shared_ptr<edmt_application_msgs::srv::GetBehaviorTrees::Response> response);
 
-  rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr list_trees_service;
+  rclcpp::Service<edmt_application_msgs::srv::GetBehaviorTrees>::SharedPtr list_trees_service;
   std::shared_ptr<EdmtApplication> edmt_application_node_;
   std::shared_ptr<EdmtApplicationBtcppLogger> logger_cout_;
 };

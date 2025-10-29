@@ -7,34 +7,44 @@ namespace
 static const auto kLogger = rclcpp::get_logger("edmt_btcpp_logger");
 }
 
-EdmtApplicationBtcppLogger::EdmtApplicationBtcppLogger(const BT::Tree& tree) : BT::StatusChangeLogger(tree.rootNode())
+EdmtApplicationBtcppLogger::EdmtApplicationBtcppLogger(const BT::Tree& tree, std::shared_ptr<rclcpp::Node> node)
+  : BT::StatusChangeLogger(tree.rootNode()), node_(node)
 {
-  RCLCPP_INFO(kLogger, "printing tree");
+  // Create a publisher so that we can
+  bt_status_publisher_ = node_->create_publisher<edmt_application_msgs::msg::VectorOfStrings>("/bt_status", 10);
+
   generateTree(tree.rootNode());
-  RCLCPP_INFO(kLogger, "done printing tree");
 }
 EdmtApplicationBtcppLogger::~EdmtApplicationBtcppLogger()
 {
 }
 
 void EdmtApplicationBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::TreeNode& node,
-                                          BT::NodeStatus /*prev_status*/, BT::NodeStatus status)
+                                          BT::NodeStatus prev_status, BT::NodeStatus status)
 {
   // if we have failed, return early
-  if (done)
+  if (done_)
+    return;
+
+  // we want to stay shown as success, not show idle again, so leave it as is
+  if (prev_status == BT::NodeStatus::SUCCESS && status == BT::NodeStatus::IDLE)
     return;
 
   log_statuses_[node.UID()].status = status;
 
+  edmt_application_msgs::msg::VectorOfStrings logmsg_vec;
+  logmsg_vec.data = {};
   // should be print tree function
   for (uint16_t id : log_order_)
   {
     std::string indent_string(log_statuses_[id].indent, '  ');
     std::string logmsg = indent_string + log_statuses_[id].name + ": " + toStr(log_statuses_[id].status, true);
-    RCLCPP_INFO(kLogger, logmsg.c_str());
+    logmsg_vec.data.push_back(logmsg);
+    // RCLCPP_INFO(kLogger, logmsg.c_str());
   }
+  bt_status_publisher_->publish(logmsg_vec);
   // we don't want to print anymore if we have failed
-  done = (status == BT::NodeStatus::FAILURE);
+  done_ = (status == BT::NodeStatus::FAILURE);
 }
 
 void EdmtApplicationBtcppLogger::generateTree(const BT::TreeNode* node, int indent)

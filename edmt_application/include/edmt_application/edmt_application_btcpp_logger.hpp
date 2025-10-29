@@ -1,12 +1,14 @@
 #pragma once
 
 #include <cstring>
+#include <rclcpp/rclcpp.hpp>
 #include "behaviortree_cpp/loggers/abstract_logger.h"
+#include "edmt_application_msgs/msg/vector_of_strings.hpp"
 
 class EdmtApplicationBtcppLogger : public BT::StatusChangeLogger
 {
 public:
-  EdmtApplicationBtcppLogger(const BT::Tree& tree);
+  EdmtApplicationBtcppLogger(const BT::Tree& tree, std::shared_ptr<rclcpp::Node> node);
   ~EdmtApplicationBtcppLogger() override;
 
   virtual void flush() override;
@@ -50,5 +52,8 @@ private:
 
   std::unordered_map<uint16_t, NodeLogStatus> log_statuses_;
   std::vector<uint16_t> log_order_;
-  bool done = false;
+  bool done_ = false;
+  std::shared_ptr<rclcpp::Node> node_;
+
+  rclcpp::Publisher<edmt_application_msgs::msg::VectorOfStrings>::SharedPtr bt_status_publisher_;
 };

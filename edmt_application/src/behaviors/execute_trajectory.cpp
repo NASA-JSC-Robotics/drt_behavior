@@ -42,6 +42,6 @@ BT::NodeStatus ExecuteTrajectory::tick()
   else
   {
     throw BT::RuntimeError(result.error());
-    return BT::NodeStatus::SUCCESS;
+    return BT::NodeStatus::FAILURE;
   }
 }

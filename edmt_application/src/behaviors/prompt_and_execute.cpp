@@ -39,7 +39,15 @@ BT::NodeStatus PromptAndExecute::tick()
     throw BT::RuntimeError("Could not access blackboard input [prompt]");
   }
 
-  edmt_application_node_->prompt_and_execute(trajectory, prompt);
+  auto result = edmt_application_node_->prompt_and_execute(trajectory, prompt);
 
-  return BT::NodeStatus::SUCCESS;
+  if (result.has_value())
+  {
+    return BT::NodeStatus::SUCCESS;
+  }
+  else
+  {
+    throw BT::RuntimeError(result.error());
+    return BT::NodeStatus::FAILURE;
+  }
 }

@@ -75,6 +75,14 @@ public:
   EdmtApplication(std::string default_planning_group, rclcpp::NodeOptions node_options);
 
   /**
+   * @brief sets the cancel_behaviors flag based on a service call
+   *
+   * @param request request to set the trigger
+   * @param response bool of success or failure
+   */
+  void stop_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+                     std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+  /**
    * @brief Set the currently active move group of the context
    *
    * @param move_group_name the name of the move group that we will use
@@ -229,10 +237,14 @@ public:
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
   std::shared_ptr<tf2_ros::StaticTransformBroadcaster> tf_static_broadcaster_;
 
+  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr logger_publisher_;
+
   rclcpp::Client<moveit_msgs::srv::GetPlanningScene>::SharedPtr get_planning_scene_client_;
   rclcpp::Client<moveit_msgs::srv::ApplyPlanningScene>::SharedPtr apply_planning_scene_client_;
 
   rclcpp::Client<controller_manager_msgs::srv::SwitchController>::SharedPtr switch_controller_client_;
+
+  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr stop_service_;
 
   std::vector<std::string> active_behaviors;
 

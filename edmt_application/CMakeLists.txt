@@ -15,6 +15,7 @@ set(dependencies_pkgs
   tl_expected
   controller_manager
   behaviortree_ros2
+  edmt_application_msgs
 )
 
 # find dependencies
