@@ -25,7 +25,7 @@
 #include <tl_expected/expected.hpp>
 #include "tf2_ros/static_transform_broadcaster.h"
 
-class EdmtApplication : public rclcpp::Node
+class DRTBehavior : public rclcpp::Node
 {
 public:
   /**
@@ -72,7 +72,7 @@ public:
   std::shared_ptr<BehaviorItem> tree_head;
   std::shared_ptr<BehaviorItem> current_node;
 
-  EdmtApplication(std::string default_planning_group, rclcpp::NodeOptions node_options);
+  DRTBehavior(std::string default_planning_group, rclcpp::NodeOptions node_options);
 
   /**
    * @brief sets the cancel_behaviors flag based on a service call
@@ -168,7 +168,7 @@ public:
     // Wait for the result.
     while (future.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready)
     {
-      RCLCPP_INFO_THROTTLE(rclcpp::get_logger("edmt_application"), *this->get_clock(), 1000,
+      RCLCPP_INFO_THROTTLE(rclcpp::get_logger("drt_behavior"), *this->get_clock(), 1000,
                            "Waiting for service response...");
     }
     return future.get();

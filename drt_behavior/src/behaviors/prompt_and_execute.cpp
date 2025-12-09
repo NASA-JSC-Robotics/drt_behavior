@@ -1,5 +1,5 @@
-#include "edmt_application/behaviors/prompt_and_execute.hpp"
-#include "edmt_application/edmt_application.hpp"
+#include "drt_behavior/behaviors/prompt_and_execute.hpp"
+#include "drt_behavior/drt_behavior.hpp"
 
 PromptAndExecute::PromptAndExecute(const std::string& name, const BT::NodeConfig& config)
   : BT::SyncActionNode(name, config)
@@ -11,7 +11,7 @@ BT::PortsList PromptAndExecute::providedPorts()
 {
   return {
     // global param
-    BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
+    BT::InputPort<std::shared_ptr<DRTBehavior>>("drt_behavior_node", "{@drt_behavior_node}"),
 
     // input params
     BT::InputPort<moveit_msgs::msg::RobotTrajectory>("trajectory"),
@@ -22,10 +22,10 @@ BT::PortsList PromptAndExecute::providedPorts()
 // You must override the virtual function tick()
 BT::NodeStatus PromptAndExecute::tick()
 {
-  std::shared_ptr<EdmtApplication> edmt_application_node_;
-  if (!getInput("edmt_application_node", edmt_application_node_))
+  std::shared_ptr<DRTBehavior> drt_behavior_node_;
+  if (!getInput("drt_behavior_node", drt_behavior_node_))
   {
-    throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
+    throw BT::RuntimeError("Could not access global blackboard input [drt_behavior_node]");
   }
 
   moveit_msgs::msg::RobotTrajectory trajectory;
@@ -39,7 +39,7 @@ BT::NodeStatus PromptAndExecute::tick()
     throw BT::RuntimeError("Could not access blackboard input [prompt]");
   }
 
-  auto result = edmt_application_node_->prompt_and_execute(trajectory, prompt);
+  auto result = drt_behavior_node_->prompt_and_execute(trajectory, prompt);
 
   if (result.has_value())
   {

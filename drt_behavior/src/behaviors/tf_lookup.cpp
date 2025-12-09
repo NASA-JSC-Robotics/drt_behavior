@@ -1,5 +1,5 @@
-#include "edmt_application/behaviors/tf_lookup.hpp"
-#include "edmt_application/edmt_application.hpp"
+#include "drt_behavior/behaviors/tf_lookup.hpp"
+#include "drt_behavior/drt_behavior.hpp"
 
 TfLookup::TfLookup(const std::string& name, const BT::NodeConfig& config) : BT::SyncActionNode(name, config)
 {
@@ -9,7 +9,7 @@ TfLookup::TfLookup(const std::string& name, const BT::NodeConfig& config) : BT::
 BT::PortsList TfLookup::providedPorts()
 {
   return { // global param
-           BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
+           BT::InputPort<std::shared_ptr<DRTBehavior>>("drt_behavior_node", "{@drt_behavior_node}"),
 
            // input params
            BT::InputPort<std::string>("base_frame"), BT::InputPort<std::string>("target_frame"),
@@ -21,10 +21,10 @@ BT::PortsList TfLookup::providedPorts()
 // You must override the virtual function tick()
 BT::NodeStatus TfLookup::tick()
 {
-  std::shared_ptr<EdmtApplication> edmt_application_node_;
-  if (!getInput("edmt_application_node", edmt_application_node_))
+  std::shared_ptr<DRTBehavior> drt_behavior_node_;
+  if (!getInput("drt_behavior_node", drt_behavior_node_))
   {
-    throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
+    throw BT::RuntimeError("Could not access global blackboard input [drt_behavior_node]");
   }
 
   std::string base_frame, target_frame;
@@ -37,7 +37,7 @@ BT::NodeStatus TfLookup::tick()
     throw BT::RuntimeError("Could not access blackboard input [target_frame]");
   }
 
-  auto result = edmt_application_node_->tf_lookup(base_frame, target_frame);
+  auto result = drt_behavior_node_->tf_lookup(base_frame, target_frame);
 
   setOutput("tf", result);
   return BT::NodeStatus::SUCCESS;

@@ -1,5 +1,5 @@
-#include "edmt_application/behaviors/publish_instruction_text.hpp"
-#include "edmt_application/edmt_application.hpp"
+#include "drt_behavior/behaviors/publish_instruction_text.hpp"
+#include "drt_behavior/drt_behavior.hpp"
 
 PublishInstructionText::PublishInstructionText(const std::string& name, const BT::NodeConfig& config)
   : BT::SyncActionNode(name, config)
@@ -11,7 +11,7 @@ BT::PortsList PublishInstructionText::providedPorts()
 {
   return {
     // global param
-    BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
+    BT::InputPort<std::shared_ptr<DRTBehavior>>("drt_behavior_node", "{@drt_behavior_node}"),
 
     // input params
     BT::InputPort<std::string>("prompt", "Press next to continue.", "default is 'Press next to continue.'"),
@@ -22,10 +22,10 @@ BT::PortsList PublishInstructionText::providedPorts()
 // You must override the virtual function tick()
 BT::NodeStatus PublishInstructionText::tick()
 {
-  std::shared_ptr<EdmtApplication> edmt_application_node_;
-  if (!getInput("edmt_application_node", edmt_application_node_))
+  std::shared_ptr<DRTBehavior> drt_behavior_node_;
+  if (!getInput("drt_behavior_node", drt_behavior_node_))
   {
-    throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
+    throw BT::RuntimeError("Could not access global blackboard input [drt_behavior_node]");
   }
 
   std::string prompt;
@@ -41,11 +41,11 @@ BT::NodeStatus PublishInstructionText::tick()
 
   if (blocking)
   {
-    edmt_application_node_->publish_instruction_text(prompt);
+    drt_behavior_node_->publish_instruction_text(prompt);
   }
   else
   {
-    edmt_application_node_->publish_instruction_text_nb(prompt);
+    drt_behavior_node_->publish_instruction_text_nb(prompt);
   }
 
   return BT::NodeStatus::SUCCESS;

@@ -3,13 +3,13 @@
 #include <cstring>
 #include <rclcpp/rclcpp.hpp>
 #include "behaviortree_cpp/loggers/abstract_logger.h"
-#include "edmt_application_msgs/msg/vector_of_strings.hpp"
+#include "drt_behavior_msgs/msg/vector_of_strings.hpp"
 
-class EdmtApplicationBtcppLogger : public BT::StatusChangeLogger
+class DRTBehaviorBtcppLogger : public BT::StatusChangeLogger
 {
 public:
-  EdmtApplicationBtcppLogger(const BT::Tree& tree, std::shared_ptr<rclcpp::Node> node);
-  ~EdmtApplicationBtcppLogger() override;
+  DRTBehaviorBtcppLogger(const BT::Tree& tree, std::shared_ptr<rclcpp::Node> node);
+  ~DRTBehaviorBtcppLogger() override;
 
   virtual void flush() override;
 
@@ -30,7 +30,6 @@ public:
     int indent;
   };
 
-private:
   /**
    * @brief Callback that gets run on every node change
    *
@@ -42,6 +41,7 @@ private:
   virtual void callback(BT::Duration timestamp, const BT::TreeNode& node, BT::NodeStatus prev_status,
                         BT::NodeStatus status) override;
 
+private:
   /**
    * @brief Method that generates the tree to use (run only at tree creation)
    *
@@ -55,5 +55,5 @@ private:
   bool done_ = false;
   std::shared_ptr<rclcpp::Node> node_;
 
-  rclcpp::Publisher<edmt_application_msgs::msg::VectorOfStrings>::SharedPtr bt_status_publisher_;
+  rclcpp::Publisher<drt_behavior_msgs::msg::VectorOfStrings>::SharedPtr bt_status_publisher_;
 };
