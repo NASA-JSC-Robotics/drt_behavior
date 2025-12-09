@@ -1,5 +1,5 @@
-#include "edmt_application/behaviors/plan_joint_states.hpp"
-#include "edmt_application/edmt_application.hpp"
+#include "drt_behavior/behaviors/plan_joint_states.hpp"
+#include "drt_behavior/drt_behavior.hpp"
 
 PlanJointStates::PlanJointStates(const std::string& name, const BT::NodeConfig& config)
   : BT::SyncActionNode(name, config)
@@ -10,7 +10,7 @@ PlanJointStates::PlanJointStates(const std::string& name, const BT::NodeConfig& 
 BT::PortsList PlanJointStates::providedPorts()
 {
   return { // global param
-           BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
+           BT::InputPort<std::shared_ptr<DRTBehavior>>("drt_behavior_node", "{@drt_behavior_node}"),
 
            // input params
            BT::InputPort<std::string>("joint_state_name"),
@@ -23,10 +23,10 @@ BT::PortsList PlanJointStates::providedPorts()
 // You must override the virtual function tick()
 BT::NodeStatus PlanJointStates::tick()
 {
-  std::shared_ptr<EdmtApplication> edmt_application_node_;
-  if (!getInput("edmt_application_node", edmt_application_node_))
+  std::shared_ptr<DRTBehavior> drt_behavior_node_;
+  if (!getInput("drt_behavior_node", drt_behavior_node_))
   {
-    throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
+    throw BT::RuntimeError("Could not access global blackboard input [drt_behavior_node]");
   }
   std::string joint_state_name;
   float speed_scale;
@@ -39,7 +39,7 @@ BT::NodeStatus PlanJointStates::tick()
     throw BT::RuntimeError("Could not access blackboard input [speed_scale]");
   }
 
-  auto trajectory = edmt_application_node_->plan_joint_states(joint_state_name, speed_scale);
+  auto trajectory = drt_behavior_node_->plan_joint_states(joint_state_name, speed_scale);
 
   if (trajectory.has_value())
   {

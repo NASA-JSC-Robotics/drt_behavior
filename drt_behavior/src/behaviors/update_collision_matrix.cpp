@@ -1,5 +1,5 @@
-#include "edmt_application/behaviors/update_collision_matrix.hpp"
-#include "edmt_application/edmt_application.hpp"
+#include "drt_behavior/behaviors/update_collision_matrix.hpp"
+#include "drt_behavior/drt_behavior.hpp"
 
 UpdateCollisionMatrix::UpdateCollisionMatrix(const std::string& name, const BT::NodeConfig& config)
   : BT::SyncActionNode(name, config)
@@ -10,7 +10,7 @@ UpdateCollisionMatrix::UpdateCollisionMatrix(const std::string& name, const BT::
 BT::PortsList UpdateCollisionMatrix::providedPorts()
 {
   return { // global param
-           BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
+           BT::InputPort<std::shared_ptr<DRTBehavior>>("drt_behavior_node", "{@drt_behavior_node}"),
 
            // input params
            BT::InputPort<std::string>("scene_object"), BT::InputPort<std::string>("robot_link"),
@@ -21,10 +21,10 @@ BT::PortsList UpdateCollisionMatrix::providedPorts()
 // You must override the virtual function tick()
 BT::NodeStatus UpdateCollisionMatrix::tick()
 {
-  std::shared_ptr<EdmtApplication> edmt_application_node_;
-  if (!getInput("edmt_application_node", edmt_application_node_))
+  std::shared_ptr<DRTBehavior> drt_behavior_node_;
+  if (!getInput("drt_behavior_node", drt_behavior_node_))
   {
-    throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
+    throw BT::RuntimeError("Could not access global blackboard input [drt_behavior_node]");
   }
 
   std::string scene_object, robot_link, allow_collisions;
@@ -46,11 +46,11 @@ BT::NodeStatus UpdateCollisionMatrix::tick()
     throw BT::RuntimeError("allow_collisions must be '[Aa]llow' or '[Dd]isallow'");
   }
 
-  EdmtApplication::CollisionType allow_collisions_enum = (allow_collisions == "allow" || allow_collisions == "Allow") ?
-                                                             EdmtApplication::CollisionType::Allow :
-                                                             EdmtApplication::CollisionType::Disallow;
+  DRTBehavior::CollisionType allow_collisions_enum = (allow_collisions == "allow" || allow_collisions == "Allow") ?
+                                                         DRTBehavior::CollisionType::Allow :
+                                                         DRTBehavior::CollisionType::Disallow;
 
-  auto result = edmt_application_node_->update_collision_matrix(scene_object, robot_link, allow_collisions_enum);
+  auto result = drt_behavior_node_->update_collision_matrix(scene_object, robot_link, allow_collisions_enum);
 
   if (result.has_value())
   {

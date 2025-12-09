@@ -1,4 +1,4 @@
-# edmt_application
+# drt_behavior
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://js-er-code.jsc.nasa.gov/edmt/toolbox/edmt_application.git
+git remote add origin https://js-er-code.jsc.nasa.gov/DRT/toolbox/drt_behavior.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://js-er-code.jsc.nasa.gov/edmt/toolbox/edmt_application/-/settings/integrations)
+- [ ] [Set up project integrations](https://js-er-code.jsc.nasa.gov/DRT/toolbox/drt_behavior/-/settings/integrations)
 
 ## Collaborate with your team
 

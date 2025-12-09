@@ -1,26 +1,30 @@
-#include "edmt_application/edmt_application_btcpp_logger.hpp"
+#include "drt_behavior/drt_behavior_btcpp_logger.hpp"
 #include "rclcpp/macros.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace
 {
-static const auto kLogger = rclcpp::get_logger("edmt_btcpp_logger");
+static const auto kLogger = rclcpp::get_logger("DRT_btcpp_logger");
 }
 
-EdmtApplicationBtcppLogger::EdmtApplicationBtcppLogger(const BT::Tree& tree, std::shared_ptr<rclcpp::Node> node)
+DRTBehaviorBtcppLogger::DRTBehaviorBtcppLogger(const BT::Tree& tree, std::shared_ptr<rclcpp::Node> node)
   : BT::StatusChangeLogger(tree.rootNode()), node_(node)
 {
+  rclcpp::QoS qos_profile(10);                                   // History depth of 10
+  qos_profile.reliability(RMW_QOS_POLICY_RELIABILITY_RELIABLE);  // Reliable delivery
+  qos_profile.durability(RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL);    // Volatile durability
+
   // Create a publisher so that we can
-  bt_status_publisher_ = node_->create_publisher<edmt_application_msgs::msg::VectorOfStrings>("/bt_status", 10);
+  bt_status_publisher_ = node_->create_publisher<drt_behavior_msgs::msg::VectorOfStrings>("/bt_status", qos_profile);
 
   generateTree(tree.rootNode());
 }
-EdmtApplicationBtcppLogger::~EdmtApplicationBtcppLogger()
+DRTBehaviorBtcppLogger::~DRTBehaviorBtcppLogger()
 {
 }
 
-void EdmtApplicationBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::TreeNode& node,
-                                          BT::NodeStatus prev_status, BT::NodeStatus status)
+void DRTBehaviorBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::TreeNode& node, BT::NodeStatus prev_status,
+                                      BT::NodeStatus status)
 {
   // if we have failed, return early
   if (done_)
@@ -32,7 +36,7 @@ void EdmtApplicationBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::
 
   log_statuses_[node.UID()].status = status;
 
-  edmt_application_msgs::msg::VectorOfStrings logmsg_vec;
+  drt_behavior_msgs::msg::VectorOfStrings logmsg_vec;
   logmsg_vec.data = {};
   // should be print tree function
   for (uint16_t id : log_order_)
@@ -43,11 +47,12 @@ void EdmtApplicationBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::
     // RCLCPP_INFO(kLogger, logmsg.c_str());
   }
   bt_status_publisher_->publish(logmsg_vec);
+  // We can't just rely on NodeStatus being FAILURE since we might expect some of the behavior to return FAILURE
   // we don't want to print anymore if we have failed
-  done_ = (status == BT::NodeStatus::FAILURE);
+  // done_ = (status == BT::NodeStatus::FAILURE);
 }
 
-void EdmtApplicationBtcppLogger::generateTree(const BT::TreeNode* node, int indent)
+void DRTBehaviorBtcppLogger::generateTree(const BT::TreeNode* node, int indent)
 {
   // on the first run, clear these data
   if (indent == 0)
@@ -74,7 +79,7 @@ void EdmtApplicationBtcppLogger::generateTree(const BT::TreeNode* node, int inde
   }
 }
 
-void EdmtApplicationBtcppLogger::flush()
+void DRTBehaviorBtcppLogger::flush()
 {
   std::cout << std::flush;
 }

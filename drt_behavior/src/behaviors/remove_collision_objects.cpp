@@ -1,5 +1,5 @@
-#include "edmt_application/behaviors/remove_collision_objects.hpp"
-#include "edmt_application/edmt_application.hpp"
+#include "drt_behavior/behaviors/remove_collision_objects.hpp"
+#include "drt_behavior/drt_behavior.hpp"
 
 RemoveCollisionObjects::RemoveCollisionObjects(const std::string& name, const BT::NodeConfig& config)
   : BT::SyncActionNode(name, config)
@@ -10,7 +10,7 @@ RemoveCollisionObjects::RemoveCollisionObjects(const std::string& name, const BT
 BT::PortsList RemoveCollisionObjects::providedPorts()
 {
   return { // global param
-           BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
+           BT::InputPort<std::shared_ptr<DRTBehavior>>("drt_behavior_node", "{@drt_behavior_node}"),
 
            // input params
            BT::InputPort<std::vector<std::string>>("objects", std::vector<std::string>({}), "defaults to empty vector")
@@ -20,10 +20,10 @@ BT::PortsList RemoveCollisionObjects::providedPorts()
 // You must override the virtual function tick()
 BT::NodeStatus RemoveCollisionObjects::tick()
 {
-  std::shared_ptr<EdmtApplication> edmt_application_node_;
-  if (!getInput("edmt_application_node", edmt_application_node_))
+  std::shared_ptr<DRTBehavior> drt_behavior_node_;
+  if (!getInput("drt_behavior_node", drt_behavior_node_))
   {
-    throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
+    throw BT::RuntimeError("Could not access global blackboard input [drt_behavior_node]");
   }
 
   std::vector<std::string> objects;
@@ -32,7 +32,7 @@ BT::NodeStatus RemoveCollisionObjects::tick()
     throw BT::RuntimeError("Could not access blackboard input [objects]");
   }
 
-  edmt_application_node_->planning_scene_interface_->removeCollisionObjects(objects);
+  drt_behavior_node_->planning_scene_interface_->removeCollisionObjects(objects);
 
   return BT::NodeStatus::SUCCESS;
 }

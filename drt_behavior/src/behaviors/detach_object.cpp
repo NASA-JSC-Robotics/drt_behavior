@@ -1,5 +1,5 @@
-#include "edmt_application/behaviors/detach_object.hpp"
-#include "edmt_application/edmt_application.hpp"
+#include "drt_behavior/behaviors/detach_object.hpp"
+#include "drt_behavior/drt_behavior.hpp"
 
 DetachObject::DetachObject(const std::string& name, const BT::NodeConfig& config) : BT::SyncActionNode(name, config)
 {
@@ -10,7 +10,7 @@ BT::PortsList DetachObject::providedPorts()
 {
   return {
     // global param
-    BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
+    BT::InputPort<std::shared_ptr<DRTBehavior>>("drt_behavior_node", "{@drt_behavior_node}"),
 
     // input params
     BT::InputPort<std::string>("move_group", std::string{ "" }, "default is empty string"),
@@ -21,10 +21,10 @@ BT::PortsList DetachObject::providedPorts()
 // You must override the virtual function tick()
 BT::NodeStatus DetachObject::tick()
 {
-  std::shared_ptr<EdmtApplication> edmt_application_node_;
-  if (!getInput("edmt_application_node", edmt_application_node_))
+  std::shared_ptr<DRTBehavior> drt_behavior_node_;
+  if (!getInput("drt_behavior_node", drt_behavior_node_))
   {
-    throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
+    throw BT::RuntimeError("Could not access global blackboard input [drt_behavior_node]");
   }
 
   std::string move_group, object;
@@ -37,8 +37,8 @@ BT::NodeStatus DetachObject::tick()
     throw BT::RuntimeError("Could not access blackboard input [object]");
   }
 
-  edmt_application_node_->set_move_group(move_group);
-  auto result = edmt_application_node_->move_group_->detachObject(object);
+  drt_behavior_node_->set_move_group(move_group);
+  auto result = drt_behavior_node_->move_group_->detachObject(object);
 
   if (result)
   {

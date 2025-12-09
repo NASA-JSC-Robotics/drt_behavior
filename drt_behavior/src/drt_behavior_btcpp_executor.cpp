@@ -5,36 +5,41 @@
 #include "rclcpp/rclcpp.hpp"
 
 // behaviors
-#include "edmt_application/behaviors/attach_object.hpp"
-#include "edmt_application/behaviors/create_collision_object.hpp"
-#include "edmt_application/behaviors/detach_object.hpp"
-#include "edmt_application/behaviors/execute_trajectory.hpp"
-#include "edmt_application/behaviors/plan_joint_states.hpp"
-#include "edmt_application/behaviors/plan_named_state.hpp"
-#include "edmt_application/behaviors/plan_relative_move.hpp"
-#include "edmt_application/behaviors/prompt_and_execute.hpp"
-#include "edmt_application/behaviors/publish_instruction_text.hpp"
-#include "edmt_application/behaviors/publish_trajectory.hpp"
-#include "edmt_application/behaviors/remove_collision_objects.hpp"
-#include "edmt_application/behaviors/tf_lookup.hpp"
-#include "edmt_application/behaviors/update_collision_matrix.hpp"
+#include "drt_behavior/behaviors/attach_object.hpp"
+#include "drt_behavior/behaviors/create_collision_object.hpp"
+#include "drt_behavior/behaviors/detach_object.hpp"
+#include "drt_behavior/behaviors/execute_trajectory.hpp"
+#include "drt_behavior/behaviors/plan_joint_states.hpp"
+#include "drt_behavior/behaviors/plan_named_state.hpp"
+#include "drt_behavior/behaviors/plan_relative_move.hpp"
+#include "drt_behavior/behaviors/prompt_and_execute.hpp"
+#include "drt_behavior/behaviors/publish_instruction_text.hpp"
+#include "drt_behavior/behaviors/publish_trajectory.hpp"
+#include "drt_behavior/behaviors/remove_collision_objects.hpp"
+#include "drt_behavior/behaviors/tf_lookup.hpp"
+#include "drt_behavior/behaviors/update_collision_matrix.hpp"
 
 // local
-#include "edmt_application/edmt_application_btcpp_executor.hpp"
+#include "drt_behavior/drt_behavior_btcpp_executor.hpp"
 
-EdmtApplicationBtcppExecutor::EdmtApplicationBtcppExecutor(const rclcpp::NodeOptions& options)
+DRTBehaviorBtcppExecutor::DRTBehaviorBtcppExecutor(const rclcpp::NodeOptions& options)
   : BT::TreeExecutionServer(options)
 {
-  list_trees_service = node()->create_service<edmt_application_msgs::srv::GetBehaviorTrees>(
+  list_trees_service = node()->create_service<drt_behavior_msgs::srv::GetBehaviorTrees>(
       "~/list_behavior_trees",
-      std::bind(&EdmtApplicationBtcppExecutor::get_behavior_trees, this, std::placeholders::_1, std::placeholders::_2));
+      std::bind(&DRTBehaviorBtcppExecutor::get_behavior_trees, this, std::placeholders::_1, std::placeholders::_2));
 }
 
-void EdmtApplicationBtcppExecutor::onTreeCreated(BT::Tree& tree)
+void DRTBehaviorBtcppExecutor::onTreeCreated(BT::Tree& tree)
 {
-  // logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree);
-  logger_cout_ = std::make_shared<EdmtApplicationBtcppLogger>(tree, node());
+  // logger_cout_ = std::make_shared<DRTBehaviorBtcppLogger>(tree);
+  logger_cout_ = std::make_shared<DRTBehaviorBtcppLogger>(tree, node());
 
+  //   std::map<int, std::string> UID_to_path;
+  //     tree.applyVisitor([&UID_to_path](BT::TreeNode* node) {
+  //     UID_to_path[node->UID()] = node->fullPath();
+  //     std::cout << node->UID() << " -> " << node->fullPath() << std::endl;
+  //   });
   // for (auto& subtree : tree.subtrees)
   // {
   //   for (auto& btnode : subtree->nodes)
@@ -68,7 +73,7 @@ void EdmtApplicationBtcppExecutor::onTreeCreated(BT::Tree& tree)
   // applyRecursiveVisitor(root_node, visitor);
 
   // put move group interface node on the blackboard
-  globalBlackboard()->set("edmt_application_node", edmt_application_node_);
+  globalBlackboard()->set("drt_behavior_node", drt_behavior_node_);
   // // put robot description and planning group on blackboard
   // globalBlackboard()->set("robot_description_topic", robot_description_topic_);
   // globalBlackboard()->set("default_planning_group", default_planning_group_);
@@ -82,7 +87,7 @@ void EdmtApplicationBtcppExecutor::onTreeCreated(BT::Tree& tree)
   return;
 }
 
-void EdmtApplicationBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory& factory)
+void DRTBehaviorBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory& factory)
 {
   // initialize ROS node parameters
   BT::RosNodeParams params;
@@ -106,9 +111,9 @@ void EdmtApplicationBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFact
   return;
 }
 
-void EdmtApplicationBtcppExecutor::get_behavior_trees(
-    const std::shared_ptr<edmt_application_msgs::srv::GetBehaviorTrees::Request> request,
-    std::shared_ptr<edmt_application_msgs::srv::GetBehaviorTrees::Response> response)
+void DRTBehaviorBtcppExecutor::get_behavior_trees(
+    const std::shared_ptr<drt_behavior_msgs::srv::GetBehaviorTrees::Request> /*request*/,
+    std::shared_ptr<drt_behavior_msgs::srv::GetBehaviorTrees::Response> response)
 {
   auto param_listener = std::make_shared<bt_server::ParamListener>(node());
   auto params = param_listener->get_params();
@@ -124,4 +129,5 @@ void EdmtApplicationBtcppExecutor::get_behavior_trees(
   }
   RCLCPP_INFO(node()->get_logger(), "Responding with available behavior trees");
   response->behavior_trees = trees;
+
 }

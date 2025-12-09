@@ -1,5 +1,5 @@
-#include "edmt_application/behaviors/execute_trajectory.hpp"
-#include "edmt_application/edmt_application.hpp"
+#include "drt_behavior/behaviors/execute_trajectory.hpp"
+#include "drt_behavior/drt_behavior.hpp"
 
 ExecuteTrajectory::ExecuteTrajectory(const std::string& name, const BT::NodeConfig& config)
   : BT::SyncActionNode(name, config)
@@ -11,7 +11,7 @@ BT::PortsList ExecuteTrajectory::providedPorts()
 {
   return {
     // global param
-    BT::InputPort<std::shared_ptr<EdmtApplication>>("edmt_application_node", "{@edmt_application_node}"),
+    BT::InputPort<std::shared_ptr<DRTBehavior>>("drt_behavior_node", "{@drt_behavior_node}"),
 
     // input params
     BT::InputPort<moveit_msgs::msg::RobotTrajectory>("trajectory"),
@@ -21,10 +21,10 @@ BT::PortsList ExecuteTrajectory::providedPorts()
 // You must override the virtual function tick()
 BT::NodeStatus ExecuteTrajectory::tick()
 {
-  std::shared_ptr<EdmtApplication> edmt_application_node_;
-  if (!getInput("edmt_application_node", edmt_application_node_))
+  std::shared_ptr<DRTBehavior> drt_behavior_node_;
+  if (!getInput("drt_behavior_node", drt_behavior_node_))
   {
-    throw BT::RuntimeError("Could not access global blackboard input [edmt_application_node]");
+    throw BT::RuntimeError("Could not access global blackboard input [drt_behavior_node]");
   }
 
   moveit_msgs::msg::RobotTrajectory trajectory;
@@ -33,7 +33,7 @@ BT::NodeStatus ExecuteTrajectory::tick()
     throw BT::RuntimeError("Could not access blackboard input [trajectory]");
   }
 
-  auto result = edmt_application_node_->execute_movement(trajectory);
+  auto result = drt_behavior_node_->execute_movement(trajectory);
 
   if (result.has_value())
   {
