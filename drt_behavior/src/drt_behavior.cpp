@@ -1,8 +1,9 @@
 #include <geometric_shapes/mesh_operations.h>
 #include <geometric_shapes/shape_messages.h>
 #include <geometric_shapes/shape_operations.h>
-#include <moveit_msgs/msg/planning_scene.h>
+#include <moveit_msgs/msg/planning_scene.hpp>
 #include <drt_behavior/drt_behavior.hpp>
+#include <moveit/trajectory_processing/time_optimal_trajectory_generation.hpp>
 
 using std::placeholders::_1;
 using std::placeholders::_2;
@@ -303,9 +304,12 @@ DRTBehavior::plan_cartesian_waypoint_pose(geometry_msgs::msg::Pose waypoint, flo
   // and instead the reference the page below, which recommends to do manual velocity scaling, which follows
   // https://groups.google.com/g/moveit-users/c/MOoFxy2exT4
   // Third create a IterativeParabolicTimeParameterization object
-  trajectory_processing::IterativeParabolicTimeParameterization iptp;
+
+  // IterativeParabolicTimeParameterization seems unavailable in jazzy. The recommended replacement is 
+  // TimeOptimalTrajectoryGeneration.
+  trajectory_processing::TimeOptimalTrajectoryGeneration totp;
   // Fourth compute computeTimeStamps
-  iptp.computeTimeStamps(rt, speed_scale, speed_scale);
+  totp.computeTimeStamps(rt, speed_scale, speed_scale);
   rt.getRobotTrajectoryMsg(trajectory);
   // END scale the speed
 
@@ -343,7 +347,7 @@ DRTBehavior::plan_joint_waypoint_pose(geometry_msgs::msg::Pose waypoint, float s
 
   if (!success)
     return tl::make_unexpected("Joint space plan failed. See moveit terminal for error");
-  return joint_space_plan.trajectory_;
+  return joint_space_plan.trajectory;
 }
 
 tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
@@ -400,7 +404,7 @@ DRTBehavior::plan_joint_states(std::string joint_state_name, float speed_scale)
 
   if (!success)
     return tl::make_unexpected("Joint space plan failed. See moveit terminal for error");
-  return joint_space_plan.trajectory_;
+  return joint_space_plan.trajectory;
 }
 
 tl::expected<moveit_msgs::msg::RobotTrajectory, std::string>
@@ -419,7 +423,7 @@ DRTBehavior::plan_named_state(std::string move_group, std::string state_name, fl
   if (!success)
     return tl::make_unexpected("Named state plan failed. See moveit terminal for error");
 
-  return my_plan.trajectory_;
+  return my_plan.trajectory;
 }
 
 tl::expected<void, std::string> DRTBehavior::prompt_and_execute(moveit_msgs::msg::RobotTrajectory trajectory,
