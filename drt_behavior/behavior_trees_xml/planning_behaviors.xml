@@ -1,0 +1,113 @@
+<root BTCPP_format="4">
+
+    <include path="./user_unblock.xml" />
+
+    <BehaviorTree ID="PILZ_LIN_to_transform">
+      <Sequence>
+        <TransformToPose
+            name="transform_to_pose"
+            transform_stamped="{transform}"
+            pose_stamped="{pose}"/>
+        <PlanToPose
+            name="Plan To Blob Centroid"
+            service_name="/plan_kinematic_path"
+            group_name="chonkur_grasp"
+            end_effector_name="grasp_frame"
+            goal_pose="{pose}"
+            pipeline="pilz_industrial_motion_planner"
+            planner="LIN"
+            orientation_tolerance="0.0872665;0.10872665;0.0872665"
+            velocity_scaling="1.0"
+            acceleration_scaling="0.1"
+            trajectory="{traj_to_pose}"/>
+        <ExecuteTrajectory
+            name="Execute the trajectory "
+            trajectory="{traj_to_pose}"
+            action_name="/execute_trajectory"/>
+      </Sequence>
+    </BehaviorTree>
+
+
+    <BehaviorTree ID="PILZ_LIN_to_position">
+      <Sequence>
+        <TransformToPose
+            name="transform_to_pose"
+            transform_stamped="{transform}"
+            pose_stamped="{pose}"/>
+        <PlanToPose
+            name="Plan To Blob Centroid"
+            service_name="/plan_kinematic_path"
+            group_name="chonkur_grasp"
+            end_effector_name="grasp_frame"
+            goal_pose="{pose}"
+            pipeline="pilz_industrial_motion_planner"
+            planner="PTP"
+            orientation_tolerance="0.0872665;0.10872665;0.0872665"
+            velocity_scaling="0.9"
+            acceleration_scaling="0.1"
+            trajectory="{traj_to_pose}"/>
+        <ExecuteTrajectory
+            name="Execute the trajectory "
+            trajectory="{traj_to_pose}"
+            action_name="/execute_trajectory"/>
+      </Sequence>
+    </BehaviorTree>
+
+    <!-- With Pause -->
+
+    <BehaviorTree ID="PILZ_LIN_to_transform_w_pause">
+      <Sequence>
+        <TransformToPose
+            name="transform_to_pose"
+            transform_stamped="{transform}"
+            pose_stamped="{pose}"/>
+        <PlanToPose
+            name="Plan To Blob Centroid"
+            service_name="/plan_kinematic_path"
+            group_name="chonkur_grasp"
+            end_effector_name="grasp_frame"
+            goal_pose="{pose}"
+            pipeline="pilz_industrial_motion_planner"
+            planner="LIN"
+            orientation_tolerance="0.0872665;0.10872665;0.0872665"
+            velocity_scaling="1.0"
+            acceleration_scaling="0.1"
+            trajectory="{traj_to_pose}"/>
+        <SubTree ID="UserUnblock"/>
+        <ExecuteTrajectory
+            name="Execute the trajectory "
+            trajectory="{traj_to_pose}"
+            action_name="/execute_trajectory"/>
+      </Sequence>
+    </BehaviorTree>
+
+
+    <BehaviorTree ID="PILZ_LIN_to_position_w_pause">
+      <Sequence>
+        <TransformToPose
+            name="transform_to_pose"
+            transform_stamped="{transform}"
+            pose_stamped="{pose}"/>
+        <PlanToPose
+            name="Plan To Blob Centroid"
+            service_name="/plan_kinematic_path"
+            group_name="chonkur_grasp"
+            end_effector_name="grasp_frame"
+            goal_pose="{pose}"
+            pipeline="pilz_industrial_motion_planner"
+            planner="PTP"
+            orientation_tolerance="0.0872665;0.10872665;0.0872665"
+            velocity_scaling="0.9"
+            acceleration_scaling="0.1"
+            trajectory="{traj_to_pose}"/>
+        <SubTree ID="UserUnblock"/>
+        <ExecuteTrajectory
+            name="Execute the trajectory "
+            trajectory="{traj_to_pose}"
+            action_name="/execute_trajectory"/>
+      </Sequence>
+    </BehaviorTree>
+
+
+
+</root>

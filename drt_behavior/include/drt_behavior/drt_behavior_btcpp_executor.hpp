@@ -1,25 +1,35 @@
 #pragma once
 
-// behavior trees / ROS
-#include <drt_behavior/drt_behavior_btcpp_logger.hpp>
+#include <atomic>
+
+// behavior trees
 #include "behaviortree_ros2/tree_execution_server.hpp"
+// ROS
 #include "rclcpp/rclcpp.hpp"
 
-// messages
-#include "drt_behavior_msgs/srv/get_behavior_trees.hpp"
+#include "drt_behavior/drt_tree_context.hpp"
 
 // application node
-#include "drt_behavior/drt_behavior.hpp"
+#include <drt_behavior/drt_behavior_btcpp_logger.hpp>
 
+namespace drt_behavior
+{
 class DRTBehaviorBtcppExecutor : public BT::TreeExecutionServer
 {
 public:
+  std::shared_ptr<rclcpp::executors::MultiThreadedExecutor> executor_;
+  BT::Tree* current_tree;
+  std::shared_ptr<DRTBehaviorBtcppLogger> logger_ptr;
+
   /**
    * @brief Construct a new DRT Application Btcpp Executor object
    *
    * @param options Standard ros node options
    */
-  DRTBehaviorBtcppExecutor(const rclcpp::NodeOptions& options = rclcpp::NodeOptions());
+  DRTBehaviorBtcppExecutor(std::shared_ptr<rclcpp::executors::MultiThreadedExecutor> executor,
+                           const rclcpp::NodeOptions& options = rclcpp::NodeOptions());
+
+  bool onGoalReceived(const std::string& tree_name, const std::string& payload) override;
 
   /**
    * @brief Registers BTCPP nodes into the factory (overrides base class)
@@ -36,15 +46,31 @@ public:
   void onTreeCreated(BT::Tree& tree) override;
 
   /**
-   * @brief Callback for the service call to get list of the available behavior trees
+   * @brief onTreeExecutionCompleted is a callback invoked after the tree execution is completed,
+   * i.e. if it returned SUCCESS/FAILURE or if the action was cancelled by the Action Client.
    *
-   * @param request Request of the setbool service
-   * @param response Response of the setbool service
+   * @param status The status of the tree after the last tick
+   * @param was_cancelled True if the action was cancelled by the Action Client
+   *
+   * @return if not std::nullopt, the string will be sent as [return_message] to the Action Client.
    */
-  void get_behavior_trees(const std::shared_ptr<drt_behavior_msgs::srv::GetBehaviorTrees::Request> request,
-                          std::shared_ptr<drt_behavior_msgs::srv::GetBehaviorTrees::Response> response);
+  virtual std::optional<std::string> onTreeExecutionCompleted(BT::NodeStatus status, bool was_cancelled) override;
 
-  rclcpp::Service<drt_behavior_msgs::srv::GetBehaviorTrees>::SharedPtr list_trees_service;
-  std::shared_ptr<DRTBehavior> drt_behavior_node_;
-  std::shared_ptr<DRTBehaviorBtcppLogger> logger_cout_;
+  /**
+   * @brief onLoopAfterTick invoked at each loop, after tree.tickOnce().
+   * If it returns a valid NodeStatus, the tree will stop and return that status.
+   * Return std::nullopt to continue the execution.
+   *
+   * @param status The status of the tree after the last tick
+   */
+  virtual std::optional<BT::NodeStatus> onLoopAfterTick(BT::NodeStatus status) override;
+
+private:
+  /// Shared context for each tree, this should be fresh and clean each run
+  std::shared_ptr<DRTTreeContext> context_;
+
+  /// Is a tree running?
+  std::atomic_bool running_;
 };
+
+}  // namespace drt_behavior

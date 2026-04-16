@@ -3,7 +3,7 @@
 #include <cstring>
 #include <rclcpp/rclcpp.hpp>
 #include "behaviortree_cpp/loggers/abstract_logger.h"
-#include "drt_behavior_msgs/msg/vector_of_strings.hpp"
+#include "std_msgs/msg/string.hpp"
 
 class DRTBehaviorBtcppLogger : public BT::StatusChangeLogger
 {
@@ -55,5 +55,5 @@ private:
   bool done_ = false;
   std::shared_ptr<rclcpp::Node> node_;
 
-  rclcpp::Publisher<drt_behavior_msgs::msg::VectorOfStrings>::SharedPtr bt_status_publisher_;
+  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr bt_status_publisher_;
 };

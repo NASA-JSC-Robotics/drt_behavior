@@ -10,12 +10,12 @@ static const auto kLogger = rclcpp::get_logger("DRT_btcpp_logger");
 DRTBehaviorBtcppLogger::DRTBehaviorBtcppLogger(const BT::Tree& tree, std::shared_ptr<rclcpp::Node> node)
   : BT::StatusChangeLogger(tree.rootNode()), node_(node)
 {
-  rclcpp::QoS qos_profile(10);                                   // History depth of 10
-  qos_profile.reliability(RMW_QOS_POLICY_RELIABILITY_RELIABLE);  // Reliable delivery
-  qos_profile.durability(RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL);    // Volatile durability
+  rclcpp::QoS qos_profile(10);                                        // History depth of 10
+  qos_profile.reliability(RMW_QOS_POLICY_RELIABILITY_RELIABLE);       // Reliable delivery
+  qos_profile.durability(RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL);  // Volatile durability
 
   // Create a publisher so that we can
-  bt_status_publisher_ = node_->create_publisher<drt_behavior_msgs::msg::VectorOfStrings>("/bt_status", qos_profile);
+  bt_status_publisher_ = node_->create_publisher<std_msgs::msg::String>("~/bt_status", qos_profile);
 
   generateTree(tree.rootNode());
 }
@@ -26,30 +26,23 @@ DRTBehaviorBtcppLogger::~DRTBehaviorBtcppLogger()
 void DRTBehaviorBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::TreeNode& node, BT::NodeStatus prev_status,
                                       BT::NodeStatus status)
 {
-  // if we have failed, return early
-  if (done_)
-    return;
-
   // we want to stay shown as success, not show idle again, so leave it as is
   if (prev_status == BT::NodeStatus::SUCCESS && status == BT::NodeStatus::IDLE)
     return;
 
   log_statuses_[node.UID()].status = status;
 
-  drt_behavior_msgs::msg::VectorOfStrings logmsg_vec;
-  logmsg_vec.data = {};
+  std::stringstream logmsg_stream;
   // should be print tree function
   for (uint16_t id : log_order_)
   {
-    std::string indent_string(log_statuses_[id].indent, '  ');
-    std::string logmsg = indent_string + log_statuses_[id].name + ": " + toStr(log_statuses_[id].status, true);
-    logmsg_vec.data.push_back(logmsg);
-    // RCLCPP_INFO(kLogger, logmsg.c_str());
+    std::string indent_string(log_statuses_[id].indent, ' ');
+    logmsg_stream << (indent_string + log_statuses_[id].name + ": " + toStr(log_statuses_[id].status, true)) << ";";
   }
-  bt_status_publisher_->publish(logmsg_vec);
-  // We can't just rely on NodeStatus being FAILURE since we might expect some of the behavior to return FAILURE
-  // we don't want to print anymore if we have failed
-  // done_ = (status == BT::NodeStatus::FAILURE);
+
+  std_msgs::msg::String msg;
+  msg.data = logmsg_stream.str();
+  bt_status_publisher_->publish(msg);
 }
 
 void DRTBehaviorBtcppLogger::generateTree(const BT::TreeNode* node, int indent)
@@ -80,6 +73,4 @@ void DRTBehaviorBtcppLogger::generateTree(const BT::TreeNode* node, int indent)
 }
 
 void DRTBehaviorBtcppLogger::flush()
-{
-  std::cout << std::flush;
-}
+{ std::cout << std::flush; }

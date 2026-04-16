@@ -7,15 +7,16 @@ endif()
 
 set(dependencies_pkgs
     rclcpp
-    std_msgs
-    sensor_msgs
-    tf2_eigen
-    moveit_visual_tools
-    moveit_ros_planning_interface
-    tl_expected
-    controller_manager
+    tf2_ros
+    # std_msgs
+    # sensor_msgs
+    # tf2_eigen
+    # moveit_visual_tools
+    # moveit_ros_planning_interface
+    # tl_expected
+    # controller_manager
     behaviortree_ros2
-    drt_behavior_msgs
+    # drt_behavior_msgs
 )
 
 # find dependencies
@@ -26,31 +27,29 @@ foreach(pkg IN LISTS dependencies_pkgs)
 endforeach()
 
 set(behavior_cpp_files
-    src/behaviors/attach_object.cpp
-    src/behaviors/create_collision_object.cpp
-    src/behaviors/detach_object.cpp
-    src/behaviors/execute_trajectory.cpp
-    src/behaviors/plan_joint_states.cpp
-    src/behaviors/plan_named_state.cpp
-    src/behaviors/plan_relative_move.cpp
-    src/behaviors/prompt_and_execute.cpp
-    src/behaviors/publish_instruction_text.cpp
-    src/behaviors/publish_trajectory.cpp
-    src/behaviors/remove_collision_objects.cpp
-    src/behaviors/tf_lookup.cpp
-    src/behaviors/update_collision_matrix.cpp
+    src/behaviors/check_param.cpp
 )
 
 add_library(drt_behavior
-    src/drt_behavior.cpp
     src/drt_behavior_btcpp_executor.cpp
     src/drt_behavior_btcpp_logger.cpp
+    src/drt_tree_context.cpp
     ${behavior_cpp_files})
 target_compile_features(drt_behavior PUBLIC c_std_99 cxx_std_17) # Require C99 and C++17
 target_include_directories(drt_behavior PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
 ament_target_dependencies(drt_behavior PUBLIC ${dependencies_pkgs})
+
+add_executable(demo src/demo.cpp)
+target_include_directories(demo PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+ament_target_dependencies(demo ${dependencies_pkgs})
+target_link_libraries(demo ${PROJECT_NAME})
+
+install(TARGETS demo
+    DESTINATION lib/${PROJECT_NAME})
 
 install(
     DIRECTORY include/
@@ -75,6 +74,10 @@ install(
 #     set(ament_cmake_cpplint_FOUND TRUE)
 #     ament_lint_auto_find_test_dependencies()
 # endif()
+
+install(DIRECTORY config launch behavior_trees_xml
+  DESTINATION share/${PROJECT_NAME}
+)
 
 ament_export_include_directories(
     include
