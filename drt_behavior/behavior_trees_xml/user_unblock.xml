@@ -1,0 +1,24 @@
+<root BTCPP_format="4">
+
+    <!--
+    Break point into our behavior tree executor.
+    Checks the parameter of the node that is spawned by the behavior tree executor.
+    Once the parameter is switched from false to true, the CheckParam return SUCCESS, the RetryUntilSuccessful loop is broken.
+    On SUCCESS CheckParam flips the it's parameter back to false.
+
+    You can change the param value from the cmd with:
+    ```
+    ros2 param set /drt_behavior_tree_node proceed true
+    ```
+    -->
+
+    <BehaviorTree ID="UserUnblock">
+        <Sequence>
+            <RetryUntilSuccessful num_attempts="-1" >
+                <!-- BT node that needs to be checked every loop -->
+                <CheckParam param_name="proceed"/>
+            </RetryUntilSuccessful>
+        </Sequence>
+    </BehaviorTree>
+
+</root>

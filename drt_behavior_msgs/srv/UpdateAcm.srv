@@ -1,5 +1,0 @@
-string object1
-string object2
-bool enable_collision
----
-bool success
