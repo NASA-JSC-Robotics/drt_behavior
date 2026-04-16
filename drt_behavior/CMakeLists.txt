@@ -8,15 +8,7 @@ endif()
 set(dependencies_pkgs
     rclcpp
     tf2_ros
-    # std_msgs
-    # sensor_msgs
-    # tf2_eigen
-    # moveit_visual_tools
-    # moveit_ros_planning_interface
-    # tl_expected
-    # controller_manager
     behaviortree_ros2
-    # drt_behavior_msgs
 )
 
 # find dependencies

@@ -10,15 +10,7 @@
     <buildtool_depend>ament_cmake_ros</buildtool_depend>
 
     <depend>rclcpp</depend>
-    <depend>std_msgs</depend>
-    <depend>sensor_msgs</depend>
-    <depend>rviz_common</depend>
-    <depend>moveit_ros_planning_interface</depend>
-    <depend>tf2_eigen</depend>
-    <depend>moveit_visual_tools</depend>
-    <depend>controller_manager</depend>
-    <depend>drt_behavior_msgs</depend>
-    <depend>tl_expected</depend>
+    <depend>tf2_ros</depend>
     <depend>behaviortree_cpp</depend>
     <depend>behaviortree_ros2</depend>
     <depend>btcpp_ros2_interfaces</depend>
