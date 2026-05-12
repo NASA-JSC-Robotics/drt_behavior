@@ -28,6 +28,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def launch_setup(context, *args, **kwargs):
 
+    use_sim_time = {"use_sim_time": LaunchConfiguration("use_sim_time")}
     # YAML file containing BT executor parameters
     package_name = LaunchConfiguration("package_name").perform(context)
     file_name = LaunchConfiguration("file_name").perform(context)
@@ -39,7 +40,7 @@ def launch_setup(context, *args, **kwargs):
         package="drt_behavior",
         executable="demo",
         output="both",
-        parameters=[bt_config],
+        parameters=[bt_config, use_sim_time],
     )
 
     return [behavior_executor]
@@ -61,6 +62,13 @@ def generate_launch_description():
             "file_name",
             default_value="sample_bt_executor.yaml",
             description="Name of the file in the config directory.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "use_sim_time",
+            default_value="false",
+            description="Use sim time.",
         )
     )
 
