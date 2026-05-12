@@ -1,0 +1,62 @@
+[workspace]
+# Update the workspace name accordingly
+name = "drt_behaviors"
+authors = ["Erik Holum <erik.holum@nasa.gov>"]
+channels = [
+  "https://prefix.dev/conda-forge",
+  "https://prefix.dev/robostack-jazzy",
+]
+platforms = ["linux-aarch64", "linux-64"]
+version = "0.1.0"
+preview = ["pixi-build"]
+
+[system-requirements]
+# Needed for realsense
+libc = { family = "glibc", version = "2.35" }
+
+[activation.env]
+LIBRARY_PATH = "${CONDA_PREFIX}/lib:${LIBRARY_PATH}"
+LD_LIBRARY_PATH = "${CONDA_PREFIX}/lib:${LD_LIBRARY_PATH}"
+LDFLAGS = "-L${CONDA_PREFIX}/lib -Wl,-rpath,${CONDA_PREFIX}/lib -fuse-ld=mold"
+COLCON_DEFAULT_OUTPUT_STYLE = "catkin_tools"
+COLCON_DEFAULTS_FILE = "${PIXI_PROJECT_ROOT}/colcon-defaults.yaml"
+RCUTILS_COLORIZED_OUTPUT = "1"
+
+[tasks]
+# Setup tasks
+setup-colcon = { cmd = """
+colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml && \
+colcon mixin update default
+""" }
+
+# Build tasks
+build = "colcon build --packages-skip color_tools_behavior"
+test = "colcon test --packages-skip color_tools_behavior"
+test-result = "colcon test-result --verbose"
+clean = "rm -rf build/* install/* log/*"
+
+[dependencies]
+python = ">=3.11,<3.13"
+cmake = ">=4.1.2,<5"
+ccache = ">=4.13.1,<5"
+ninja = ">=1.13.1,<2"
+mold = ">=2.40.4,<3"
+colcon-common-extensions = ">=0.3.0,<0.4"
+colcon-mixin = ">=0.2.3,<0.3"
+
+# For geometry behaviors
+eigen = ">=3.4,<4"
+
+# Not necessary for building, but for tests/running in isolated environments
+ros-jazzy-ros-base = "*"
+
+[dev]
+ros-jazzy-behaviortree-ros2 = { path = "././external/BehaviorTree.ROS2/behaviortree_ros2/package.xml" }
+ros-jazzy-btcpp-ros2-interfaces = { path = "././external/BehaviorTree.ROS2/btcpp_ros2_interfaces/package.xml" }
+ros-jazzy-btcpp-ros2-samples = { path = "././external/BehaviorTree.ROS2/btcpp_ros2_samples/package.xml" }
+ros-jazzy-drt-behavior = { path = "././drt_behavior/package.xml" }
+ros-jazzy-geometry-behavior = { path = "././geometry_behavior/package.xml" }
+ros-jazzy-moveit-behavior = { path = "././moveit_behavior/package.xml" }
+
+# Requires a source dependency we don't currently have
+# ros-jazzy-color-tools-behavior = { path = "././color_tools_behavior/package.xml" }

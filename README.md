@@ -1,4 +1,4 @@
-# drt_behavior
+# DRT Behavior
 
 This repository contains libraries of [behaviortree.cpp](https://behaviortree.dev) behaviors, along with a basic application for tree execution in ROS 2 applications.
 
@@ -24,7 +24,6 @@ Yaml list of `behavior_trees` declares where to find xml files of the different 
 
 Make sure to double check that both of these are filled out properly if you are not able to find the behaviors you are looking for.
 
-
 ## Implemented Behaviors
 
 Generally behavior names should be self-explanatory, but to understand how to use it effectively be sure to check the header, where the inputs and outputs are defined.
@@ -47,3 +46,21 @@ Generally behavior names should be self-explanatory, but to understand how to us
   * Plan To Joint State
   * Plan To Pose
   * Publish Trajectory
+
+## Development
+
+An isolated [pixi](https://pixi.prefix.dev) workflow is provided for development in isolation.
+Though note that as of now this requires a source dependency on `color_tools`, which is not currently included with this package.
+
+To configure and run:
+
+```bash
+# Install the dependencies
+pixi install --frozen
+
+# Compile everything but color_tools_behaviors
+pixi run build
+
+# Run tests
+pixi run test
+```
