@@ -2,7 +2,6 @@
     main_tree_to_execute="BagPickUp">
 
 
-    <include path="./planning_behaviors.xml" />
     <include path="./util_behaviors.xml" />
     <include path="./user_unblock.xml" />
 
@@ -29,7 +28,6 @@
                 aligned_transform="{goal_transform_stamped}"
             />
 
-
             <!-- Make the transform easier for the planner -->
             <ApplyTransform name="Rotate the transform"
                 input_transform="{goal_transform_stamped}"
@@ -38,8 +36,9 @@
             />
 
             <!-- Get right above the target approach -->
+            <SubTree ID="rrt_to_transform" transform="{goal_transform_stamped}"/>
             <!-- <SubTree ID="PILZ_LIN_to_transform" transform="{goal_transform_stamped}"/> -->
-            <SubTree ID="PILZ_LIN_to_transform_w_pause" transform="{goal_transform_stamped}"/>
+            <!-- <SubTree ID="PILZ_LIN_to_transform_w_pause" transform="{goal_transform_stamped}"/> -->
 
             <!-- Get right above the target approach -->
             <ApplyTransform name="Rotate the transform"
@@ -48,8 +47,9 @@
                 resulting_transform="{goal_transform_stamped}"
             />
 
+            <SubTree ID="rrt_to_transform" transform="{goal_transform_stamped}"/>
             <!-- <SubTree ID="PILZ_LIN_to_transform" transform="{goal_transform_stamped}"/> -->
-            <SubTree ID="PILZ_LIN_to_transform_w_pause" transform="{goal_transform_stamped}"/>
+            <!-- <SubTree ID="PILZ_LIN_to_transform_w_pause" transform="{goal_transform_stamped}"/> -->
 
             <!-- Close the gripper -->
             <SubTree ID="CloseGripper"/>
@@ -61,8 +61,9 @@
                 resulting_transform="{goal_transform_stamped}"
             />
 
+            <SubTree ID="rrt_to_transform" transform="{goal_transform_stamped}"/>
             <!-- <SubTree ID="PILZ_LIN_to_transform" transform="{goal_transform_stamped}"/> -->
-            <SubTree ID="PILZ_LIN_to_transform_w_pause" transform="{goal_transform_stamped}"/>
+            <!-- <SubTree ID="PILZ_LIN_to_transform_w_pause" transform="{goal_transform_stamped}"/> -->
 
             <!-- Move the bag to the goal -->
             <SubTree ID="RandomGoalTransform"/>
@@ -79,8 +80,8 @@
           <CreateRandomTransform
             name="Create random start transform"
             transform_name="approximate_bag_pose"
-            center="-0.45;1.2;1.29"
-            box_side="0.2;0.35;0.10"
+            center="0.45;0.75;1.29"
+            box_side="0.5;0.35;0.10"
             transform="{transform}"/>
 
           <ApplyTransform name="Rotate the transform"
@@ -92,8 +93,9 @@
             name="publish transform"
             input_transform="{transform}" />
 
+          <SubTree ID="rrt_to_transform" transform="{transform}"/>
           <!-- <SubTree ID="PILZ_LIN_to_position" transform="{transform}"/> -->
-          <SubTree ID="PILZ_LIN_to_position_w_pause" transform="{transform}"/>
+          <!-- <SubTree ID="PILZ_LIN_to_position_w_pause" transform="{transform}"/> -->
 
         </Sequence>
     </BehaviorTree>
@@ -116,8 +118,9 @@
             name="publish transform"
             input_transform="{transform}" />
 
+          <SubTree ID="rrt_to_transform" transform="{transform}"/>
           <!-- <SubTree ID="PILZ_LIN_to_position" transform="{transform}"/> -->
-          <SubTree ID="PILZ_LIN_to_position_w_pause" transform="{transform}"/>
+          <!-- <SubTree ID="PILZ_LIN_to_position_w_pause" transform="{transform}"/> -->
 
         </Sequence>
     </BehaviorTree>
@@ -131,7 +134,7 @@
                 service_name="/plan_kinematic_path"
                 group_name="hand"
                 joint_names="finger_1_joint;finger_2_joint"
-                joint_positions="0.025;0.025"
+                joint_positions="0.024;0.024"
                 tolerance="0.0001"
                 trajectory="{gripper_traj}"/>
 
@@ -150,7 +153,7 @@
                 service_name="/plan_kinematic_path"
                 group_name="hand"
                 joint_names="finger_1_joint;finger_2_joint"
-                joint_positions="0.0;0.0"
+                joint_positions="0.001;0.001"
                 tolerance="0.0001"
                 trajectory="{gripper_traj}"/>
 

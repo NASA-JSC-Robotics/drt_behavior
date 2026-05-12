@@ -3,8 +3,6 @@
 #include "moveit_behavior/plan_to_joint_state.hpp"
 #include "moveit_behavior/plan_to_pose.hpp"
 #include "moveit_behavior/publish_trajectory.hpp"
-// #include "behaviortree_cpp/utils/shared_library.h"
-// #include "behaviortree_ros2/ros_node_params.hpp"
 
 BTCPP_EXPORT void BT_RegisterRosNodeFromPlugin(BT::BehaviorTreeFactory& factory, const BT::RosNodeParams& params)
 {

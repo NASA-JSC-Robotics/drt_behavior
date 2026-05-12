@@ -11,12 +11,18 @@
 #include "moveit_msgs/msg/move_it_error_codes.hpp"
 #include "moveit_msgs/msg/robot_trajectory.hpp"
 
-// using namespace std::chrono;
-
 namespace moveit_behavior
 {
 using ExecTraj = moveit_msgs::action::ExecuteTrajectory;
-
+/**
+ * @brief Execute given moveit robot trajectory using move_group's action client interface.
+ *
+ * @details
+ * | Data Port Name             | Port Type | Object Type                        |
+ * | ---------------------------|-----------|------------------------------------|
+ * | action_name                | Input     | std::string                        |
+ * | trajectory                 | Input     | moveit_msgs::msg::RobotTrajectory  |
+ */
 class ExecuteTrajectory : public BT::RosActionNode<ExecTraj>
 {
 public:

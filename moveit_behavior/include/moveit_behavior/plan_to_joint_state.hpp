@@ -17,8 +17,20 @@
 
 namespace moveit_behavior
 {
-
 using GetMotionPlan = moveit_msgs::srv::GetMotionPlan;
+/**
+ * @brief Constructs motion planning requests and uses move_group's server client interface to find trajectory to a joint state.
+ *
+ * @details
+ * | Data Port Name             | Port Type | Object Type                        |
+ * | ---------------------------|-----------|------------------------------------|
+ * | service_name               | Input     | std::string                        |
+ * | group_name                 | Input     | std::string                        |
+ * | joint_names                | Input     | std::vector<std::string>           |
+ * | joint_positions            | Input     | std::vector<double>                |
+ * | tolerance                  | Input     | double                             |
+ * | trajectory                 | Output    | moveit_msgs::msg::RobotTrajectory  |
+ */
 class PlanToJointState : public BT::RosServiceNode<GetMotionPlan>
 {
 private:

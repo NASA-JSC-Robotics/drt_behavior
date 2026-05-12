@@ -4,7 +4,15 @@
 namespace moveit_behavior
 {
 using DisplayTraj = moveit_msgs::msg::DisplayTrajectory;
-
+/**
+ * @brief Converts robot trajectory into display robot trajectory message to be visualized by RViz.
+ *
+ * @details
+ * | Data Port Name             | Port Type | Object Type                        |
+ * | ---------------------------|-----------|------------------------------------|
+ * | topic_name                 | Input     | std::string                        |
+ * | trajectory                 | Input     | moveit_msgs::msg::RobotTrajectory  |
+ */
 class PublishDisplayTrajectory : public BT::RosTopicPubNode<DisplayTraj>
 {
 public:
@@ -20,15 +28,6 @@ public:
     });
   }
 
-  bool setMessage(DisplayTraj& msg) override
-  {
-    if (!getInput("trajectory", msg.trajectory))
-    {
-      std::cout << "Could not access required blackboard input [trajectory]" << std::endl;
-      return false;
-    }
-    return true;
-  }
-  //   BT::NodeStatus onTick(const std::shared_ptr<moveit_msgs::msg::DisplayTrajectory>& last_msg) override;
+  bool setMessage(DisplayTraj& msg) override;
 };
 };  // namespace moveit_behavior

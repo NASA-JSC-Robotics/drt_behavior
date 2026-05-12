@@ -67,7 +67,7 @@ install(
 #     ament_lint_auto_find_test_dependencies()
 # endif()
 
-install(DIRECTORY config launch behavior_trees_xml
+install(DIRECTORY config launch behavior_trees_xml rviz
   DESTINATION share/${PROJECT_NAME}
 )
 
