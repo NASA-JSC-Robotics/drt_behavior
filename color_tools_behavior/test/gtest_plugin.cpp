@@ -16,7 +16,6 @@
  * under the License.
  */
 
-
 #include <gmock/gmock.h>  // Required for matchers
 #include <gtest/gtest.h>
 

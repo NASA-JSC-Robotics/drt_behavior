@@ -16,7 +16,6 @@
  * under the License.
  */
 
-
 #include <behaviortree_ros2/plugins.hpp>
 #include "behaviortree_cpp/bt_factory.h"
 #include "color_tools_behavior/color_blob_find.hpp"

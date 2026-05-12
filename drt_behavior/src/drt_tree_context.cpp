@@ -16,7 +16,7 @@
  * under the License.
  */
 
- #include "drt_behavior/drt_tree_context.hpp"
+#include "drt_behavior/drt_tree_context.hpp"
 
 namespace drt_behavior
 {
