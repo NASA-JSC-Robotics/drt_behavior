@@ -52,6 +52,10 @@ install(TARGETS
   RUNTIME DESTINATION share/${PROJECT_NAME}/bt_plugins
 )
 
+install(DIRECTORY behavior_trees_xml
+  DESTINATION share/${PROJECT_NAME}
+)
+
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)

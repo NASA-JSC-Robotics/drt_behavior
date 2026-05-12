@@ -1,0 +1,3187 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 0
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /MotionPlanning1/Scene Robot1
+        - /MotionPlanning1/Planning Request1
+      Splitter Ratio: 0.5372233390808105
+    Tree Height: 325
+  - Class: rviz_common/Selection
+    Name: Selection
+  - Class: rviz_common/Tool Properties
+    Expanded:
+      - /2D Goal Pose1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.5886790156364441
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz_visual_tools/RvizVisualToolsGui
+    Name: RvizVisualToolsGui
+  - Class: drt_rviz2_panels/BehaviorTreePanel
+    Name: BehaviorTreePanel
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Acceleration_Scaling_Factor: 1
+      Class: moveit_rviz_plugin/MotionPlanning
+      Enabled: true
+      Move Group Namespace: ""
+      MoveIt_Allow_Approximate_IK: false
+      MoveIt_Allow_External_Program: false
+      MoveIt_Allow_Replanning: false
+      MoveIt_Allow_Sensor_Positioning: false
+      MoveIt_Planning_Attempts: 10
+      MoveIt_Planning_Time: 5
+      MoveIt_Use_Cartesian_Path: false
+      MoveIt_Use_Constraint_Aware_IK: false
+      MoveIt_Workspace:
+        Center:
+          X: 0
+          Y: 0
+          Z: 0
+        Size:
+          X: 2
+          Y: 2
+          Z: 2
+      Name: MotionPlanning
+      Planned Path:
+        Color Enabled: true
+        Interrupt Display: true
+        Links:
+          All Links Enabled: true
+          Expand Joint Details: false
+          Expand Link Details: false
+          Expand Tree: false
+          Link Tree Style: Links in Alphabetic Order
+          base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          base_link_inertia:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_back:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_front:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_left_cal_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          bench_lid:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_right:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_right_cal_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          cabinet_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cabinet_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cabinet_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cabinet_4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          center_push_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          clr_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          clr_carriage:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          csm_faceplate_cover:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cubby_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cubby_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          door:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          door_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          drawer_1_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_1_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_1_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_1_right:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_2_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_2_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_2_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_2_right:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          end_estop_light:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ewellix_lift_higher_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ewellix_lift_lower_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ewellix_lift_middle_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ewellix_lift_tip_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          express_rack:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flange:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          forearm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          front_left_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          front_right_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ft_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          grasp_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_palm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          ground_plane:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          hatch_level_bench:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          latch_cover:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          latch_lock:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_latch_pull:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lift_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_infra1_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_infra1_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_infra2_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_infra2_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lift_camera_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/apriltag:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_1_grab_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_1_grab_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_1_grab_touch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_2_grab_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_2_grab_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_2_grab_touch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_3_grab_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_3_grab_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_3_grab_touch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_rotary_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_rotary_handle_grasp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_rotary_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_back:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_bench:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_frame_front_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/hatch_frame_front_top:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/hatch_front:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_inner_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_latch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_latch_catch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_latch_spring_anchor:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/hatch_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_outer_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_right:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_top:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/internal_2_grab_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/internal_2_grab_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/internal_2_grab_touch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/internal_rotary_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/internal_rotary_handle_grasp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/internal_rotary_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/right_cal_1_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/right_cal_2_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lower_lift_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          motor_side_estop_light:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          mtc_effector_side:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          mtc_robot_side:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          paddle_latch_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          paddle_latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_frame_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_frame_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_latch_button:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_latch_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          recessed_latch_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          recessed_latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_angle_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_latch_pull:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          robotiq_hande_cb_adapter:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          room_ceiling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          round_latch_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          round_latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          seal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          seal_corner_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          seal_corner_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          seal_corner_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          seal_corner_4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          shoulder_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          side_bottom_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          side_top_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          trainer_box:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_plane_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_plane_middle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_plane_right_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_plane_right_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_top:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          upper_arm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          upper_lift_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ur10e_mount_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          ur10e_mount_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ur_realsense_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          velcro:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_cable_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_cable_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_cable_collision:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_carriage:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_gearbox:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_motor:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wood_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wrist_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wrist_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wrist_mounted_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_infra1_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_infra1_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_infra2_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_infra2_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+        Loop Animation: false
+        Robot Alpha: 0.5
+        Robot Color: 150; 50; 150
+        Show Robot Collision: false
+        Show Robot Visual: true
+        Show Trail: false
+        State Display Time: 0.05 s
+        Trail Step Size: 1
+        Trajectory Topic: /display_planned_path
+        Use Sim Time: false
+      Planning Metrics:
+        Payload: 1
+        Show Joint Torques: false
+        Show Manipulability: false
+        Show Manipulability Index: false
+        Show Weight Limit: false
+        TextHeight: 0.07999999821186066
+      Planning Request:
+        Colliding Link Color: 255; 0; 0
+        Goal State Alpha: 0.699999988079071
+        Goal State Color: 250; 128; 0
+        Interactive Marker Size: 0
+        Joint Violation Color: 255; 0; 255
+        Planning Group: ur_manipulator
+        Query Goal State: false
+        Query Start State: false
+        Show Workspace: false
+        Start State Alpha: 0.699999988079071
+        Start State Color: 0; 255; 0
+      Planning Scene Topic: monitored_planning_scene
+      Robot Description: robot_description
+      Scene Geometry:
+        Scene Alpha: 0.8999999761581421
+        Scene Color: 50; 230; 50
+        Scene Display Time: 0.009999999776482582
+        Show Scene Geometry: true
+        Voxel Coloring: Z-Axis
+        Voxel Rendering: Occupied Voxels
+      Scene Robot:
+        Attached Body Color: 150; 50; 150
+        Links:
+          All Links Enabled: true
+          Expand Joint Details: false
+          Expand Link Details: false
+          Expand Tree: false
+          Link Tree Style: Links in Alphabetic Order
+          base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          base_link_inertia:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_back:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_front:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_left_cal_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          bench_lid:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_right:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          bench_right_cal_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          cabinet_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cabinet_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cabinet_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cabinet_4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          center_push_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          clr_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          clr_carriage:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          csm_faceplate_cover:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cubby_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          cubby_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          door:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          door_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          drawer_1_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_1_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_1_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_1_right:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_2_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_2_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_2_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          drawer_2_right:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          end_estop_light:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ewellix_lift_higher_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ewellix_lift_lower_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ewellix_lift_middle_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ewellix_lift_tip_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          express_rack:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flange:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          forearm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          front_left_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          front_right_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ft_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          grasp_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_palm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          ground_plane:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          hatch_level_bench:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          latch_cover:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          latch_lock:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_latch_pull:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lift_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_infra1_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_infra1_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_infra2_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_infra2_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lift_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lift_camera_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/apriltag:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_1_grab_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_1_grab_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_1_grab_touch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_2_grab_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_2_grab_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_2_grab_touch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_3_grab_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_3_grab_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_3_grab_touch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_rotary_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/external_rotary_handle_grasp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/external_rotary_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_back:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_bench:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_frame_front_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/hatch_frame_front_top:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/hatch_front:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_inner_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_latch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_latch_catch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_latch_spring_anchor:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/hatch_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_outer_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_right:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/hatch_top:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/internal_2_grab_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/internal_2_grab_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/internal_2_grab_touch:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/internal_rotary_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/internal_rotary_handle_grasp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/internal_rotary_wheel:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lorge/right_cal_1_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lorge/right_cal_2_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lower_lift_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          motor_side_estop_light:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          mtc_effector_side:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          mtc_robot_side:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          paddle_latch_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          paddle_latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_frame_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_frame_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_latch_button:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_latch_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          push_latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          recessed_latch_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          recessed_latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_angle_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_latch_pull:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          robotiq_hande_cb_adapter:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          room_ceiling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          round_latch_handle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          round_latch_housing:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          seal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          seal_corner_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          seal_corner_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          seal_corner_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          seal_corner_4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          shoulder_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          side_bottom_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          side_top_face:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          trainer_box:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_plane_left:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_plane_middle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_plane_right_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_plane_right_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          trainer_top:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          upper_arm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          upper_lift_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ur10e_mount_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          ur10e_mount_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          ur_realsense_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          velcro:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_cable_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_cable_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_cable_collision:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_carriage:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_gearbox:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          vention_rail_motor:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wood_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wrist_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wrist_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wrist_mounted_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_infra1_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_infra1_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_infra2_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_infra2_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          wrist_mounted_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+        Robot Alpha: 1
+        Show Robot Collision: false
+        Show Robot Visual: false
+      Value: true
+      Velocity_Scaling_Factor: 1
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rviz_visual_tools
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link_inertia:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bench_back:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bench_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bench_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bench_left_cal_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        bench_lid:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bench_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bench_right_cal_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        cabinet_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        cabinet_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        cabinet_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        cabinet_4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        center_push_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        clr_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        clr_carriage:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        csm_faceplate_cover:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        cubby_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        cubby_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        door:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        door_face:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        drawer_1_bottom:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        drawer_1_face:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        drawer_1_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        drawer_1_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        drawer_2_bottom:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        drawer_2_face:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        drawer_2_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        drawer_2_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        end_estop_light:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ewellix_lift_higher_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ewellix_lift_lower_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ewellix_lift_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ewellix_lift_tip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        express_rack:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        finger_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        flange:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        forearm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_left_face:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_right_face:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ft_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        grasp_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        gripper_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        gripper_palm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        ground_plane:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hatch_level_bench:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        latch_cover:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        latch_housing:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        latch_lock:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_latch_pull:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift_camera_bottom_screw_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_color_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_color_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_infra1_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_infra1_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_infra2_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_infra2_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lift_camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lift_camera_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/apriltag:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/external_1_grab_center:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/external_1_grab_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/external_1_grab_touch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/external_2_grab_center:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/external_2_grab_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/external_2_grab_touch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/external_3_grab_center:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/external_3_grab_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/external_3_grab_touch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/external_rotary_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/external_rotary_handle_grasp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/external_rotary_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_back:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_bench:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_bottom:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_face:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_frame_front_bottom:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/hatch_frame_front_top:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/hatch_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_inner_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_latch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_latch_catch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_latch_spring_anchor:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/hatch_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_outer_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/hatch_top:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/internal_2_grab_center:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/internal_2_grab_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/internal_2_grab_touch:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/internal_rotary_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/internal_rotary_handle_grasp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/internal_rotary_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lorge/right_cal_1_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lorge/right_cal_2_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lower_lift_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        motor_side_estop_light:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        mtc_effector_side:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        mtc_robot_side:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        paddle_latch_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        paddle_latch_housing:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        push_frame_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        push_frame_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        push_latch_button:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        push_latch_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        push_latch_housing:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        recessed_latch_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        recessed_latch_housing:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_angle_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_latch_pull:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_hande_cb_adapter:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        room_ceiling:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        round_latch_handle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        round_latch_housing:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        seal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        seal_corner_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        seal_corner_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        seal_corner_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        seal_corner_4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        shoulder_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        side_bottom_face:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        side_top_face:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        trainer_box:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        trainer_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        trainer_plane_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        trainer_plane_middle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        trainer_plane_right_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        trainer_plane_right_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        trainer_top:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        upper_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        upper_lift_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ur10e_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        ur10e_mount_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ur_realsense_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        velcro:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        vention_rail_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        vention_rail_cable_0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        vention_rail_cable_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        vention_rail_cable_collision:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        vention_rail_carriage:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        vention_rail_gearbox:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        vention_rail_motor:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wood_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wrist_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wrist_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wrist_mounted_camera_bottom_screw_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_color_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_color_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_infra1_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_infra1_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_infra2_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_infra2_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_mounted_camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: RobotModel
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Wrist Mounted Camera Image
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /wrist_mounted_camera/color/image_raw
+      Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Colorblob Image
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /colorblob_image
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        approximate_bag_pose:
+          Value: true
+        bag_dropoff:
+          Value: true
+        base:
+          Value: false
+        base_link:
+          Value: false
+        base_link_inertia:
+          Value: false
+        bench_back:
+          Value: false
+        bench_front:
+          Value: false
+        bench_left:
+          Value: false
+        bench_left_cal_frame:
+          Value: false
+        bench_lid:
+          Value: false
+        bench_right:
+          Value: false
+        bench_right_cal_frame:
+          Value: false
+        cabinet_1:
+          Value: false
+        cabinet_2:
+          Value: false
+        cabinet_3:
+          Value: false
+        cabinet_4:
+          Value: false
+        center_push_frame:
+          Value: false
+        clr_base:
+          Value: false
+        clr_carriage:
+          Value: false
+        colorblob_xd:
+          Value: true
+        csm_faceplate_cover:
+          Value: false
+        cubby_1:
+          Value: false
+        cubby_2:
+          Value: false
+        door:
+          Value: false
+        door_face:
+          Value: false
+        drawer_1_bottom:
+          Value: false
+        drawer_1_face:
+          Value: false
+        drawer_1_left:
+          Value: false
+        drawer_1_right:
+          Value: false
+        drawer_2_bottom:
+          Value: false
+        drawer_2_face:
+          Value: false
+        drawer_2_left:
+          Value: false
+        drawer_2_right:
+          Value: false
+        end_estop_light:
+          Value: false
+        ewellix_lift_higher_link:
+          Value: false
+        ewellix_lift_lower_link:
+          Value: false
+        ewellix_lift_middle_link:
+          Value: false
+        ewellix_lift_tip_link:
+          Value: false
+        express_rack:
+          Value: false
+        finger_1_link:
+          Value: false
+        finger_2_link:
+          Value: false
+        flange:
+          Value: false
+        forearm_link:
+          Value: false
+        front_left_face:
+          Value: false
+        front_right_face:
+          Value: false
+        ft_frame:
+          Value: false
+        grasp_frame:
+          Value: false
+        gripper_base_link:
+          Value: false
+        gripper_palm_link:
+          Value: false
+        ground_plane:
+          Value: false
+        hatch_level_bench:
+          Value: false
+        latch_cover:
+          Value: false
+        latch_housing:
+          Value: false
+        latch_lock:
+          Value: false
+        left_latch_pull:
+          Value: false
+        lift_camera_bottom_screw_frame:
+          Value: false
+        lift_camera_color_frame:
+          Value: false
+        lift_camera_color_optical_frame:
+          Value: false
+        lift_camera_depth_frame:
+          Value: false
+        lift_camera_depth_optical_frame:
+          Value: false
+        lift_camera_infra1_frame:
+          Value: false
+        lift_camera_infra1_optical_frame:
+          Value: false
+        lift_camera_infra2_frame:
+          Value: false
+        lift_camera_infra2_optical_frame:
+          Value: false
+        lift_camera_link:
+          Value: false
+        lift_camera_mount:
+          Value: false
+        lorge/apriltag:
+          Value: true
+        lorge/external_1_grab_center:
+          Value: false
+        lorge/external_1_grab_handle:
+          Value: false
+        lorge/external_1_grab_touch:
+          Value: false
+        lorge/external_2_grab_center:
+          Value: false
+        lorge/external_2_grab_handle:
+          Value: false
+        lorge/external_2_grab_touch:
+          Value: false
+        lorge/external_3_grab_center:
+          Value: false
+        lorge/external_3_grab_handle:
+          Value: false
+        lorge/external_3_grab_touch:
+          Value: false
+        lorge/external_rotary_handle:
+          Value: false
+        lorge/external_rotary_handle_grasp:
+          Value: false
+        lorge/external_rotary_wheel:
+          Value: false
+        lorge/hatch_back:
+          Value: false
+        lorge/hatch_bench:
+          Value: false
+        lorge/hatch_bottom:
+          Value: false
+        lorge/hatch_face:
+          Value: false
+        lorge/hatch_frame:
+          Value: false
+        lorge/hatch_frame_front_bottom:
+          Value: false
+        lorge/hatch_frame_front_top:
+          Value: false
+        lorge/hatch_front:
+          Value: false
+        lorge/hatch_inner_frame:
+          Value: false
+        lorge/hatch_latch:
+          Value: false
+        lorge/hatch_latch_catch:
+          Value: false
+        lorge/hatch_latch_spring_anchor:
+          Value: false
+        lorge/hatch_left:
+          Value: false
+        lorge/hatch_outer_frame:
+          Value: false
+        lorge/hatch_right:
+          Value: false
+        lorge/hatch_top:
+          Value: false
+        lorge/internal_2_grab_center:
+          Value: false
+        lorge/internal_2_grab_handle:
+          Value: false
+        lorge/internal_2_grab_touch:
+          Value: false
+        lorge/internal_rotary_handle:
+          Value: false
+        lorge/internal_rotary_handle_grasp:
+          Value: false
+        lorge/internal_rotary_wheel:
+          Value: false
+        lorge/right_cal_1_frame:
+          Value: false
+        lorge/right_cal_2_frame:
+          Value: false
+        lower_lift_plate:
+          Value: false
+        motor_side_estop_light:
+          Value: false
+        mtc_effector_side:
+          Value: false
+        mtc_robot_side:
+          Value: false
+        paddle_latch_handle:
+          Value: false
+        paddle_latch_housing:
+          Value: false
+        push_frame_1:
+          Value: false
+        push_frame_2:
+          Value: false
+        push_latch_button:
+          Value: false
+        push_latch_handle:
+          Value: false
+        push_latch_housing:
+          Value: false
+        recessed_latch_handle:
+          Value: false
+        recessed_latch_housing:
+          Value: false
+        right_angle_mount:
+          Value: false
+        right_latch_pull:
+          Value: false
+        robotiq_hande_cb_adapter:
+          Value: false
+        room_ceiling:
+          Value: false
+        round_latch_handle:
+          Value: false
+        round_latch_housing:
+          Value: false
+        seal:
+          Value: false
+        seal_corner_1:
+          Value: false
+        seal_corner_2:
+          Value: false
+        seal_corner_3:
+          Value: false
+        seal_corner_4:
+          Value: false
+        shoulder_link:
+          Value: false
+        side_bottom_face:
+          Value: false
+        side_top_face:
+          Value: false
+        tool0:
+          Value: false
+        trainer_box:
+          Value: false
+        trainer_frame:
+          Value: false
+        trainer_plane_left:
+          Value: false
+        trainer_plane_middle:
+          Value: false
+        trainer_plane_right_1:
+          Value: false
+        trainer_plane_right_2:
+          Value: false
+        trainer_top:
+          Value: false
+        upper_arm_link:
+          Value: false
+        upper_lift_plate:
+          Value: false
+        ur10e_mount_link:
+          Value: false
+        ur10e_mount_plate:
+          Value: false
+        ur_realsense_mount:
+          Value: false
+        velcro:
+          Value: false
+        vention_rail_base_link:
+          Value: false
+        vention_rail_cable_0:
+          Value: false
+        vention_rail_cable_1:
+          Value: false
+        vention_rail_cable_collision:
+          Value: false
+        vention_rail_carriage:
+          Value: false
+        vention_rail_gearbox:
+          Value: false
+        vention_rail_motor:
+          Value: false
+        wood_frame:
+          Value: false
+        world:
+          Value: false
+        wrist_1_link:
+          Value: false
+        wrist_2_link:
+          Value: false
+        wrist_3_link:
+          Value: false
+        wrist_mounted_camera_bottom_screw_frame:
+          Value: false
+        wrist_mounted_camera_color_frame:
+          Value: false
+        wrist_mounted_camera_color_optical_frame:
+          Value: false
+        wrist_mounted_camera_depth_frame:
+          Value: false
+        wrist_mounted_camera_depth_optical_frame:
+          Value: false
+        wrist_mounted_camera_infra1_frame:
+          Value: false
+        wrist_mounted_camera_infra1_optical_frame:
+          Value: false
+        wrist_mounted_camera_infra2_frame:
+          Value: false
+        wrist_mounted_camera_infra2_optical_frame:
+          Value: false
+        wrist_mounted_camera_link:
+          Value: false
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        world:
+          approximate_bag_pose:
+            {}
+          bag_dropoff:
+            {}
+          clr_base:
+            end_estop_light:
+              {}
+            motor_side_estop_light:
+              {}
+            vention_rail_base_link:
+              vention_rail_carriage:
+                clr_carriage:
+                  lower_lift_plate:
+                    ewellix_lift_lower_link:
+                      ewellix_lift_higher_link:
+                        ewellix_lift_middle_link:
+                          {}
+                        ewellix_lift_tip_link:
+                          {}
+                        upper_lift_plate:
+                          right_angle_mount:
+                            ur10e_mount_plate:
+                              ur10e_mount_link:
+                                base_link:
+                                  base:
+                                    {}
+                                  base_link_inertia:
+                                    shoulder_link:
+                                      upper_arm_link:
+                                        forearm_link:
+                                          wrist_1_link:
+                                            wrist_2_link:
+                                              wrist_3_link:
+                                                flange:
+                                                  tool0:
+                                                    mtc_robot_side:
+                                                      mtc_effector_side:
+                                                        ur_realsense_mount:
+                                                          robotiq_hande_cb_adapter:
+                                                            gripper_base_link:
+                                                              finger_1_link:
+                                                                push_frame_1:
+                                                                  {}
+                                                              finger_2_link:
+                                                                push_frame_2:
+                                                                  {}
+                                                              grasp_frame:
+                                                                {}
+                                                              gripper_palm_link:
+                                                                center_push_frame:
+                                                                  {}
+                                                          wrist_mounted_camera_bottom_screw_frame:
+                                                            wrist_mounted_camera_link:
+                                                              wrist_mounted_camera_color_frame:
+                                                                wrist_mounted_camera_color_optical_frame:
+                                                                  colorblob_xd:
+                                                                    {}
+                                                              wrist_mounted_camera_depth_frame:
+                                                                wrist_mounted_camera_depth_optical_frame:
+                                                                  {}
+                                                              wrist_mounted_camera_infra1_frame:
+                                                                wrist_mounted_camera_infra1_optical_frame:
+                                                                  {}
+                                                              wrist_mounted_camera_infra2_frame:
+                                                                wrist_mounted_camera_infra2_optical_frame:
+                                                                  {}
+                                                ft_frame:
+                                                  {}
+                      lift_camera_mount:
+                        {}
+                    lift_camera_bottom_screw_frame:
+                      lift_camera_link:
+                        lift_camera_color_frame:
+                          lift_camera_color_optical_frame:
+                            {}
+                        lift_camera_depth_frame:
+                          lift_camera_depth_optical_frame:
+                            {}
+                        lift_camera_infra1_frame:
+                          lift_camera_infra1_optical_frame:
+                            {}
+                        lift_camera_infra2_frame:
+                          lift_camera_infra2_optical_frame:
+                            {}
+              vention_rail_gearbox:
+                vention_rail_motor:
+                  vention_rail_cable_0:
+                    {}
+                  vention_rail_cable_1:
+                    {}
+                  vention_rail_cable_collision:
+                    {}
+          express_rack:
+            wood_frame:
+              csm_faceplate_cover:
+                door_face:
+                  {}
+                seal:
+                  seal_corner_1:
+                    {}
+                  seal_corner_2:
+                    {}
+                  seal_corner_3:
+                    {}
+                  seal_corner_4:
+                    {}
+              door:
+                latch_housing:
+                  latch_cover:
+                    {}
+                  latch_lock:
+                    {}
+                  left_latch_pull:
+                    {}
+                  right_latch_pull:
+                    {}
+              velcro:
+                {}
+          ground_plane:
+            {}
+          lorge/hatch_frame:
+            lorge/hatch_bench:
+              {}
+            lorge/hatch_bottom:
+              lorge/hatch_back:
+                {}
+              lorge/hatch_front:
+                {}
+              lorge/hatch_left:
+                {}
+              lorge/hatch_right:
+                {}
+              lorge/hatch_top:
+                {}
+            lorge/hatch_frame_front_bottom:
+              {}
+            lorge/hatch_frame_front_top:
+              {}
+            lorge/hatch_inner_frame:
+              {}
+            lorge/hatch_outer_frame:
+              lorge/hatch_face:
+                lorge/apriltag:
+                  {}
+                lorge/external_1_grab_handle:
+                  lorge/external_1_grab_center:
+                    {}
+                  lorge/external_1_grab_touch:
+                    {}
+                lorge/external_2_grab_handle:
+                  lorge/external_2_grab_center:
+                    {}
+                  lorge/external_2_grab_touch:
+                    {}
+                lorge/external_3_grab_handle:
+                  lorge/external_3_grab_center:
+                    {}
+                  lorge/external_3_grab_touch:
+                    {}
+                lorge/external_rotary_wheel:
+                  lorge/external_rotary_handle:
+                    lorge/external_rotary_handle_grasp:
+                      {}
+                lorge/hatch_latch:
+                  {}
+                lorge/internal_2_grab_handle:
+                  lorge/internal_2_grab_center:
+                    {}
+                  lorge/internal_2_grab_touch:
+                    {}
+                lorge/internal_rotary_wheel:
+                  lorge/internal_rotary_handle:
+                    lorge/internal_rotary_handle_grasp:
+                      {}
+                lorge/right_cal_1_frame:
+                  {}
+                lorge/right_cal_2_frame:
+                  {}
+              lorge/hatch_latch_spring_anchor:
+                lorge/hatch_latch_catch:
+                  {}
+          room_ceiling:
+            {}
+          trainer_frame:
+            bench_back:
+              bench_front:
+                bench_left_cal_frame:
+                  {}
+              bench_left:
+                {}
+              bench_lid:
+                {}
+              bench_right:
+                bench_right_cal_frame:
+                  {}
+              hatch_level_bench:
+                {}
+            front_left_face:
+              cubby_1:
+                {}
+              cubby_2:
+                {}
+            front_right_face:
+              cabinet_1:
+                round_latch_housing:
+                  round_latch_handle:
+                    {}
+              cabinet_2:
+                push_latch_housing:
+                  push_latch_button:
+                    {}
+                  push_latch_handle:
+                    {}
+              cabinet_3:
+                {}
+            side_bottom_face:
+              side_top_face:
+                cabinet_4:
+                  paddle_latch_housing:
+                    paddle_latch_handle:
+                      {}
+                drawer_1_face:
+                  drawer_1_bottom:
+                    {}
+                  drawer_1_left:
+                    {}
+                  drawer_1_right:
+                    {}
+                drawer_2_face:
+                  drawer_2_bottom:
+                    {}
+                  drawer_2_left:
+                    {}
+                  drawer_2_right:
+                    {}
+                  recessed_latch_housing:
+                    recessed_latch_handle:
+                      {}
+            trainer_box:
+              {}
+            trainer_plane_left:
+              {}
+            trainer_plane_middle:
+              {}
+            trainer_plane_right_1:
+              {}
+            trainer_plane_right_2:
+              {}
+            trainer_top:
+              {}
+      Update Interval: 0
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: world
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+    - Class: rviz_default_plugins/SetInitialPose
+      Covariance x: 0.25
+      Covariance y: 0.25
+      Covariance yaw: 0.06853891909122467
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /initialpose
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /goal_pose
+    - Class: rviz_default_plugins/PublishPoint
+      Single click: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /clicked_point
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 7.277990818023682
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -0.37141716480255127
+        Y: 0.38076716661453247
+        Z: 1.2642449140548706
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.49979668855667114
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: 4.358575820922852
+    Saved: ~
+Window Geometry:
+  BehaviorTreePanel:
+    collapsed: false
+  Colorblob Image:
+    collapsed: false
+  Displays:
+    collapsed: false
+  Height: 1136
+  Hide Left Dock: false
+  Hide Right Dock: false
+  MotionPlanning:
+    collapsed: false
+  MotionPlanning - Trajectory Slider:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000400000000000002b40000041afc020000000cfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b00000180000000c700fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006900000001d3000000b90000003f00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000003f00fffffffc000001c100000294000001840100001afa000000000100000006fb00000022004200650068006100760069006f0072005400720065006500500061006e0065006c0100000000ffffffff000000a300fffffffb00000022004200650068006100760069006f0072005400720065006500500061006e0065006c0000000000ffffffff000000a300fffffffb00000022004200650068006100760069006f0072005400720065006500500061006e0065006c0000000000ffffffff000000a300fffffffb00000022004200650068006100760069006f0072005400720065006500500061006e0065006c0000000000ffffffff000000a300fffffffb00000022004200650068006100760069006f0072005400720065006500500061006e0065006c0000000000ffffffff000000a300fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000000000001c9000001c900ffffff00000001000001400000041afc0200000004fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb00000034005700720069007300740020004d006f0075006e007400650064002000430061006d00650072006100200049006d006100670065010000003b0000024d0000001600fffffffc0000028e000001c70000001600fffffffa000000000100000002fb0000001e0043006f006c006f00720062006c006f006200200049006d0061006700650100000000ffffffff0000009700fffffffb0000000a005600690065007700730000000622000001100000010000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000003460000041a00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  RvizVisualToolsGui:
+    collapsed: false
+  Selection:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 1862
+  Wrist Mounted Camera Image:
+    collapsed: false
+  X: 58
+  Y: 27

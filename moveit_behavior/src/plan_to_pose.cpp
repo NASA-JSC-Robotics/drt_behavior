@@ -3,11 +3,6 @@ namespace moveit_behavior
 {
 bool PlanToPose::setRequest(Request::SharedPtr& request)
 {
-  // getInput("value", request->data);
-  // std::cout << "setRequest " << std::endl;
-
-  // get planning inputs
-
   std::string group_name;
   if (!getInput("group_name", group_name))
   {
@@ -25,12 +20,8 @@ bool PlanToPose::setRequest(Request::SharedPtr& request)
     throw BT::RuntimeError("Could not access required blackboard input [goal_pose]");
   }
 
-  std::cout << "Goal Pose Stamped" << std::endl;
-  std::cout << geometry_msgs::msg::to_yaml(goal_pose_stamped) << std::endl;
-  // geometry_msgs::msg::Pose goal_pose = goal_pose_stamped.pose;
-
-  double tolerance;
-  getInput("tolerance", tolerance);
+  double position_tolerance;
+  getInput("position_tolerance", position_tolerance);
 
   moveit_msgs::msg::WorkspaceParameters wp;
   wp.header.frame_id = "world";
@@ -47,7 +38,7 @@ bool PlanToPose::setRequest(Request::SharedPtr& request)
   {
     shape_msgs::msg::SolidPrimitive pri;
     pri.type = shape_msgs::msg::SolidPrimitive::SPHERE;
-    pri.dimensions = { 0.05 };
+    pri.dimensions = { position_tolerance };
 
     geometry_msgs::msg::Pose pri_pose;
     pri_pose.position = goal_pose_stamped.pose.position;
@@ -59,7 +50,6 @@ bool PlanToPose::setRequest(Request::SharedPtr& request)
     pos_con.weight = 1.0;
 
     pos_con.link_name = end_effector_name;
-    pos_con.header.frame_id = "world";
     pos_con.header.frame_id = goal_pose_stamped.header.frame_id;
   }
   constraints.position_constraints.push_back(pos_con);
@@ -67,7 +57,6 @@ bool PlanToPose::setRequest(Request::SharedPtr& request)
   std::vector<double> orientation_tolerance;
   if (getInput("orientation_tolerance", orientation_tolerance))
   {
-    std::cout << "adding orientation constraint" << std::endl;
     moveit_msgs::msg::OrientationConstraint ori_con;
     ori_con.header.frame_id = goal_pose_stamped.header.frame_id;
     ori_con.orientation = goal_pose_stamped.pose.orientation;
@@ -100,8 +89,6 @@ bool PlanToPose::setRequest(Request::SharedPtr& request)
 BT::NodeStatus PlanToPose::onResponseReceived(const Response::SharedPtr& response)
 {
   moveit_msgs::msg::MotionPlanResponse mpr = response.get()->motion_plan_response;
-  // std::cout << moveit_msgs::msg::to_yaml(mpr) << std::endl;
-  // std::cout << "Motion plan has successded" << std::endl;
 
   if (mpr.error_code.val == moveit_msgs::msg::MoveItErrorCodes::SUCCESS)
   {

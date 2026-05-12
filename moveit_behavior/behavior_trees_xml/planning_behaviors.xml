@@ -1,6 +1,30 @@
 <root BTCPP_format="4">
 
-    <include path="./user_unblock.xml" />
+    <BehaviorTree ID="rrt_to_transform">
+      <Sequence>
+        <TransformToPose
+            name="transform_to_pose"
+            transform_stamped="{transform}"
+            pose_stamped="{pose}"/>
+        <PlanToPose
+            name="Plan to transform"
+            service_name="/plan_kinematic_path"
+            group_name="clr"
+            end_effector_name="grasp_frame"
+            goal_pose="{pose}"
+            pipeline="ompl"
+            planner="RRTConnect"
+            orientation_tolerance="0.05;0.05;0.05"
+            velocity_scaling="1.0"
+            acceleration_scaling="1.0"
+            trajectory="{traj_to_pose}"/>
+        <ExecuteTrajectory
+            name="Execute the trajectory "
+            trajectory="{traj_to_pose}"
+            action_name="/execute_trajectory"/>
+      </Sequence>
+    </BehaviorTree>
+
 
     <BehaviorTree ID="PILZ_LIN_to_transform">
       <Sequence>
@@ -11,13 +35,13 @@
         <PlanToPose
             name="Plan To Blob Centroid"
             service_name="/plan_kinematic_path"
-            group_name="chonkur_grasp"
+            group_name="clr"
             end_effector_name="grasp_frame"
             goal_pose="{pose}"
             pipeline="pilz_industrial_motion_planner"
             planner="LIN"
             orientation_tolerance="0.0872665;0.10872665;0.0872665"
-            velocity_scaling="1.0"
+            velocity_scaling="0.1"
             acceleration_scaling="0.1"
             trajectory="{traj_to_pose}"/>
         <ExecuteTrajectory
@@ -37,13 +61,13 @@
         <PlanToPose
             name="Plan To Blob Centroid"
             service_name="/plan_kinematic_path"
-            group_name="chonkur_grasp"
+            group_name="clr"
             end_effector_name="grasp_frame"
             goal_pose="{pose}"
             pipeline="pilz_industrial_motion_planner"
             planner="PTP"
             orientation_tolerance="0.0872665;0.10872665;0.0872665"
-            velocity_scaling="0.9"
+            velocity_scaling="0.1"
             acceleration_scaling="0.1"
             trajectory="{traj_to_pose}"/>
         <ExecuteTrajectory
@@ -54,7 +78,7 @@
     </BehaviorTree>
 
     <!-- With Pause -->
-
+    <!--
     <BehaviorTree ID="PILZ_LIN_to_transform_w_pause">
       <Sequence>
         <TransformToPose
@@ -106,7 +130,7 @@
             trajectory="{traj_to_pose}"
             action_name="/execute_trajectory"/>
       </Sequence>
-    </BehaviorTree>
+    </BehaviorTree> -->
 
 
 

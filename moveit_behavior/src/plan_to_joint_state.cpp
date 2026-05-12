@@ -3,11 +3,7 @@ namespace moveit_behavior
 {
 bool PlanToJointState::setRequest(Request::SharedPtr& request)
 {
-  // getInput("value", request->data);
-  // std::cout << "setRequest " << std::endl;
-
   // get planning inputs
-
   std::string group_name;
   if (!getInput("group_name", group_name))
   {
@@ -78,5 +74,3 @@ BT::NodeStatus PlanToJointState::onFailure(BT::ServiceNodeErrorCode error)
   return BT::NodeStatus::FAILURE;
 }
 }  // namespace moveit_behavior
-
-// CreateRosNodePlugin(moveit_behavior::PlanToJointState, "PlanToJointState");

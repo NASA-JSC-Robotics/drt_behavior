@@ -18,8 +18,25 @@
 
 namespace moveit_behavior
 {
-
 using GetMotionPlan = moveit_msgs::srv::GetMotionPlan;
+/**
+ * @brief Constructs motion planning requests and uses move_group's server client interface to find trajectory to a pose.
+ *
+ * @details
+ * | Data Port Name             | Port Type | Object Type                        |
+ * | ---------------------------|-----------|------------------------------------|
+ * | service_name               | Input     | std::string                        |
+ * | group_name                 | Input     | std::string                        |
+ * | end_effector_name          | Input     | std::string                        |
+ * | position_tolerance         | Input     | double                             |
+ * | orientation_tolerance      | Input     | std::vector<double>                |
+ * | goal_pose                  | Input     | geometry_msgs::msg::PoseStamped    |
+ * | velocity_scaling           | Input     | double                             |
+ * | acceleration_scaling       | Input     | double                             |
+ * | planner                    | Input     | std::string                        |
+ * | pipeline                   | Input     | std::string                        |
+ * | trajectory                 | Output    | moveit_msgs::msg::RobotTrajectory  |
+ */
 class PlanToPose : public BT::RosServiceNode<GetMotionPlan>
 {
 public:
@@ -32,6 +49,7 @@ public:
     return providedBasicPorts(
         { BT::InputPort<std::string>("group_name", "the name of the planning group"),
           BT::InputPort<std::string>("end_effector_name", "the names of the end effector"),
+          BT::InputPort<double>("position_tolerance", 0.01, "Raidus of sphere in which end effector position is valid"),
           BT::InputPort<std::vector<double> >("orientation_tolerance"),
           BT::InputPort<geometry_msgs::msg::PoseStamped>("goal_pose",
                                                          "the positions of the joints (in same order as joint names)"),
