@@ -13,10 +13,10 @@
             end_effector_name="{end_effector_name}"
             goal_pose="{pose}"
             pipeline="ompl"
-            planner="RRTConnect"
-            orientation_tolerance="0.05;0.05;0.05"
-            velocity_scaling="1.0"
-            acceleration_scaling="1.0"
+            planner="{planner=RRTConnect}"
+            orientation_tolerance="{orientation_tolerance=0.05;0.05;0.05}"
+            velocity_scaling="{velocity_scaling=1.0}"
+            acceleration_scaling="{acceleration_scaling=1.0}"
             trajectory="{traj_to_pose}"/>
         <ExecuteTrajectory
             name="Execute the trajectory "
@@ -40,9 +40,9 @@
             goal_pose="{pose}"
             pipeline="pilz_industrial_motion_planner"
             planner="LIN"
-            orientation_tolerance="0.0872665;0.10872665;0.0872665"
-            velocity_scaling="0.1"
-            acceleration_scaling="0.1"
+            orientation_tolerance="{orientation_tolerance=0.0872665;0.10872665;0.0872665}"
+            velocity_scaling="{velocity_scaling=1.0}"
+            acceleration_scaling="{acceleration_scaling=1.0}"
             trajectory="{traj_to_pose}"/>
         <ExecuteTrajectory
             name="Execute the trajectory "
@@ -66,9 +66,9 @@
             goal_pose="{pose}"
             pipeline="pilz_industrial_motion_planner"
             planner="PTP"
-            orientation_tolerance="0.0872665;0.10872665;0.0872665"
-            velocity_scaling="0.1"
-            acceleration_scaling="0.1"
+            orientation_tolerance="{orientation_tolerance=0.0872665;0.10872665;0.0872665}"
+            velocity_scaling="{velocity_scaling=1.0}"
+            acceleration_scaling="{acceleration_scaling=1.0}"
             trajectory="{traj_to_pose}"/>
         <ExecuteTrajectory
             name="Execute the trajectory "
