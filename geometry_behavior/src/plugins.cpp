@@ -22,9 +22,9 @@
 #include "geometry_behavior/apply_transform.hpp"
 #include "geometry_behavior/async_tf_lookup.hpp"
 #include "geometry_behavior/create_random_transform.hpp"
+#include "geometry_behavior/pose_to_transform.hpp"
 #include "geometry_behavior/publish_transform.hpp"
 #include "geometry_behavior/transform_to_pose.hpp"
-#include "geometry_behavior/pose_to_transform.hpp"
 
 BTCPP_EXPORT void BT_RegisterRosNodeFromPlugin(BT::BehaviorTreeFactory& factory, const BT::RosNodeParams& params)
 {

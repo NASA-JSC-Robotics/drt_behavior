@@ -28,11 +28,11 @@ PoseToTransform::PoseToTransform(const std::string& name, const BT::NodeConfig& 
 // It is mandatory to define this STATIC method.
 BT::PortsList PoseToTransform::providedPorts()
 {
-  return { 
-           // input parameters
-           BT::InputPort<geometry_msgs::msg::PoseStamped>("pose_stamped"),
-           // output params
-           BT::OutputPort<geometry_msgs::msg::TransformStamped>("transform_stamped"),
+  return {
+    // input parameters
+    BT::InputPort<geometry_msgs::msg::PoseStamped>("pose_stamped"),
+    // output params
+    BT::OutputPort<geometry_msgs::msg::TransformStamped>("transform_stamped"),
   };
 }
 
@@ -47,14 +47,12 @@ BT::NodeStatus PoseToTransform::tick()
 
   geometry_msgs::msg::TransformStamped t_stamped;
   t_stamped.header = p_stamped.header;
-  
-  t_stamped.transform.translation.x = p_stamped.pose.position.x; 
-  t_stamped.transform.translation.y = p_stamped.pose.position.y; 
-  t_stamped.transform.translation.z = p_stamped.pose.position.z; 
+
+  t_stamped.transform.translation.x = p_stamped.pose.position.x;
+  t_stamped.transform.translation.y = p_stamped.pose.position.y;
+  t_stamped.transform.translation.z = p_stamped.pose.position.z;
 
   t_stamped.transform.rotation = p_stamped.pose.orientation;
-
-  std::cout << geometry_msgs::msg::to_yaml(t_stamped) << std::endl;
 
   setOutput("transform_stamped", t_stamped);
 
