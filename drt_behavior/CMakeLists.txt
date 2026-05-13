@@ -33,14 +33,14 @@ target_include_directories(drt_behavior PUBLIC
     $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
 ament_target_dependencies(drt_behavior PUBLIC ${dependencies_pkgs})
 
-add_executable(demo src/demo.cpp)
-target_include_directories(demo PUBLIC
+add_executable(behavior_executor src/behavior_executor.cpp)
+target_include_directories(behavior_executor PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
-ament_target_dependencies(demo ${dependencies_pkgs})
-target_link_libraries(demo ${PROJECT_NAME})
+ament_target_dependencies(behavior_executor ${dependencies_pkgs})
+target_link_libraries(behavior_executor ${PROJECT_NAME})
 
-install(TARGETS demo
+install(TARGETS behavior_executor
     DESTINATION lib/${PROJECT_NAME})
 
 install(
