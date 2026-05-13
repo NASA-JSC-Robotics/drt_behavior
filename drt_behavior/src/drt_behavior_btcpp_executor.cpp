@@ -79,5 +79,14 @@ std::optional<std::string> DRTBehaviorBtcppExecutor::onTreeExecutionCompleted(BT
   return std::nullopt;
 }
 
-std::optional<BT::NodeStatus> DRTBehaviorBtcppExecutor::onLoopAfterTick(BT::NodeStatus /*status*/)
-{ return std::nullopt; }
+std::optional<BT::NodeStatus> DRTBehaviorBtcppExecutor::onLoopAfterTick(BT::NodeStatus status)
+{
+  // If a tick fails we kill the tree
+  if (status == BT::NodeStatus::FAILURE)
+  {
+    RCLCPP_ERROR(node()->get_logger(), "Tree returned FAILURE, stopping execution");
+    return status;
+  }
+  // otherwise continue
+  return std::nullopt;
+}
