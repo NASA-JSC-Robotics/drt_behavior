@@ -30,8 +30,10 @@ BT::PortsList ApplyTransform::providedPorts()
 {
   return { // output params
            BT::InputPort<geometry_msgs::msg::TransformStamped>("input_transform"),
-           BT::InputPort<std::vector<double> >("applied_transform_translation", std::vector<double>{ 0.0, 0.0, 0.0 }, "XYZ translation"),
-           BT::InputPort<std::vector<double> >("applied_transform_rotation", std::vector<double>{ 0.0, 0.0, 0.0, 1.0 },  "Either RPY in radians, or XYZ-W quaternions"),
+           BT::InputPort<std::vector<double> >("applied_transform_translation", std::vector<double>{ 0.0, 0.0, 0.0 },
+                                               "XYZ translation"),
+           BT::InputPort<std::vector<double> >("applied_transform_rotation", std::vector<double>{ 0.0, 0.0, 0.0, 1.0 },
+                                               "Either RPY in radians, or XYZ-W quaternions"),
            BT::OutputPort<geometry_msgs::msg::TransformStamped>("resulting_transform")
   };
 }
@@ -46,13 +48,13 @@ BT::NodeStatus ApplyTransform::tick()
   }
 
   std::vector<double> applied_transform_translation;
-  if (!getInput("applied_transform", applied_transform_translation))
+  if (!getInput("applied_transform_translation", applied_transform_translation))
   {
     throw BT::RuntimeError("Could not access blackboard input [applied_transform_translation]");
   }
 
   std::vector<double> applied_transform_rotation;
-  if (!getInput("applied_transform", applied_transform_rotation))
+  if (!getInput("applied_transform_rotation", applied_transform_rotation))
   {
     throw BT::RuntimeError("Could not access blackboard input [applied_transform_rotation]");
   }
@@ -61,14 +63,15 @@ BT::NodeStatus ApplyTransform::tick()
   {
     throw BT::RuntimeError("applied_transform_translation blackboard input is not of the right size");
   }
-  Eigen::Vector3d translation(applied_transform_translation[0], applied_transform_translation[1], applied_transform_translation[2]);
+  Eigen::Vector3d translation(applied_transform_translation[0], applied_transform_translation[1],
+                              applied_transform_translation[2]);
 
   Eigen::Matrix3d rotation;
   if (applied_transform_rotation.size() == 4)
   {
     // quat
-    rotation = Eigen::Quaterniond(applied_transform_rotation[3], applied_transform_rotation[0], applied_transform_rotation[1],
-                                  applied_transform_rotation[2])
+    rotation = Eigen::Quaterniond(applied_transform_rotation[3], applied_transform_rotation[0],
+                                  applied_transform_rotation[1], applied_transform_rotation[2])
                    .toRotationMatrix();
   }
   else if (applied_transform_rotation.size() == 3)
