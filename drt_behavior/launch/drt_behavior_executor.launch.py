@@ -38,7 +38,7 @@ def launch_setup(context, *args, **kwargs):
     # Behavior executor node
     behavior_executor = Node(
         package="drt_behavior",
-        executable="demo",
+        executable="behavior_executor",
         output="both",
         parameters=[bt_config, use_sim_time],
     )
