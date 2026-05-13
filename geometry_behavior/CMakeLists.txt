@@ -25,6 +25,7 @@ set(behavior_cpp_files
     src/apply_transform.cpp
     src/async_tf_lookup.cpp
     src/transform_to_pose.cpp
+    src/pose_to_transform.cpp
     src/create_random_transform.cpp
     src/publish_transform.cpp
     src/plugins.cpp
