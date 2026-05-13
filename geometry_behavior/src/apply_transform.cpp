@@ -30,7 +30,8 @@ BT::PortsList ApplyTransform::providedPorts()
 {
   return { // output params
            BT::InputPort<geometry_msgs::msg::TransformStamped>("input_transform"),
-           BT::InputPort<std::vector<double> >("applied_transform"),
+           BT::InputPort<std::vector<double> >("applied_transform_translation", std::vector<double>{ 0.0, 0.0, 0.0 }, "XYZ translation"),
+           BT::InputPort<std::vector<double> >("applied_transform_rotation", std::vector<double>{ 0.0, 0.0, 0.0, 1.0 },  "Either RPY in radians, or XYZ-W quaternions"),
            BT::OutputPort<geometry_msgs::msg::TransformStamped>("resulting_transform")
   };
 }
@@ -44,32 +45,42 @@ BT::NodeStatus ApplyTransform::tick()
     throw BT::RuntimeError("Could not access blackboard input [input_transform]");
   }
 
-  std::vector<double> applied_transform_vec;
-  if (!getInput("applied_transform", applied_transform_vec))
+  std::vector<double> applied_transform_translation;
+  if (!getInput("applied_transform", applied_transform_translation))
   {
-    throw BT::RuntimeError("Could not access blackboard input [applied_transform]");
+    throw BT::RuntimeError("Could not access blackboard input [applied_transform_translation]");
   }
 
-  Eigen::Vector3d translation(applied_transform_vec[0], applied_transform_vec[1], applied_transform_vec[2]);
-  Eigen::Matrix3d rotation;
+  std::vector<double> applied_transform_rotation;
+  if (!getInput("applied_transform", applied_transform_rotation))
+  {
+    throw BT::RuntimeError("Could not access blackboard input [applied_transform_rotation]");
+  }
 
-  if (applied_transform_vec.size() == 7)
+  if (applied_transform_translation.size() != 3)
+  {
+    throw BT::RuntimeError("applied_transform_translation blackboard input is not of the right size");
+  }
+  Eigen::Vector3d translation(applied_transform_translation[0], applied_transform_translation[1], applied_transform_translation[2]);
+
+  Eigen::Matrix3d rotation;
+  if (applied_transform_rotation.size() == 4)
   {
     // quat
-    rotation = Eigen::Quaterniond(applied_transform_vec[6], applied_transform_vec[3], applied_transform_vec[4],
-                                  applied_transform_vec[5])
+    rotation = Eigen::Quaterniond(applied_transform_rotation[3], applied_transform_rotation[0], applied_transform_rotation[1],
+                                  applied_transform_rotation[2])
                    .toRotationMatrix();
   }
-  else if (applied_transform_vec.size() == 6)
+  else if (applied_transform_rotation.size() == 3)
   {
     // rpy
-    rotation = Eigen::AngleAxisd(applied_transform_vec[5], Eigen::Vector3d::UnitZ()) *
-               Eigen::AngleAxisd(applied_transform_vec[4], Eigen::Vector3d::UnitY()) *
-               Eigen::AngleAxisd(applied_transform_vec[3], Eigen::Vector3d::UnitX());
+    rotation = Eigen::AngleAxisd(applied_transform_rotation[2], Eigen::Vector3d::UnitZ()) *
+               Eigen::AngleAxisd(applied_transform_rotation[1], Eigen::Vector3d::UnitY()) *
+               Eigen::AngleAxisd(applied_transform_rotation[0], Eigen::Vector3d::UnitX());
   }
   else
   {
-    throw BT::RuntimeError("applied_transform blackboard input is not of the right size");
+    throw BT::RuntimeError("applied_transform_rotation blackboard input is not of the right size");
   }
 
   Eigen::Isometry3d applied_transform;
@@ -78,22 +89,6 @@ BT::NodeStatus ApplyTransform::tick()
 
   Eigen::Isometry3d eigen_transform = tf2::transformToEigen(t_stamped);
   Eigen::Isometry3d resulting_transform = eigen_transform * applied_transform;
-
-  // Eigen::Matrix3d rotation_matrix = eigen_transform.rotation();
-
-  // Eigen::Vector3d x_axis = rotation_matrix(Eigen::all, 0);
-  // x_axis(2) = 0.0;
-  // x_axis.normalize();
-  // Eigen::Vector3d z_axis = Eigen::Vector3d(0.0, 0.0, -1.0);
-  // Eigen::Vector3d y_axis = z_axis.cross(x_axis);
-
-  // rotation_matrix(Eigen::all, 0) = x_axis;
-  // rotation_matrix(Eigen::all, 1) = y_axis;
-  // rotation_matrix(Eigen::all, Eigen::last) = Eigen::Vector3d(0.0, 0.0, -1.0);
-
-  // Eigen::Quaterniond aligned_quat(rotation_matrix);
-  // aligned_quat.normalize();
-  // eigen_transform.linear() = aligned_quat.toRotationMatrix();
 
   geometry_msgs::msg::TransformStamped res = tf2::eigenToTransform(resulting_transform);
   res.header = t_stamped.header;
