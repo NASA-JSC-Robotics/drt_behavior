@@ -9,8 +9,8 @@
         <PlanToPose
             name="Plan to transform"
             service_name="/plan_kinematic_path"
-            group_name="clr"
-            end_effector_name="grasp_frame"
+            group_name="{group_name}"
+            end_effector_name="{end_effector_name}"
             goal_pose="{pose}"
             pipeline="ompl"
             planner="RRTConnect"
@@ -35,8 +35,8 @@
         <PlanToPose
             name="Plan To Blob Centroid"
             service_name="/plan_kinematic_path"
-            group_name="clr"
-            end_effector_name="grasp_frame"
+            group_name="{group_name}"
+            end_effector_name="{end_effector_name}"
             goal_pose="{pose}"
             pipeline="pilz_industrial_motion_planner"
             planner="LIN"
@@ -61,8 +61,8 @@
         <PlanToPose
             name="Plan To Blob Centroid"
             service_name="/plan_kinematic_path"
-            group_name="clr"
-            end_effector_name="grasp_frame"
+            group_name="{group_name}"
+            end_effector_name="{end_effector_name}"
             goal_pose="{pose}"
             pipeline="pilz_industrial_motion_planner"
             planner="PTP"
