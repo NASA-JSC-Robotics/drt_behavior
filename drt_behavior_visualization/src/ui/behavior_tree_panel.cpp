@@ -16,9 +16,9 @@
  * under the License.
  */
 
-#include "visualization_tools/ui/behavior_tree_panel.hpp"
+#include "drt_behavior_visualization/ui/behavior_tree_panel.hpp"
 
-namespace visualization_tools
+namespace drt_behavior_visualization
 {
 BehaviorTreePanel::BehaviorTreePanel(QWidget* parent)
   : rviz_common::Panel{ parent }, ui_(std::make_unique<Ui::rviz_panel>())
@@ -41,7 +41,7 @@ void BehaviorTreePanel::onInitialize()
   ui_->guiArea->layout()->addWidget(behavior_tree_widget_.get());
   ui_->retranslateUi(this);
 }
-}  // namespace visualization_tools
+}  // namespace drt_behavior_visualization
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(visualization_tools::BehaviorTreePanel, rviz_common::Panel)
+PLUGINLIB_EXPORT_CLASS(drt_behavior_visualization::BehaviorTreePanel, rviz_common::Panel)

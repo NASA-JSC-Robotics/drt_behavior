@@ -1,4 +1,4 @@
-# visualization_tools
+# drt_behavior_visualization
 
 Collection of RViz plugins for NASA JSC's Dexterous Robotics Group
 

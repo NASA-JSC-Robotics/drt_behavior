@@ -35,9 +35,9 @@
 #include <QtWidgets>
 
 #include <ui_rviz2_panel.h>
-#include <visualization_tools/ui/behavior_tree_widget.hpp>
+#include <drt_behavior_visualization/ui/behavior_tree_widget.hpp>
 
-namespace visualization_tools
+namespace drt_behavior_visualization
 {
 class BehaviorTreePanel : public rviz_common::Panel
 {
@@ -59,4 +59,4 @@ private:
   std::unique_ptr<Ui::rviz_panel> ui_;
   // private Q_SLOTS:
 };
-};  // namespace visualization_tools
+};  // namespace drt_behavior_visualization

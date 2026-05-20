@@ -46,7 +46,7 @@
  */
 #include <ui_behavior_tree_widget.h>
 
-namespace visualization_tools
+namespace drt_behavior_visualization
 {
 using ExecuteTree = btcpp_ros2_interfaces::action::ExecuteTree;
 using GoalHandleExecuteTree = rclcpp_action::ClientGoalHandle<ExecuteTree>;
@@ -121,4 +121,4 @@ private Q_SLOTS:
   void on_RunButton_pressed();
 };
 
-}  // namespace visualization_tools
+}  // namespace drt_behavior_visualization

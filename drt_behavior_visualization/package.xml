@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>visualization_tools</name>
+  <name>drt_behavior_visualization</name>
   <version>1.0.0</version>
   <description> RViz panels for drt_behavior by Dexterous Robotics Team of JSC </description>
   <maintainer email="misha.savchenko@nasa.gov">Misha Savchenko</maintainer>

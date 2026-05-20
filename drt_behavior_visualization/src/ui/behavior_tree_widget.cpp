@@ -16,9 +16,9 @@
  * under the License.
  */
 
-#include "visualization_tools/ui/behavior_tree_widget.hpp"
+#include "drt_behavior_visualization/ui/behavior_tree_widget.hpp"
 
-namespace visualization_tools
+namespace drt_behavior_visualization
 {
 using ExecuteTree = btcpp_ros2_interfaces::action::ExecuteTree;
 using GoalHandleExecuteTree = rclcpp_action::ClientGoalHandle<ExecuteTree>;
@@ -336,4 +336,4 @@ void BehaviorTreeWidget::waitForClient(rclcpp::ClientBase::SharedPtr client)
 
 // #endregion PROTECTED
 
-}  // namespace visualization_tools
+}  // namespace drt_behavior_visualization

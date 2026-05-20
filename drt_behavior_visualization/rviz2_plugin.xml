@@ -1,6 +1,6 @@
 <library path="behavior_tree_panel">
-    <class name="visualization_tools/BehaviorTreePanel"
-           type="visualization_tools::BehaviorTreePanel"
+    <class name="drt_behavior_visualization/BehaviorTreePanel"
+           type="drt_behavior_visualization::BehaviorTreePanel"
            base_class_type="rviz_common::Panel">
         <description>Behavior Tree RViz Panel</description>
     </class>
