@@ -49,9 +49,9 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QPushButton" name="InitializeButton">
+        <widget class="QPushButton" name="UpdateTreesBtn">
          <property name="text">
-          <string>Initialize</string>
+          <string>Update Trees</string>
          </property>
         </widget>
        </item>

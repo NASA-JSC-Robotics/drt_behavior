@@ -44,7 +44,7 @@ BehaviorTreeWidget::BehaviorTreeWidget(QWidget* parent, rclcpp::Node::SharedPtr 
 
   // Set the initialized status
   // Right when we finish constructing the widget let actually send the request to get behavior trees
-  on_InitializeButton_pressed();
+  on_UpdateTreesBtn_pressed();
 }
 
 void BehaviorTreeWidget::initialize_ui()
@@ -55,7 +55,7 @@ void BehaviorTreeWidget::initialize_ui()
 
 // #region OVERRIDES
 
-void BehaviorTreeWidget::on_InitializeButton_pressed()
+void BehaviorTreeWidget::on_UpdateTreesBtn_pressed()
 {
   widget_initialized_ = false;
   // Wait for the service to be available

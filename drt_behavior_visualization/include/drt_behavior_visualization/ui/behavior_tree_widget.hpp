@@ -117,7 +117,7 @@ private:
 
 private Q_SLOTS:
   void on_StopButton_pressed();
-  void on_InitializeButton_pressed();
+  void on_UpdateTreesBtn_pressed();
   void on_RunButton_pressed();
 };
 
