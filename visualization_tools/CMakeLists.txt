@@ -29,7 +29,7 @@ set(dependencies_pkgs
     rviz_common
     # BT
     btcpp_ros2_interfaces
-    # QT 
+    # QT
     Qt5Core
     Qt5Gui
     Qt5Widgets

@@ -8,7 +8,7 @@
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  
+
   <!-- RVIZ -->
   <build_depend>qtbase5-dev</build_depend>
 
@@ -16,7 +16,7 @@
   <depend>rclcpp</depend>
   <depend>rviz_common</depend>
   <depend>btcpp_ros2_interfaces</depend>
-  
+
   <exec_depend>ros2launch</exec_depend>
 
   <!-- QT Dependencies -->
