@@ -17,7 +17,6 @@
 #include <QtWidgets>
 
 #include <ui_rviz2_panel.h>
-#include <visualization_tools/ui/base_rviz_widget.hpp>
 #include <visualization_tools/ui/behavior_tree_widget.hpp>
 
 namespace visualization_tools

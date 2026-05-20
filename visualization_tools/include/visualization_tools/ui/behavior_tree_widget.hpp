@@ -27,14 +27,13 @@
  *  in order to generate the header file from ui.
  */
 #include <ui_behavior_tree_widget.h>
-#include <visualization_tools/ui/base_rviz_widget.hpp>
 
 namespace visualization_tools
 {
 using ExecuteTree = btcpp_ros2_interfaces::action::ExecuteTree;
 using GoalHandleExecuteTree = rclcpp_action::ClientGoalHandle<ExecuteTree>;
 
-class BehaviorTreeWidget : public BaseRVizWidget
+class BehaviorTreeWidget : public QWidget
 {
   Q_OBJECT
 
@@ -42,16 +41,6 @@ public:
   explicit BehaviorTreeWidget(QWidget* parent, rclcpp::Node::SharedPtr node_ptr);
 
   ~BehaviorTreeWidget() = default;
-
-  // #region OVERRIDES
-
-  std::string getName() const override;
-
-  void load(const rviz_common::Config& config) override;
-
-  void save(rviz_common::Config config) const override;
-
-  // #endregion OVERRIDES
 
   // #region PRIVATE
 
@@ -108,6 +97,12 @@ private Q_SLOTS:
   void on_StopButton_pressed();
   void on_InitializeButton_pressed();
   void on_RunButton_pressed();
+
+protected:
+  // ROS
+  rclcpp::Node::SharedPtr node_;
+
+  void waitForClient(rclcpp::ClientBase::SharedPtr client);
 };
 
 }  // namespace visualization_tools

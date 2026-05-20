@@ -60,7 +60,6 @@ qt5_wrap_ui(${bt_panel}_uis_h ${${bt_panel}_uis})
 
 set(${PROJECT_NAME}_headers_to_moc
     include/${PROJECT_NAME}/ui/behavior_tree_panel.hpp
-    include/${PROJECT_NAME}/ui/base_rviz_widget.hpp
     include/${PROJECT_NAME}/ui/behavior_tree_widget.hpp
 )
 
@@ -70,7 +69,6 @@ endforeach()
 
 set(${PROJECT_NAME}_source_files
     src/ui/behavior_tree_panel.cpp
-    src/ui/base_rviz_widget.cpp
     src/ui/behavior_tree_widget.cpp
 )
 

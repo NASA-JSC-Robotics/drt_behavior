@@ -6,7 +6,7 @@ using ExecuteTree = btcpp_ros2_interfaces::action::ExecuteTree;
 using GoalHandleExecuteTree = rclcpp_action::ClientGoalHandle<ExecuteTree>;
 
 BehaviorTreeWidget::BehaviorTreeWidget(QWidget* parent, rclcpp::Node::SharedPtr node_ptr)
-  : BaseRVizWidget{ parent, node_ptr }, ui_(std::make_unique<Ui::behavior_tree_widget>())
+  : QWidget(parent), node_(node_ptr), ui_(std::make_unique<Ui::behavior_tree_widget>())
 {
   // Extend the widget with all attributes and children from UI file
   ui_->setupUi(this);
@@ -298,17 +298,24 @@ std::string BehaviorTreeWidget::replace_string(std::string string_to_replace, st
   return string_to_replace;
 }
 
-std::string BehaviorTreeWidget::getName() const
-{ return "behavior_tree_widget"; }
+// #region PROTECTED
 
-void BehaviorTreeWidget::load(const rviz_common::Config& /*config*/)
+void BehaviorTreeWidget::waitForClient(rclcpp::ClientBase::SharedPtr client)
 {
-  // TODO: Implement
+  // Get the name of the client
+  std::string client_name = client->get_service_name();
+  // Wait for the client to be ready
+  while (!client->wait_for_service(std::chrono::seconds(1)) && rclcpp::ok())
+  {
+    if (!rclcpp::ok())
+    {
+      return;
+    }
+    RCLCPP_INFO(node_->get_logger(), "Service %s not available, waiting again...", client_name.c_str());
+  }
+  RCLCPP_DEBUG(node_->get_logger(), "Service %s is now available", client_name.c_str());
 }
 
-void BehaviorTreeWidget::save(rviz_common::Config /*config*/) const
-{
-  // TODO: Implement
-}
+// #endregion PROTECTED
 
 }  // namespace visualization_tools
