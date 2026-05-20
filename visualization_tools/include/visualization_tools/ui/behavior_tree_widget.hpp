@@ -27,9 +27,9 @@
  *  in order to generate the header file from ui.
  */
 #include <ui_behavior_tree_widget.h>
-#include <drt_rviz2_panels/ui/base_rviz_widget.hpp>
+#include <visualization_tools/ui/base_rviz_widget.hpp>
 
-namespace drt_rviz2_panels
+namespace visualization_tools
 {
     using ExecuteTree = btcpp_ros2_interfaces::action::ExecuteTree;
     using GoalHandleExecuteTree = rclcpp_action::ClientGoalHandle<ExecuteTree>;
@@ -111,4 +111,4 @@ namespace drt_rviz2_panels
         void on_RunButton_pressed();
     };
 
-} // drt_rviz2_panels
+} // visualization_tools

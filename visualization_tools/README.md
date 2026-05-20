@@ -1,4 +1,4 @@
-# drt_rviz2_panels
+# visualization_tools
 
 Collection of RViz plugins for NASA JSC's Dexterous Robotics Group
 

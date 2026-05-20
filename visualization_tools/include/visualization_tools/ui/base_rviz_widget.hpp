@@ -13,7 +13,7 @@
 // Qt
 #include <QtWidgets>
 
-namespace drt_rviz2_panels
+namespace visualization_tools
 {
 
 class BaseRVizWidget : public QWidget

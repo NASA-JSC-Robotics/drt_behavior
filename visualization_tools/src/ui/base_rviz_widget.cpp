@@ -1,6 +1,6 @@
-#include <drt_rviz2_panels/ui/base_rviz_widget.hpp>
+#include <visualization_tools/ui/base_rviz_widget.hpp>
 
-namespace drt_rviz2_panels
+namespace visualization_tools
 {
 
 BaseRVizWidget::BaseRVizWidget(

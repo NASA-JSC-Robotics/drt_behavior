@@ -17,10 +17,10 @@
 #include <QScrollArea>
 
 #include <ui_rviz2_panel.h>
-#include <drt_rviz2_panels/ui/base_rviz_widget.hpp>
-#include <drt_rviz2_panels/ui/behavior_tree_widget.hpp>
+#include <visualization_tools/ui/base_rviz_widget.hpp>
+#include <visualization_tools/ui/behavior_tree_widget.hpp>
 
-namespace drt_rviz2_panels
+namespace visualization_tools
 {
     class BehaviorTreePanel : public rviz_common::Panel
     {
@@ -42,4 +42,4 @@ namespace drt_rviz2_panels
         std::unique_ptr<Ui::rviz_panel> ui_;
         // private Q_SLOTS:
     };
-}; // drt_rviz2_panels
+}; // visualization_tools

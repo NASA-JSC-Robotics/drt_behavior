@@ -1,6 +1,6 @@
-#include "drt_rviz2_panels/ui/behavior_tree_panel.hpp"
+#include "visualization_tools/ui/behavior_tree_panel.hpp"
 
-namespace drt_rviz2_panels
+namespace visualization_tools
 {
     BehaviorTreePanel::BehaviorTreePanel(QWidget *parent)
         : rviz_common::Panel{parent}, ui_(std::make_unique<Ui::rviz_panel>())
@@ -27,4 +27,4 @@ namespace drt_rviz2_panels
 }
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(drt_rviz2_panels::BehaviorTreePanel, rviz_common::Panel)
+PLUGINLIB_EXPORT_CLASS(visualization_tools::BehaviorTreePanel, rviz_common::Panel)

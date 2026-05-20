@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(drt_rviz2_panels)
+project(visualization_tools)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)

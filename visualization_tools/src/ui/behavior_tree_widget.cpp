@@ -1,6 +1,6 @@
-#include "drt_rviz2_panels/ui/behavior_tree_widget.hpp"
+#include "visualization_tools/ui/behavior_tree_widget.hpp"
 
-namespace drt_rviz2_panels
+namespace visualization_tools
 {
     using ExecuteTree = btcpp_ros2_interfaces::action::ExecuteTree;
     using GoalHandleExecuteTree = rclcpp_action::ClientGoalHandle<ExecuteTree>;
@@ -318,4 +318,4 @@ namespace drt_rviz2_panels
         // TODO: Implement
     }
 
-} // drt_rviz2_panels
+} // visualization_tools
