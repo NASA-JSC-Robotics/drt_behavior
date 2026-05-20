@@ -3,7 +3,7 @@
 <package format="3">
   <name>visualization_tools</name>
   <version>1.0.0</version>
-  <description> RViz panels by Dexterous Robotics Team of JSC </description>
+  <description> RViz panels for drt_behavior by Dexterous Robotics Team of JSC </description>
   <maintainer email="misha.savchenko@nasa.gov">Misha Savchenko</maintainer>
   <license>Apache-2.0</license>
 
@@ -16,8 +16,6 @@
   <depend>rclcpp</depend>
   <depend>rviz_common</depend>
   <depend>btcpp_ros2_interfaces</depend>
-
-  <exec_depend>ros2launch</exec_depend>
 
   <!-- QT Dependencies -->
   <exec_depend>libqt5-core</exec_depend>
