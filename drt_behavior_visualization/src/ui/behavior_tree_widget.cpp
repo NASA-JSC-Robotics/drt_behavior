@@ -70,7 +70,7 @@ void BehaviorTreeWidget::on_UpdateTreesBtn_pressed()
 
 void BehaviorTreeWidget::on_StopButton_pressed()
 {
-  std::cout << "Canceling current goal..." << std::endl;
+  RCLCPP_INFO(node_->get_logger(), "Canceling current goal...");
   execute_tree_client_->async_cancel_all_goals();
   return;
 }
