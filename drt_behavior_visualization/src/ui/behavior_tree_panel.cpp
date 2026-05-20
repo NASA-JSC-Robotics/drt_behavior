@@ -37,7 +37,6 @@ void BehaviorTreePanel::onInitialize()
   node_ = abstract_node_ptr_->get_raw_node();
   // Add the BehaviorTreeWidget to the GUI
   behavior_tree_widget_ = std::make_shared<BehaviorTreeWidget>(ui_->guiArea, node_);
-  // ui_->guiArea = behavior_tree_widget_.get();
   ui_->guiArea->layout()->addWidget(behavior_tree_widget_.get());
   ui_->retranslateUi(this);
 }
