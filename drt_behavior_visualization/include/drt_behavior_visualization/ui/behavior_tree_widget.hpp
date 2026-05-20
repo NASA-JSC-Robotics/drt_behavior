@@ -86,7 +86,6 @@ private:
 
   rclcpp_action::Client<btcpp_ros2_interfaces::action::ExecuteTree>::SharedPtr execute_tree_client_;
 
-  // rclcpp::Client<drt_behavior_msgs::srv::GetBehaviorTrees>::SharedPtr get_behavior_trees_client_;
   rclcpp::Client<btcpp_ros2_interfaces::srv::GetTrees>::SharedPtr get_behavior_trees_client_;
 
   rclcpp::Client<std_srvs::srv::Trigger>::SharedPtr stop_client_;
