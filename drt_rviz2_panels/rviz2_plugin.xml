@@ -1,0 +1,7 @@
+<library path="behavior_tree_panel">
+    <class name="drt_rviz2_panels/BehaviorTreePanel" 
+           type="drt_rviz2_panels::BehaviorTreePanel" 
+           base_class_type="rviz_common::Panel">
+        <description>Behavior Tree RViz Panel</description>
+    </class>
+</library>
