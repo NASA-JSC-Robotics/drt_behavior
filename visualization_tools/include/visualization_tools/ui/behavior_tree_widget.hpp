@@ -45,6 +45,10 @@ public:
   // #region PRIVATE
 
 private:
+  // #tag GUI
+  rclcpp::Node::SharedPtr node_;
+  std::unique_ptr<Ui::behavior_tree_widget> ui_;
+
   const std::string green = "\033[92m";
   const std::string red = "\033[91m";
   const std::string blue = "\033[96m";
@@ -52,8 +56,6 @@ private:
   const std::string end_color = "\033[0m";
 
   std::string active_behavior = "";
-  // #tag GUI
-  std::unique_ptr<Ui::behavior_tree_widget> ui_;
 
   std::vector<std::string> available_behaviors;
 
@@ -93,16 +95,12 @@ private:
   void update_log_text();
   std::string process_text(std::string text);
 
+  void waitForClient(rclcpp::ClientBase::SharedPtr client);
+
 private Q_SLOTS:
   void on_StopButton_pressed();
   void on_InitializeButton_pressed();
   void on_RunButton_pressed();
-
-protected:
-  // ROS
-  rclcpp::Node::SharedPtr node_;
-
-  void waitForClient(rclcpp::ClientBase::SharedPtr client);
 };
 
 }  // namespace visualization_tools
