@@ -31,7 +31,6 @@ BehaviorTreeWidget::BehaviorTreeWidget(QWidget* parent, rclcpp::Node::SharedPtr 
 
   initialize_ui();
 
-  // #tag ROS_Service_Clients
   get_behavior_trees_client_ = node_->create_client<btcpp_ros2_interfaces::srv::GetTrees>("/get_loaded_trees");
 
   stop_client_ = node_->create_client<std_srvs::srv::Trigger>("/drt_behavior_stop");
@@ -52,8 +51,6 @@ void BehaviorTreeWidget::initialize_ui()
   ui_->AutoScrollLog->setChecked(true);
   ui_->AutoScrollBehaviorTree->setChecked(false);
 }
-
-// #region OVERRIDES
 
 void BehaviorTreeWidget::on_UpdateTreesBtn_pressed()
 {
@@ -156,7 +153,6 @@ void BehaviorTreeWidget::get_behavior_trees_cb(
   return;
 }
 
-// publisher callbacks
 void BehaviorTreeWidget::bt_status_callback(const std_msgs::msg::String::SharedPtr msg)
 {
   std::vector<std::string> result;
@@ -232,15 +228,12 @@ void BehaviorTreeWidget::update_bt_text()
   auto formatted_bt_print_text = "<pre>" + bt_print_text + "</pre>";
 
   QTextCursor cursor = ui_->BehaviorTreeText->textCursor();
-  // int lineNumber = cursor.blockNumber();
   auto scroll_value = ui_->BehaviorTreeText->verticalScrollBar()->value();
 
   ui_->BehaviorTreeText->setHtml(QString::fromStdString(formatted_bt_print_text));
 
   if (ui_->AutoScrollBehaviorTree->isChecked())
   {
-    // cursor.movePosition(QTextCursor::End);
-    // ui_->BehaviorTreeText->setTextCursor(cursor);
     // Get the full text of the document
     QTextDocument* doc = ui_->BehaviorTreeText->document();
 
@@ -316,8 +309,6 @@ std::string BehaviorTreeWidget::replace_string(std::string string_to_replace, st
   return string_to_replace;
 }
 
-// #region PROTECTED
-
 void BehaviorTreeWidget::waitForClient(rclcpp::ClientBase::SharedPtr client)
 {
   // Get the name of the client
@@ -333,7 +324,5 @@ void BehaviorTreeWidget::waitForClient(rclcpp::ClientBase::SharedPtr client)
   }
   RCLCPP_DEBUG(node_->get_logger(), "Service %s is now available", client_name.c_str());
 }
-
-// #endregion PROTECTED
 
 }  // namespace drt_behavior_visualization

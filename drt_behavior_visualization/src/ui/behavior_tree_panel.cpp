@@ -26,7 +26,7 @@ BehaviorTreePanel::BehaviorTreePanel(QWidget* parent)
   // Extend the widget with all attributes and children from UI file
   ui_->setupUi(this);
 }
-// Overridden from Panel
+
 void BehaviorTreePanel::onInitialize()
 {
   // Access the abstract ROS Node and
