@@ -8,6 +8,7 @@ endif()
 set(dependencies_pkgs
     rclcpp
     tf2_ros
+    std_srvs
     behaviortree_ros2
 )
 
@@ -20,6 +21,7 @@ endforeach()
 
 set(behavior_cpp_files
     src/behaviors/check_param.cpp
+    src/behaviors/get_approval.cpp
 )
 
 add_library(drt_behavior

@@ -24,6 +24,7 @@
 #include "rclcpp/rclcpp.hpp"
 // local
 #include "drt_behavior/behaviors/check_param.hpp"
+#include "drt_behavior/behaviors/get_approval.hpp"
 
 #include "drt_behavior/drt_behavior_btcpp_executor.hpp"
 
@@ -38,6 +39,7 @@ DRTBehaviorBtcppExecutor::DRTBehaviorBtcppExecutor(std::shared_ptr<rclcpp::execu
 void DRTBehaviorBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory& factory)
 {
   factory.registerNodeType<CheckParam>("CheckParam");
+  factory.registerNodeType<GetApproval>("GetApproval", BT::RosNodeParams(node()));
   return;
 }
 
