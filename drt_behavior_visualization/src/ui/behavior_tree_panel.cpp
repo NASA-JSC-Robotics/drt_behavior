@@ -40,7 +40,7 @@ void BehaviorTreePanel::onInitialize()
   behavior_tree_widget_ = std::make_shared<BehaviorTreeWidget>(ui_->guiArea, node_);
   ui_->guiArea->layout()->addWidget(behavior_tree_widget_.get());
 
-  behavior_approval_widget = std::make_shared<BehaviorApprovalWidget>(ui_->guiArea, node_);
+  behavior_approval_widget = std::make_shared<BehaviorApprovalWidget>(ui_->guiArea);
   ui_->guiArea->layout()->addWidget(behavior_approval_widget.get());
   ui_->retranslateUi(this);
 }
