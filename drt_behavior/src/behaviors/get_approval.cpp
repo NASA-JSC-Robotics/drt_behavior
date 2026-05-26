@@ -19,11 +19,11 @@
 #include "drt_behavior/behaviors/get_approval.hpp"
 namespace drt_behavior
 {
-bool GetApproval::setRequest(Request::SharedPtr& request)
+bool GetApproval::setRequest(Request::SharedPtr& /*request*/)
 { return true; }
 
 BT::PortsList GetApproval::providedPorts()
-{ return {}; }
+{ return providedBasicPorts({}); }
 
 BT::NodeStatus GetApproval::onResponseReceived(const Response::SharedPtr& response)
 {
