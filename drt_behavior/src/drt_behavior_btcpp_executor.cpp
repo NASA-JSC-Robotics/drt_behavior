@@ -39,7 +39,11 @@ DRTBehaviorBtcppExecutor::DRTBehaviorBtcppExecutor(std::shared_ptr<rclcpp::execu
 void DRTBehaviorBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory& factory)
 {
   factory.registerNodeType<CheckParam>("CheckParam");
-  factory.registerNodeType<GetApproval>("GetApproval", BT::RosNodeParams(node()));
+
+  BT::RosNodeParams get_approval_params(node());
+  get_approval_params.server_timeout = std::chrono::milliseconds(30 * 1000);
+
+  factory.registerNodeType<GetApproval>("GetApproval", get_approval_params);
   return;
 }
 
