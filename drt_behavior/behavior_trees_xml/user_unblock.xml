@@ -28,7 +28,7 @@
     The service server is part of the RViz plugin.
     -->
 
-    <BehaviorTree ID="GetApproval">
+    <BehaviorTree ID="GetApprovalTree">
         <Sequence>
             <GetApproval
                 name="Get Approval"
