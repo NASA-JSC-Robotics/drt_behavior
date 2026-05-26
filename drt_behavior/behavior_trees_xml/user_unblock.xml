@@ -21,4 +21,21 @@
         </Sequence>
     </BehaviorTree>
 
+
+    <!--
+    Service based approach to break point into our behavior tree executor.
+    Querries `/approval_service` with Trigger service and waits 30s for user's approval.
+    The service server is part of the RViz plugin.
+    -->
+
+    <BehaviorTree ID="GetApproval">
+        <Sequence>
+            <GetApproval
+                name="Get Approval"
+                service_name="/approval_service"
+            />
+        </Sequence>
+    </BehaviorTree>
+
+
 </root>
