@@ -31,9 +31,9 @@ BehaviorApprovalWidget::BehaviorApprovalWidget(QWidget* parent)
   // Setup ui
   ui_->setupUi(this);
   // Empty callback function, mandatory for service construction
-  auto callback = [](const std::shared_ptr<std_srvs::srv::SetBool::Request> /*request*/,
-                     std::shared_ptr<std_srvs::srv::SetBool::Response> /*response*/) {};
-  approval_service = node_->create_service<std_srvs::srv::SetBool>("approval_service", callback);
+  auto callback = [](const std::shared_ptr<std_srvs::srv::Trigger::Request> /*request*/,
+                     std::shared_ptr<std_srvs::srv::Trigger::Response> /*response*/) {};
+  approval_service = node_->create_service<std_srvs::srv::Trigger>("approval_service", callback);
 
   // Getting the widget by name, make it easier to use
   approval_choice_widget = parent->findChild<QDialogButtonBox*>("approvalChoice");
@@ -59,7 +59,7 @@ void BehaviorApprovalWidget::timer_cb()
   // Instead of having RViz executor spin the node and trigger the callback when a request is sent,
   // we check if there is a request manually
   // If there is a request we show the widget and wait for use to make their choice
-  std_srvs::srv::SetBool::Request request;
+  std_srvs::srv::Trigger::Request request;
   rmw_request_id_t req_id;
   if (approval_service->take_request(request, req_id))
   {
@@ -74,7 +74,7 @@ void BehaviorApprovalWidget::process_input(const bool& input)
   if (request_header)
   {
     // return user's response
-    std_srvs::srv::SetBool::Response response;
+    std_srvs::srv::Trigger::Response response;
     response.success = input;
     approval_service->send_response(request_header.value(), response);
     request_header.reset();

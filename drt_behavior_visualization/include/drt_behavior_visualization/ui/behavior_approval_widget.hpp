@@ -22,7 +22,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include "rclcpp_action/rclcpp_action.hpp"
 #include "std_msgs/msg/string.hpp"
-#include "std_srvs/srv/set_bool.hpp"
+#include "std_srvs/srv/trigger.hpp"
 // BT
 #include "btcpp_ros2_interfaces/action/execute_tree.hpp"
 #include "btcpp_ros2_interfaces/srv/get_trees.hpp"
@@ -65,7 +65,7 @@ private:
   std::unique_ptr<Ui::ApprovalWidget> ui_;
   rclcpp::Node::SharedPtr node_;
 
-  rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr approval_service;
+  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr approval_service;
   QDialogButtonBox* approval_choice_widget;
 
   QTimer* timer;
