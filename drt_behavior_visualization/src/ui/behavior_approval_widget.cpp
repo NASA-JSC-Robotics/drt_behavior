@@ -41,7 +41,7 @@ BehaviorApprovalWidget::BehaviorApprovalWidget(QWidget* parent)
   QSizePolicy sp_retain = approval_choice_widget->sizePolicy();
   sp_retain.setRetainSizeWhenHidden(true);
   approval_choice_widget->setSizePolicy(sp_retain);
-  // Hid the widget
+  // Hide the widget
   approval_choice_widget->hide();
 
   // Connect widget's buttons to callbacks
