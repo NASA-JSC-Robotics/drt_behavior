@@ -52,6 +52,7 @@ set(bt_panel behavior_tree_panel)
 set(${bt_panel}_uis
     resource/rviz2_panel.ui
     resource/behavior_tree_widget.ui
+    resource/approval_widget.ui
 )
 
 # Generate header for ui
@@ -61,6 +62,7 @@ qt5_wrap_ui(${bt_panel}_uis_h ${${bt_panel}_uis})
 set(${PROJECT_NAME}_headers_to_moc
     include/${PROJECT_NAME}/ui/behavior_tree_panel.hpp
     include/${PROJECT_NAME}/ui/behavior_tree_widget.hpp
+    include/${PROJECT_NAME}/ui/behavior_approval_widget.hpp
 )
 
 foreach(header "${${PROJECT_NAME}_headers_to_moc}")
@@ -70,6 +72,7 @@ endforeach()
 set(${PROJECT_NAME}_source_files
     src/ui/behavior_tree_panel.cpp
     src/ui/behavior_tree_widget.cpp
+    src/ui/behavior_approval_widget.cpp
 )
 
 add_library(${bt_panel} SHARED

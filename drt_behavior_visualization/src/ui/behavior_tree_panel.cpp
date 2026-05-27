@@ -17,6 +17,7 @@
  */
 
 #include "drt_behavior_visualization/ui/behavior_tree_panel.hpp"
+#include "drt_behavior_visualization/ui/behavior_approval_widget.hpp"
 
 namespace drt_behavior_visualization
 {
@@ -38,6 +39,9 @@ void BehaviorTreePanel::onInitialize()
   // Add the BehaviorTreeWidget to the GUI
   behavior_tree_widget_ = std::make_shared<BehaviorTreeWidget>(ui_->guiArea, node_);
   ui_->guiArea->layout()->addWidget(behavior_tree_widget_.get());
+
+  behavior_approval_widget = std::make_shared<BehaviorApprovalWidget>(ui_->guiArea);
+  ui_->guiArea->layout()->addWidget(behavior_approval_widget.get());
   ui_->retranslateUi(this);
 }
 }  // namespace drt_behavior_visualization

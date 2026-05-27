@@ -35,6 +35,7 @@
 #include <QtWidgets>
 
 #include <ui_rviz2_panel.h>
+#include <drt_behavior_visualization/ui/behavior_approval_widget.hpp>
 #include <drt_behavior_visualization/ui/behavior_tree_widget.hpp>
 
 namespace drt_behavior_visualization
@@ -54,6 +55,7 @@ protected:
 
   // Widgets
   std::shared_ptr<BehaviorTreeWidget> behavior_tree_widget_;
+  std::shared_ptr<BehaviorApprovalWidget> behavior_approval_widget;
 
 private:
   std::unique_ptr<Ui::rviz_panel> ui_;
