@@ -40,10 +40,10 @@ void DRTBehaviorBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory&
 {
   factory.registerNodeType<CheckParam>("CheckParam");
 
-  BT::RosNodeParams get_approval_params(node());
-  get_approval_params.server_timeout = std::chrono::milliseconds(30 * 1000);
+  BT::RosNodeParams call_trigger_params(node());
+  call_trigger_params.server_timeout = std::chrono::milliseconds(600 * 1000);
 
-  factory.registerNodeType<CallTriggerService>("CallTriggerService", get_approval_params);
+  factory.registerNodeType<CallTriggerService>("CallTriggerService", call_trigger_params);
   return;
 }
 

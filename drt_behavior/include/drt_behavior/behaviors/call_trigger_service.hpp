@@ -30,7 +30,7 @@ namespace drt_behavior
 {
 using Trigger = std_srvs::srv::Trigger;
 /**
- * @brief Constructs std_srvs Trigger request, returning value when response is recieved.
+ * @brief Constructs std_srvs Trigger request, returning value when response is received.
  *
  * @details
  * | Data Port Name             | Port Type | Object Type                        |
