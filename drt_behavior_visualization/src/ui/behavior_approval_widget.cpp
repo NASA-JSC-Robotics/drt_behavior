@@ -26,7 +26,10 @@ namespace drt_behavior_visualization
 BehaviorApprovalWidget::BehaviorApprovalWidget(QWidget* parent)
   : QWidget(parent), ui_(std::make_unique<Ui::ApprovalWidget>())
 {
-  // Create a hidden node
+  // Create a hidden, unspun node specifically for handling service callbacks for the GUI.
+  // This is triggered manually using the Qt timer, and will not show up in any ros2cli tools.
+  // This is safer for Qt, as it enables UI modifications without dealing with contamination
+  // from ROS processes.
   node_ = std::make_shared<rclcpp::Node>("_behavior_approval_node");
   // Setup ui
   ui_->setupUi(this);
