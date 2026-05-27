@@ -28,9 +28,9 @@
     The service server is part of the RViz plugin.
     -->
 
-    <BehaviorTree ID="GetApprovalTree">
+    <BehaviorTree ID="CallTriggerServiceTree">
         <Sequence>
-            <GetApproval
+            <CallTriggerService
                 name="Get Approval"
                 service_name="/approval_service"
             />

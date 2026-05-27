@@ -16,16 +16,16 @@
  * under the License.
  */
 
-#include "drt_behavior/behaviors/get_approval.hpp"
+#include "drt_behavior/behaviors/call_trigger_service.hpp"
 namespace drt_behavior
 {
-bool GetApproval::setRequest(Request::SharedPtr& /*request*/)
+bool CallTriggerService::setRequest(Request::SharedPtr& /*request*/)
 { return true; }
 
-BT::PortsList GetApproval::providedPorts()
+BT::PortsList CallTriggerService::providedPorts()
 { return providedBasicPorts({}); }
 
-BT::NodeStatus GetApproval::onResponseReceived(const Response::SharedPtr& response)
+BT::NodeStatus CallTriggerService::onResponseReceived(const Response::SharedPtr& response)
 {
   if (response.get()->success)
   {
@@ -37,7 +37,7 @@ BT::NodeStatus GetApproval::onResponseReceived(const Response::SharedPtr& respon
   }
 }
 
-BT::NodeStatus GetApproval::onFailure(BT::ServiceNodeErrorCode error)
+BT::NodeStatus CallTriggerService::onFailure(BT::ServiceNodeErrorCode error)
 {
   RCLCPP_ERROR(logger(), "Error: %d", error);
   return BT::NodeStatus::FAILURE;

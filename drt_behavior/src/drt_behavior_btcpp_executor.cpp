@@ -23,8 +23,8 @@
 // ROS
 #include "rclcpp/rclcpp.hpp"
 // local
+#include "drt_behavior/behaviors/call_trigger_service.hpp"
 #include "drt_behavior/behaviors/check_param.hpp"
-#include "drt_behavior/behaviors/get_approval.hpp"
 
 #include "drt_behavior/drt_behavior_btcpp_executor.hpp"
 
@@ -43,7 +43,7 @@ void DRTBehaviorBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory&
   BT::RosNodeParams get_approval_params(node());
   get_approval_params.server_timeout = std::chrono::milliseconds(30 * 1000);
 
-  factory.registerNodeType<GetApproval>("GetApproval", get_approval_params);
+  factory.registerNodeType<CallTriggerService>("CallTriggerService", get_approval_params);
   return;
 }
 

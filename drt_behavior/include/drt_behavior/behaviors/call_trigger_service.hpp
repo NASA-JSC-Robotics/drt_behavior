@@ -37,10 +37,10 @@ using Trigger = std_srvs::srv::Trigger;
  * | ---------------------------|-----------|------------------------------------|
  * | service_name               | Input     | std::string                        |
  */
-class GetApproval : public BT::RosServiceNode<Trigger>
+class CallTriggerService : public BT::RosServiceNode<Trigger>
 {
 public:
-  explicit GetApproval(const std::string& name, const BT::NodeConfig& conf, const BT::RosNodeParams& params)
+  explicit CallTriggerService(const std::string& name, const BT::NodeConfig& conf, const BT::RosNodeParams& params)
     : RosServiceNode<Trigger>(name, conf, params)
   {
   }
