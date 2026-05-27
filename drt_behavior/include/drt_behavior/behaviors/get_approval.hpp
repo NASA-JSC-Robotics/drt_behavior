@@ -30,7 +30,7 @@ namespace drt_behavior
 {
 using Trigger = std_srvs::srv::Trigger;
 /**
- * @brief Constructs motion planning requests and uses move_group's server client interface to find trajectory to a joint state.
+ * @brief Constructs std_srvs Trigger request, returning value when response is recieved.
  *
  * @details
  * | Data Port Name             | Port Type | Object Type                        |
