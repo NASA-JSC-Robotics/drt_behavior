@@ -40,7 +40,14 @@ getPublisherQoSProfile(const std::shared_ptr<rclcpp::Node>& node, const std::str
 
     if (!publishers_info.empty())
     {
-      return publishers_info.front().qos_profile().get_rmw_qos_profile();
+      auto qos_profile = publishers_info.front().qos_profile().get_rmw_qos_profile();
+      if (qos_profile.history == RMW_QOS_POLICY_HISTORY_UNKNOWN)
+      {
+        RCLCPP_WARN(node->get_logger(), "Got unknown QOS history policy for topic name %s. Fixing.", topic_name.c_str());
+        qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
+        qos_profile.depth = 10;
+      }
+      return qos_profile;
     }
 
     if (node->now() - start_time > rclcpp::Duration(timeout))
@@ -104,20 +111,29 @@ BT::NodeStatus GetSyncedImagePointCloudDepth::onStart()
 
   // Get publisher QoS profiles
   auto maybe_point_cloud_qos_profile = getPublisherQoSProfile(context->node, point_cloud_topic_name);
+  if (!maybe_point_cloud_qos_profile)
+  {
+    RCLCPP_ERROR(context->node->get_logger(), "Failed to get point cloud QoS profile.");
+    return BT::NodeStatus::FAILURE;
+  }
   auto maybe_rgb_image_qos_profile = getPublisherQoSProfile(context->node, rgb_image_topic_name);
+  if (!maybe_rgb_image_qos_profile)
+  {
+    RCLCPP_ERROR(context->node->get_logger(), "Failed to RGB image QoS profile.");
+    return BT::NodeStatus::FAILURE;
+  }
   auto maybe_rgb_camera_info_qos_profile = getPublisherQoSProfile(context->node, rgb_camera_info_topic_name);
+  if (!maybe_rgb_camera_info_qos_profile)
+  {
+    RCLCPP_ERROR(context->node->get_logger(), "Failed to RGB camera info QoS profile.");
+    return BT::NodeStatus::FAILURE;
+  }
   auto maybe_depth_image_qos_profile = getPublisherQoSProfile(context->node, depth_image_topic_name);
-
-  // // Check that QoS profiles were retrieved.
-  // if (const auto error =
-  //         moveit_studio::behaviors::maybe_error(maybe_point_cloud_qos_profile, maybe_rgb_image_qos_profile,
-  //         maybe_rgb_camera_info_qos_profile,
-  //                     maybe_depth_image_qos_profile))
-  // {
-  //   shared_resources_->logger->publishFailureMessage(
-  //       name(), std::string("Failed to get required publisher QoS profile: ").append(error.value()));
-  //   return BT::NodeStatus::FAILURE;
-  // }
+  if (!maybe_depth_image_qos_profile)
+  {
+    RCLCPP_ERROR(context->node->get_logger(), "Failed to depth image QoS profile.");
+    return BT::NodeStatus::FAILURE;
+  }
 
   sub_point_cloud_.subscribe(node_raw_ptr, point_cloud_topic_name, maybe_point_cloud_qos_profile.value());
   sub_rgb_image_.subscribe(node_raw_ptr, rgb_image_topic_name, hints.getTransport(),
