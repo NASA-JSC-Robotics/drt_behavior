@@ -30,8 +30,8 @@ colcon mixin update default
 """ }
 
 # Build tasks
-build = "colcon build --packages-skip color_tools_behavior"
-test = "colcon test --packages-skip color_tools_behavior"
+build = "colcon build"
+test = "colcon test"
 test-result = "colcon test-result --verbose"
 clean = "rm -rf build/* install/* log/*"
 
@@ -47,6 +47,10 @@ colcon-mixin = ">=0.2.3,<0.3"
 # For geometry behaviors
 eigen = ">=3.4,<4"
 
+# For color behaviors
+nanobind = ">=2.12.0,<3"
+opencv = ">=4.12.0,<5"
+
 # Not necessary for building, but for tests/running in isolated environments
 ros-jazzy-ros-base = "*"
 
@@ -54,9 +58,11 @@ ros-jazzy-ros-base = "*"
 ros-jazzy-behaviortree-ros2 = { path = "././external/BehaviorTree.ROS2/behaviortree_ros2/package.xml" }
 ros-jazzy-btcpp-ros2-interfaces = { path = "././external/BehaviorTree.ROS2/btcpp_ros2_interfaces/package.xml" }
 ros-jazzy-btcpp-ros2-samples = { path = "././external/BehaviorTree.ROS2/btcpp_ros2_samples/package.xml" }
+ros-jazzy-color-blob-centroid = { path = "././external/color_tools/color_blob_centroid/package.xml" }
+ros-jazzy-color-names = { path = "././external/color_tools/color_names/package.xml" }
+ros-jazzy-color-tools-msgs = { path = "././external/color_tools/color_tools_msgs/package.xml" }
 ros-jazzy-drt-behavior = { path = "././drt_behavior/package.xml" }
+ros-jazzy-drt-behavior-visualization = { path = "././drt_behavior_visualization/package.xml" }
+ros-jazzy-color-tools-behavior = { path = "././color_tools_behavior/package.xml" }
 ros-jazzy-geometry-behavior = { path = "././geometry_behavior/package.xml" }
 ros-jazzy-moveit-behavior = { path = "././moveit_behavior/package.xml" }
-
-# Requires a source dependency we don't currently have
-# ros-jazzy-color-tools-behavior = { path = "././color_tools_behavior/package.xml" }

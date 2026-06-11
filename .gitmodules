@@ -1,3 +1,6 @@
 [submodule "external/BehaviorTree.ROS2"]
 	path = external/BehaviorTree.ROS2
 	url = https://github.com/BehaviorTree/BehaviorTree.ROS2.git
+[submodule "external/color_tools"]
+	path = external/color_tools
+	url = https://github.com/NASA-JSC-Robotics/color_tools.git
