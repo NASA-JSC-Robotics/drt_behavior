@@ -39,6 +39,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <string_view>
 /**
  *  Include header generated from ui file
  *  Note that you will need to use add_library function first
@@ -63,11 +64,36 @@ private:
   rclcpp::Node::SharedPtr node_;
   std::unique_ptr<Ui::behavior_tree_widget> ui_;
 
-  const std::string green = "\033[92m";
-  const std::string red = "\033[91m";
-  const std::string blue = "\033[96m";
-  const std::string yellow = "\033[93m";
-  const std::string end_color = "\033[0m";
+  static constexpr std::string green = "\033[92m";
+  static constexpr std::string red = "\033[91m";
+  static constexpr std::string blue = "\033[96m";
+  static constexpr std::string yellow = "\033[93m";
+  static constexpr std::string end_color = "\033[0m";
+
+  // Text replacement mapping using string_view for zero-allocation matching
+  struct Replacement
+  {
+    std::string_view old_text;
+    std::string_view new_text;
+  };
+
+  // Define the list of text replacements in the order they should be applied.
+  const std::vector<Replacement> text_replacements = { { green, "<font color=\"Green\">" },
+                                                       { "\x1b[32m", "<font color=\"Green\">" },
+                                                       { red, "<font color=\"Red\">" },
+                                                       { "\x1b[31m", "<font color=\"Red\">" },
+                                                       { blue, "<font color=\"Blue\">" },
+                                                       { "\x1b[34m", "<font color=\"Blue\">" },
+                                                       { yellow, "<font color=\"Orange\">" },
+                                                       { "\x1b[33m", "<font color=\"Orange\">" },
+                                                       { "\x1b[36m", "<font color=\"Cyan\">" },
+                                                       { end_color, "</font>" },
+                                                       { "\x1b[0m", "</font>" },
+                                                       { "\t", "  " },
+                                                       { "│   ", "|&nbsp;&nbsp;&nbsp;" },
+                                                       { "    ", "&nbsp;&nbsp;&nbsp;&nbsp;" },
+                                                       { "\n", "<br/>" },
+                                                       { "\r", "<br/>" } };
 
   std::string active_behavior = "";
 
@@ -93,11 +119,10 @@ private:
   void get_behavior_trees_cb(const rclcpp::Client<btcpp_ros2_interfaces::srv::GetTrees>::SharedFuture future);
   void logger_callback(const std_msgs::msg::String::SharedPtr msg);
   void bt_status_callback(const std_msgs::msg::String::SharedPtr msg);
-  std::string replace_string(std::string string_to_replace, std::string old_text, std::string new_text);
 
   void update_bt_text();
   void update_log_text();
-  std::string process_text(std::string text);
+  void process_text(std::string& text);
 
   void waitForClient(rclcpp::ClientBase::SharedPtr client);
 
