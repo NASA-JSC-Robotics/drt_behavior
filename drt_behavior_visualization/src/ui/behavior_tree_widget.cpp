@@ -16,6 +16,8 @@
  * under the License.
  */
 
+#include <string_view>
+
 #include "drt_behavior_visualization/ui/behavior_tree_widget.hpp"
 
 namespace drt_behavior_visualization
@@ -177,33 +179,34 @@ void BehaviorTreeWidget::logger_callback(const std_msgs::msg::String::SharedPtr 
 
 void BehaviorTreeWidget::process_text(std::string& text)
 {
-  // terminal green
-  replace_string(text, green, "<font color=\"Green\">");
-  // btcpp green
-  replace_string(text, "\x1b[32m", "<font color=\"Green\">");
-  // terminal red
-  replace_string(text, red, "<font color=\"Red\">");
-  // btcpp red
-  replace_string(text, "\x1b[31m", "<font color=\"Red\">");
-  // terminal blue
-  replace_string(text, blue, "<font color=\"Blue\">");
-  // btcpp blue
-  replace_string(text, "\x1b[34m", "<font color=\"Blue\">");
-  // terminal yellow
-  replace_string(text, yellow, "<font color=\"Orange\">");
-  // btcpp yelow
-  replace_string(text, "\x1b[33m", "<font color=\"Orange\">");
-  // btcpp cyan
-  replace_string(text, "\x1b[36m", "<font color=\"Cyan\">");
-  // terminal end color
-  replace_string(text, end_color, "</font>");
-  // btcpp end color
-  replace_string(text, "\x1b[0m", "</font>");
-  replace_string(text, "\t", "  ");
-  replace_string(text, "│   ", "|&nbsp;&nbsp;&nbsp;");
-  replace_string(text, "    ", "&nbsp;&nbsp;&nbsp;&nbsp;");
-  replace_string(text, "\n", "<br/>");
-  replace_string(text, "\r", "<br/>");
+  std::string result;
+  result.reserve(text.size() * 2);  // Pre-allocate memory to prevent reallocations
+
+  size_t i = 0;
+  while (i < text.size())
+  {
+    bool matched = false;
+
+    for (const auto& [old_text, new_text] : text_replacements)
+    {
+      // Check if the current substring matches our token
+      if (text.compare(i, old_text.size(), old_text) == 0)
+      {
+        result.append(new_text);
+        i += old_text.size();
+        matched = true;
+        break;  // Move to the next position in the main string
+      }
+    }
+
+    if (!matched)
+    {
+      result.push_back(text[i]);
+      i++;
+    }
+  }
+
+  text = std::move(result);  // Efficiently swap the processed string back
 }
 
 void BehaviorTreeWidget::update_bt_text()
@@ -296,17 +299,6 @@ void BehaviorTreeWidget::update_log_text()
     QTextCursor cursor = ui_->LogText->textCursor();
     cursor.movePosition(QTextCursor::End);
     ui_->LogText->setTextCursor(cursor);
-  }
-}
-
-void BehaviorTreeWidget::replace_string(std::string& string_to_replace, const std::string& old_text,
-                                        const std::string& new_text)
-{
-  size_t pos = 0;
-  while ((pos = string_to_replace.find(old_text, pos)) != std::string::npos)
-  {
-    string_to_replace.replace(pos, old_text.length(), new_text);
-    pos += new_text.length();  // Move past the replaced part
   }
 }
 
