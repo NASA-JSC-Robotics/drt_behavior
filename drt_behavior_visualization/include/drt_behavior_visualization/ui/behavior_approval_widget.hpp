@@ -74,7 +74,7 @@ private:
 
   void timer_cb();
 
-  void process_input(const bool& input);
+  void process_input(const bool input);
 
 private Q_SLOTS:
 };

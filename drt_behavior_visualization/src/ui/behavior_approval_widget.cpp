@@ -71,7 +71,7 @@ void BehaviorApprovalWidget::timer_cb()
   }
 }
 
-void BehaviorApprovalWidget::process_input(const bool& input)
+void BehaviorApprovalWidget::process_input(const bool input)
 {
   // Check if there optional variable is set
   if (request_header)

@@ -175,36 +175,35 @@ void BehaviorTreeWidget::logger_callback(const std_msgs::msg::String::SharedPtr 
   update_log_text();
 }
 
-std::string BehaviorTreeWidget::process_text(std::string text)
+void BehaviorTreeWidget::process_text(std::string& text)
 {
   // terminal green
-  text = replace_string(text, green, "<font color=\"Green\">");
+  replace_string(text, green, "<font color=\"Green\">");
   // btcpp green
-  text = replace_string(text, "\x1b[32m", "<font color=\"Green\">");
+  replace_string(text, "\x1b[32m", "<font color=\"Green\">");
   // terminal red
-  text = replace_string(text, red, "<font color=\"Red\">");
+  replace_string(text, red, "<font color=\"Red\">");
   // btcpp red
-  text = replace_string(text, "\x1b[31m", "<font color=\"Red\">");
+  replace_string(text, "\x1b[31m", "<font color=\"Red\">");
   // terminal blue
-  text = replace_string(text, blue, "<font color=\"Blue\">");
+  replace_string(text, blue, "<font color=\"Blue\">");
   // btcpp blue
-  text = replace_string(text, "\x1b[34m", "<font color=\"Blue\">");
+  replace_string(text, "\x1b[34m", "<font color=\"Blue\">");
   // terminal yellow
-  text = replace_string(text, yellow, "<font color=\"Orange\">");
+  replace_string(text, yellow, "<font color=\"Orange\">");
   // btcpp yelow
-  text = replace_string(text, "\x1b[33m", "<font color=\"Orange\">");
+  replace_string(text, "\x1b[33m", "<font color=\"Orange\">");
   // btcpp cyan
-  text = replace_string(text, "\x1b[36m", "<font color=\"Cyan\">");
+  replace_string(text, "\x1b[36m", "<font color=\"Cyan\">");
   // terminal end color
-  text = replace_string(text, end_color, "</font>");
+  replace_string(text, end_color, "</font>");
   // btcpp end color
-  text = replace_string(text, "\x1b[0m", "</font>");
-  text = replace_string(text, "\t", "  ");
-  text = replace_string(text, "│   ", "|&nbsp;&nbsp;&nbsp;");
-  text = replace_string(text, "    ", "&nbsp;&nbsp;&nbsp;&nbsp;");
-  text = replace_string(text, "\n", "<br/>");
-  text = replace_string(text, "\r", "<br/>");
-  return text;
+  replace_string(text, "\x1b[0m", "</font>");
+  replace_string(text, "\t", "  ");
+  replace_string(text, "│   ", "|&nbsp;&nbsp;&nbsp;");
+  replace_string(text, "    ", "&nbsp;&nbsp;&nbsp;&nbsp;");
+  replace_string(text, "\n", "<br/>");
+  replace_string(text, "\r", "<br/>");
 }
 
 void BehaviorTreeWidget::update_bt_text()
@@ -212,7 +211,7 @@ void BehaviorTreeWidget::update_bt_text()
   bool first_time = true;
   std::string bt_print_text = "";
 
-  for (const auto& bt_data : bt_text)
+  for (auto bt_data : bt_text)
   {
     if (first_time)
     {
@@ -222,7 +221,8 @@ void BehaviorTreeWidget::update_bt_text()
     {
       bt_print_text += "<br/>";
     }
-    bt_print_text += process_text(bt_data);
+    process_text(bt_data);
+    bt_print_text += bt_data;
   }
 
   auto formatted_bt_print_text = "<pre>" + bt_print_text + "</pre>";
@@ -273,7 +273,7 @@ void BehaviorTreeWidget::update_log_text()
   bool first_time = true;
   std::string log_text = "";
 
-  for (const auto& log_data : log)
+  for (auto log_data : log)
   {
     if (first_time)
     {
@@ -283,7 +283,8 @@ void BehaviorTreeWidget::update_log_text()
     {
       log_text += "<br/>";
     }
-    log_text += process_text(log_data);
+    process_text(log_data);
+    log_text += log_data;
   }
 
   auto formatted_log_text = "<pre style='white-space: pre-wrap;'>" + log_text + "</pre>";
@@ -298,7 +299,8 @@ void BehaviorTreeWidget::update_log_text()
   }
 }
 
-std::string BehaviorTreeWidget::replace_string(std::string string_to_replace, std::string old_text, std::string new_text)
+void BehaviorTreeWidget::replace_string(std::string& string_to_replace, const std::string& old_text,
+                                        const std::string& new_text)
 {
   size_t pos = 0;
   while ((pos = string_to_replace.find(old_text, pos)) != std::string::npos)
@@ -306,7 +308,6 @@ std::string BehaviorTreeWidget::replace_string(std::string string_to_replace, st
     string_to_replace.replace(pos, old_text.length(), new_text);
     pos += new_text.length();  // Move past the replaced part
   }
-  return string_to_replace;
 }
 
 void BehaviorTreeWidget::waitForClient(rclcpp::ClientBase::SharedPtr client)

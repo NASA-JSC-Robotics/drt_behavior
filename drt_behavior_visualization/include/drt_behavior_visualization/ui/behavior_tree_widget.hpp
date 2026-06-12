@@ -93,11 +93,11 @@ private:
   void get_behavior_trees_cb(const rclcpp::Client<btcpp_ros2_interfaces::srv::GetTrees>::SharedFuture future);
   void logger_callback(const std_msgs::msg::String::SharedPtr msg);
   void bt_status_callback(const std_msgs::msg::String::SharedPtr msg);
-  std::string replace_string(std::string string_to_replace, std::string old_text, std::string new_text);
+  void replace_string(std::string& string_to_replace, const std::string& old_text, const std::string& new_text);
 
   void update_bt_text();
   void update_log_text();
-  std::string process_text(std::string text);
+  void process_text(std::string& text);
 
   void waitForClient(rclcpp::ClientBase::SharedPtr client);
 
