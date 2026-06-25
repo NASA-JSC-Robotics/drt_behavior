@@ -26,8 +26,6 @@
 #include "behaviortree_cpp/behavior_tree.h"
 #include "drt_behavior/drt_tree_context.hpp"
 
-#include <spdlog/spdlog.h>
-
 #include <color_blob_centroid/color_blob_centroid.hpp>
 
 #include <rclcpp/rclcpp.hpp>
