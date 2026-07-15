@@ -40,16 +40,10 @@ using SrvApplyPlanningScene = moveit_msgs::srv::ApplyPlanningScene;
  * | Data Port Name             | Port Type | Object Type                        |
  * | ---------------------------|-----------|------------------------------------|
  * | service_name               | Input     | std::string                        |
- * | group_name                 | Input     | std::string                        |
- * | end_effector_name          | Input     | std::string                        |
- * | position_tolerance         | Input     | double                             |
- * | orientation_tolerance      | Input     | std::vector<double>                |
- * | goal_pose                  | Input     | geometry_msgs::msg::PoseStamped    |
- * | velocity_scaling           | Input     | double                             |
- * | acceleration_scaling       | Input     | double                             |
- * | planner                    | Input     | std::string                        |
- * | pipeline                   | Input     | std::string                        |
- * | trajectory                 | Output    | moveit_msgs::msg::RobotTrajectory  |
+ * | planning_scene             | Input     | moveit_msgs::msg::PlanningScene    |
+ * | links_1                    | Input     | std::string                        |
+ * | links_2                    | Input     | std::string                        |
+ * | disable_collisions         | Input     | bool                               |
  */
 class ModifyCollisions : public BT::RosServiceNode<SrvApplyPlanningScene>
 {
