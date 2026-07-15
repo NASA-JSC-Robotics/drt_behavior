@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(dependencies_pkgs
     ament_cmake
     rclcpp
+    moveit_core
     moveit_msgs
     behaviortree_cpp
     behaviortree_ros2
@@ -20,6 +21,8 @@ endforeach()
 
 set(behavior_cpp_files
     src/execute_trajectory.cpp
+    src/get_planning_scene.cpp
+    src/modify_collisions.cpp
     src/plan_to_joint_state.cpp
     src/plan_to_pose.cpp
     src/publish_trajectory.cpp
