@@ -34,7 +34,7 @@ namespace moveit_behavior
 {
 using SrvApplyPlanningScene = moveit_msgs::srv::ApplyPlanningScene;
 /**
- * @brief Constructs motion planning requests and uses move_group's server client interface to find trajectory to a pose.
+ * @brief Modifies the Allowable Collision Matrix for two groups of links. Applies the given disable/enable collisions bool to all links.
  *
  * @details
  * | Data Port Name             | Port Type | Object Type                        |

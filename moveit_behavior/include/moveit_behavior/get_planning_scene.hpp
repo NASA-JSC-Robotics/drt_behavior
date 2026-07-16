@@ -31,7 +31,7 @@ namespace moveit_behavior
 {
 using SrvGetPlanningScene = moveit_msgs::srv::GetPlanningScene;
 /**
- * @brief Constructs motion planning requests and uses move_group's server client interface to find trajectory to a pose.
+ * @brief Gets planning scene from available service.
  *
  * @details
  * | Data Port Name             | Port Type | Object Type                        |
