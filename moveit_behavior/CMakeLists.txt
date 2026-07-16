@@ -13,6 +13,8 @@ set(dependencies_pkgs
     behaviortree_cpp
     behaviortree_ros2
     btcpp_ros2_interfaces
+    drt_behavior
+    dex_ivr_helpers
 )
 
 foreach(pkg IN LISTS dependencies_pkgs)
@@ -27,6 +29,7 @@ set(behavior_cpp_files
     src/plan_to_pose.cpp
     src/publish_trajectory.cpp
     src/plugins.cpp
+    src/twist_about_frame.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${behavior_cpp_files})

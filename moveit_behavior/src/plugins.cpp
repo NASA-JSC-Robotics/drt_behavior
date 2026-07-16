@@ -23,6 +23,7 @@
 #include "moveit_behavior/plan_to_joint_state.hpp"
 #include "moveit_behavior/plan_to_pose.hpp"
 #include "moveit_behavior/publish_trajectory.hpp"
+#include "moveit_behavior/twist_about_frame.hpp"
 
 BTCPP_EXPORT void BT_RegisterRosNodeFromPlugin(BT::BehaviorTreeFactory& factory, const BT::RosNodeParams& params)
 {
@@ -32,4 +33,5 @@ BTCPP_EXPORT void BT_RegisterRosNodeFromPlugin(BT::BehaviorTreeFactory& factory,
   factory.registerNodeType<moveit_behavior::PlanToJointState>("PlanToJointState", params);
   factory.registerNodeType<moveit_behavior::PlanToPose>("PlanToPose", params);
   factory.registerNodeType<moveit_behavior::PublishDisplayTrajectory>("PublishDisplayTrajectory", params);
+  factory.registerNodeType<moveit_behavior::TwistAboutFrame>("TwistAboutFrame");
 }
