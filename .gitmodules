@@ -4,3 +4,6 @@
 [submodule "external/color_tools"]
 	path = external/color_tools
 	url = https://github.com/NASA-JSC-Robotics/color_tools.git
+[submodule "external/dex_ivr_helpers"]
+	path = external/dex_ivr_helpers
+	url = git@js-er-code.jsc.nasa.gov:imetro/dex_ivr_helpers.git
