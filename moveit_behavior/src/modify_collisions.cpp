@@ -22,7 +22,7 @@ namespace moveit_behavior
 bool ModifyCollisions::setRequest(Request::SharedPtr& request)
 {
   moveit_msgs::msg::PlanningScene planning_scene;
-    if (!getInput("planning_scene", planning_scene))
+  if (!getInput("planning_scene", planning_scene))
   {
     throw BT::RuntimeError("Could not access required blackboard input [planning_scene]");
   }
@@ -47,13 +47,15 @@ bool ModifyCollisions::setRequest(Request::SharedPtr& request)
   moveit_msgs::msg::AllowedCollisionMatrix acm_msg = planning_scene.allowed_collision_matrix;
   collision_detection::AllowedCollisionMatrix raw_acm(acm_msg);
 
-  for (const auto& link1 : links_1) {
-      for (const auto& link2 : links_2) {
-          raw_acm.setEntry(link1, link2, disable_collisions);
-      }
+  for (const auto& link1 : links_1)
+  {
+    for (const auto& link2 : links_2)
+    {
+      raw_acm.setEntry(link1, link2, disable_collisions);
+    }
   }
 
-  moveit_msgs::msg::AllowedCollisionMatrix modified_acm; 
+  moveit_msgs::msg::AllowedCollisionMatrix modified_acm;
   raw_acm.getMessage(modified_acm);
 
   // Apply the updated ACM back to the planning scene

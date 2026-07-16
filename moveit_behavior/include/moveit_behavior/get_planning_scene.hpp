@@ -24,8 +24,8 @@
 #include "behaviortree_cpp/behavior_tree.h"
 #include "behaviortree_ros2/bt_action_node.hpp"
 
-#include "moveit_msgs/srv/get_planning_scene.hpp"
 #include "moveit_msgs/msg/planning_scene.hpp"
+#include "moveit_msgs/srv/get_planning_scene.hpp"
 
 namespace moveit_behavior
 {
@@ -47,13 +47,9 @@ public:
   {
   }
   static BT::PortsList providedPorts()
-  {
-    return providedBasicPorts({
-          BT::OutputPort<moveit_msgs::msg::PlanningScene>("planning_scene") });
-    }
+  { return providedBasicPorts({ BT::OutputPort<moveit_msgs::msg::PlanningScene>("planning_scene") }); }
   bool setRequest(Request::SharedPtr& request) override;
   BT::NodeStatus onResponseReceived(const Response::SharedPtr& response) override;
   virtual BT::NodeStatus onFailure(BT::ServiceNodeErrorCode error) override;
-
 };
 };  // namespace moveit_behavior

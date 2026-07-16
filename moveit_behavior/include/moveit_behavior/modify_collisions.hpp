@@ -25,16 +25,16 @@
 #include "behaviortree_ros2/bt_action_node.hpp"
 
 #include "moveit/collision_detection/collision_matrix.hpp"
+#include "moveit_msgs/msg/planning_scene.hpp"
 #include "moveit_msgs/msg/planning_scene_components.hpp"
 #include "moveit_msgs/srv/apply_planning_scene.hpp"
-#include "moveit_msgs/msg/planning_scene.hpp"
-
 
 namespace moveit_behavior
 {
 using SrvApplyPlanningScene = moveit_msgs::srv::ApplyPlanningScene;
 /**
- * @brief Modifies the Allowable Collision Matrix for two groups of links. Applies the given disable/enable collisions bool to all links.
+ * @brief Modifies the Allowable Collision Matrix for two groups of links. Applies the given disable/enable collisions
+ * bool to all links.
  *
  * @details
  * | Data Port Name             | Port Type | Object Type                        |
@@ -54,15 +54,17 @@ public:
   }
   static BT::PortsList providedPorts()
   {
-    return providedBasicPorts({
-          BT::InputPort<moveit_msgs::msg::PlanningScene>("planning_scene","planning scene from the GetPlanningScene service"),
+    return providedBasicPorts(
+        { BT::InputPort<moveit_msgs::msg::PlanningScene>("planning_scene",
+                                                         "planning scene from the GetPlanningScene service"),
           BT::InputPort<std::vector<std::string> >("links_1", "first vector of objects to modify collisions for"),
-          BT::InputPort<std::vector<std::string> >("links_2", "second vector of objects to modify collisions against links_1"),
-          BT::InputPort<bool>("disable_collisions", true, "true to disable collisions between links, false to enable collisions")});
+          BT::InputPort<std::vector<std::string> >("links_2",
+                                                   "second vector of objects to modify collisions against links_1"),
+          BT::InputPort<bool>("disable_collisions", true,
+                              "true to disable collisions between links, false to enable collisions") });
   }
   bool setRequest(Request::SharedPtr& request) override;
   BT::NodeStatus onResponseReceived(const Response::SharedPtr& response) override;
   virtual BT::NodeStatus onFailure(BT::ServiceNodeErrorCode error) override;
-
 };
 };  // namespace moveit_behavior

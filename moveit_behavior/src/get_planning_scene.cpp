@@ -20,9 +20,7 @@
 namespace moveit_behavior
 {
 bool GetPlanningScene::setRequest(Request::SharedPtr& request)
-{
-  return true;
-}
+{ return true; }
 
 BT::NodeStatus GetPlanningScene::onResponseReceived(const Response::SharedPtr& response)
 {
@@ -35,7 +33,6 @@ BT::NodeStatus GetPlanningScene::onResponseReceived(const Response::SharedPtr& r
   }
 
   return BT::NodeStatus::FAILURE;
-
 }
 
 BT::NodeStatus GetPlanningScene::onFailure(BT::ServiceNodeErrorCode error)
