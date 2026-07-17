@@ -34,9 +34,9 @@ namespace moveit_behavior
 using SrvApplyPlanningScene = moveit_msgs::srv::ApplyPlanningScene;
 /**
  * @brief Modifies the Allowable Collision Matrix  to enable/disable collisions between two lists of links.
- * 
+ *
  * @details Will apply the specified disable/enable collision bool to the all pairs of links provided in both lists.
- * 
+ *
  * | Data Port Name             | Port Type | Object Type                        |
  * | ---------------------------|-----------|------------------------------------|
  * | service_name               | Input     | std::string                        |
