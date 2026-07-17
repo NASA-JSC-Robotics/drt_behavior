@@ -31,7 +31,7 @@ namespace moveit_behavior
 {
 using SrvGetPlanningScene = moveit_msgs::srv::GetPlanningScene;
 /**
- * @brief Gets planning scene from available service.
+ * @brief Gets the MoveIt planning scene from an available service.
  *
  * @details
  * | Data Port Name             | Port Type | Object Type                        |

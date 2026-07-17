@@ -41,8 +41,8 @@ using SrvApplyPlanningScene = moveit_msgs::srv::ApplyPlanningScene;
  * | ---------------------------|-----------|------------------------------------|
  * | service_name               | Input     | std::string                        |
  * | planning_scene             | Input     | moveit_msgs::msg::PlanningScene    |
- * | links_1                    | Input     | std::string                        |
- * | links_2                    | Input     | std::string                        |
+ * | links_1                    | Input     | std::vector<std::string>           |
+ * | links_2                    | Input     | std::vector<std::string>           |
  * | disable_collisions         | Input     | bool                               |
  */
 class ModifyCollisions : public BT::RosServiceNode<SrvApplyPlanningScene>
