@@ -32,6 +32,7 @@ BT::NodeStatus GetPlanningScene::onResponseReceived(const Response::SharedPtr& r
     return BT::NodeStatus::SUCCESS;
   }
 
+  RCLCPP_ERROR(logger(), "Error: Planning scene empty or missing components");
   return BT::NodeStatus::FAILURE;
 }
 
