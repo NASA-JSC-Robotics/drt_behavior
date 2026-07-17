@@ -44,15 +44,15 @@ BT::NodeStatus AlignTransform::tick()
   Eigen::Isometry3d eigen_transform = tf2::transformToEigen(t_stamped);
   Eigen::Matrix3d rotation_matrix = eigen_transform.rotation();
 
-  Eigen::Vector3d x_axis = rotation_matrix(Eigen::all, 0);
+  Eigen::Vector3d x_axis = rotation_matrix(Eigen::placeholders::all, 0);
   x_axis(2) = 0.0;
   x_axis.normalize();
   Eigen::Vector3d z_axis = Eigen::Vector3d(0.0, 0.0, -1.0);
   Eigen::Vector3d y_axis = z_axis.cross(x_axis);
 
-  rotation_matrix(Eigen::all, 0) = x_axis;
-  rotation_matrix(Eigen::all, 1) = y_axis;
-  rotation_matrix(Eigen::all, Eigen::last) = Eigen::Vector3d(0.0, 0.0, -1.0);
+  rotation_matrix(Eigen::placeholders::all, 0) = x_axis;
+  rotation_matrix(Eigen::placeholders::all, 1) = y_axis;
+  rotation_matrix(Eigen::placeholders::all, Eigen::placeholders::last) = Eigen::Vector3d(0.0, 0.0, -1.0);
 
   Eigen::Quaterniond aligned_quat(rotation_matrix);
   aligned_quat.normalize();
