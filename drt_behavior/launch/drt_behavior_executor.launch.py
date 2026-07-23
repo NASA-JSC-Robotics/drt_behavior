@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2025, United States Government, as represented by the
+# Copyright (c) 2026, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
 #
 # All rights reserved.
@@ -9,7 +9,7 @@
 # (the "License"); you may not use this file except in compliance with the
 # License. You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     http://apache.org
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -43,7 +43,21 @@ def launch_setup(context, *args, **kwargs):
         parameters=[bt_config, use_sim_time],
     )
 
-    return [behavior_executor]
+    # Custom ACM Modifier Node
+    acm_modifier = Node(
+        package="clr_behavior_pick_and_place_demo",
+        executable="acm_modifier_node",
+        name="acm_modifier_node",
+        output="both",
+        parameters=[
+            use_sim_time,
+            {
+                "gripper_links": ["finger_1_link", "finger_2_link", "gripper_base_link"]
+            }
+        ],
+    )
+
+    return [behavior_executor, acm_modifier]
 
 
 def generate_launch_description():
