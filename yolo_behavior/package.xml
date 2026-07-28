@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+    <name>yolo_behavior</name>
+    <version>1.0.0</version>
+    <description>BT.cpp behaviors for DRT color tools</description>
+    <maintainer email="misha.savchenko@nasa.gov">Misha Savchenko</maintainer>
+    <license>Apache-2.0</license>
+
+    <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+    <depend>rclcpp</depend>
+    <depend>behaviortree_cpp</depend>
+    <depend>behaviortree_ros2</depend>
+    <depend>btcpp_ros2_interfaces</depend>
+    <depend>drt_behavior</depend>
+
+    <depend>geometry_msgs</depend>
+    <depend>color_tools_msgs</depend>
+    <depend>color_blob_centroid</depend>
+    <depend>message_filters</depend>
+    <depend>image_transport</depend>
+    <depend>ros2_yolos_cpp</depend>
+
+    <test_depend>ament_cmake_gtest</test_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>
