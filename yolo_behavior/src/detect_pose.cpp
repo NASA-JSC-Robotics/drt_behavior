@@ -28,19 +28,19 @@ DetectPose::DetectPose(const std::string& name, const BT::NodeConfiguration& con
 
 BT::PortsList DetectPose::providedPorts()
 {
-  return {
-    // Yolo Config
-    BT::InputPort<std::string>(kModelPath, "/path/to/model", "Path to model."),
-    BT::InputPort<std::string>(kLabelsPath, "/path/to/label", "Path to label."),
+  return { // Yolo Config
+           BT::InputPort<std::string>(kModelPath, "/path/to/model", "Path to model."),
+           BT::InputPort<std::string>(kLabelsPath, "/path/to/label", "Path to label."),
 
-    BT::InputPort<bool>(kUseGpu, true, "Attempt to use GPU"),
-    BT::InputPort<float>(kConfThreshold, 0.45, "Confidence Threshold."),
-    BT::InputPort<float>(kNmsThreshold, 0.45, "NMS Threshold"),
-    BT::InputPort<bool>(kPublishDebugImage, true, "Publish debug image."),
+           BT::InputPort<bool>(kUseGpu, true, "Attempt to use GPU"),
+           BT::InputPort<float>(kConfThreshold, 0.45, "Confidence Threshold."),
+           BT::InputPort<float>(kNmsThreshold, 0.45, "NMS Threshold"),
+           BT::InputPort<bool>(kPublishDebugImage, true, "Publish debug image."),
 
-    BT::InputPort<std::string>(kImageTopic, "image_topic", "image topic."),
-    BT::InputPort<std::string>(kDebugImageTopic, "~/debug_image", "image topic."),
+           BT::InputPort<std::string>(kImageTopic, "image_topic", "image topic."),
+           BT::InputPort<std::string>(kDebugImageTopic, "~/debug_image", "image topic."),
 
+           BT::OutputPort<std::vector<ros2_yolos_cpp::PoseResult>>(kPoseResults, "{pose_results}", "Depth image")
   };
 }
 
@@ -79,7 +79,8 @@ BT::NodeStatus DetectPose::onStart()
 
   if (publish_debug_image)
   {
-    debug_publisher = node_raw_ptr->create_publisher<sensor_msgs::msg::Image>(debug_image_topic, 1);
+    auto qos = rclcpp::QoS(rclcpp::KeepLast(1)).reliable().transient_local();
+    debug_publisher = node_raw_ptr->create_publisher<sensor_msgs::msg::Image>(debug_image_topic, qos);
   }
 
   return BT::NodeStatus::RUNNING;
@@ -106,20 +107,21 @@ void DetectPose::imageCB(const sensor_msgs::msg::Image::SharedPtr msg)
     if (poses.size())
     {
       std::cout << "Pose detected" << std::endl;
-      // debug_publisher->publish(conversion::toDetection2DArray(poses, msg->header, msg->width, msg->height));
-      if (publish_debug_image && debug_publisher)  // && debug_publisher->is_activated())
+      poses.resize(1);
+      if (publish_debug_image && debug_publisher)
       {
         d = cv->image.clone();
         pose_->drawPoses(d, poses);
-        // debug_pub_->publish(*cv_bridge::CvImage(msg->header, "bgr8", d).toImageMsg());
       }
+      setOutput(kPoseResults, poses);
     }
     else
     {
-      std::cout << "Pose not detected" << std::endl;
+      // std::cout << "Pose not detected" << std::endl;
     }
     if (publish_debug_image)
     {
+      // std::cout << "Publishing images" << std::endl;
       debug_publisher->publish(*cv_bridge::CvImage(msg->header, "bgr8", d).toImageMsg());
     }
     detection_done = true;
@@ -135,27 +137,6 @@ BT::NodeStatus DetectPose::onRunning()
   }
 
   return BT::NodeStatus::SUCCESS;
-  // if (sync_done_)
-  // {
-  //   return BT::NodeStatus::SUCCESS;
-  // }
-
-  // auto node_shrd_ptr = node_.lock();
-  // if (node_shrd_ptr)
-  // {
-  //   if (node_shrd_ptr->now() - start_time_ > rclcpp::Duration(kMessageSyncTimeout))
-  //   {
-  //     unsubscribeTopics();
-  //     return BT::NodeStatus::FAILURE;
-  //   }
-  // }
-  // else
-  // {
-  //   unsubscribeTopics();
-  //   return BT::NodeStatus::FAILURE;
-  // }
-
-  // return BT::NodeStatus::RUNNING;
 }
 
 void DetectPose::onHalted()

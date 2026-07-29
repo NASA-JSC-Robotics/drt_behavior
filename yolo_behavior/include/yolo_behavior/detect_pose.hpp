@@ -89,10 +89,7 @@ private:
   static constexpr auto kDebugImageTopic = "debug_image_topic";
   static constexpr auto kImageTopic = "image_topic";
 
-  // static constexpr auto kInputImage = "input_image";
-
-  // static constexpr auto kDebugImage = "debug_image";
-  // static constexpr auto kDectededPose = "detected_pose";
+  static constexpr auto kPoseResults = "pose_results";
 
   std::unique_ptr<ros2_yolos_cpp::IPoseAdapter> pose_;
 };
