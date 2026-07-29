@@ -34,6 +34,7 @@ endforeach()
 find_package(ros2_yolos_cpp REQUIRED)
 set(behavior_cpp_files
     src/detect_pose.cpp
+    src/pixels_to_depth.cpp
     src/plugins.cpp
 )
 
