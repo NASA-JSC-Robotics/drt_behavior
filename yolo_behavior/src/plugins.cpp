@@ -18,6 +18,7 @@
 
 #include <behaviortree_ros2/plugins.hpp>
 #include "behaviortree_cpp/bt_factory.h"
+#include "yolo_behavior/cvmat_to_depth.hpp"
 #include "yolo_behavior/detect_pose.hpp"
 #include "yolo_behavior/pixels_to_depth.hpp"
 #include "yolo_behavior/segmentor.hpp"
@@ -27,4 +28,5 @@ BTCPP_EXPORT void BT_RegisterRosNodeFromPlugin(BT::BehaviorTreeFactory& factory,
   factory.registerNodeType<yolo_behavior::DetectPose>("DetectPose");
   factory.registerNodeType<yolo_behavior::PixelsToDepth>("PixelsToDepth");
   factory.registerNodeType<yolo_behavior::Segmentor>("Segmentor");
+  factory.registerNodeType<yolo_behavior::CVMatToDepth>("CVMatToDepth");
 }
