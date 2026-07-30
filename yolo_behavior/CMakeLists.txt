@@ -25,6 +25,10 @@ set(dependencies_pkgs
     color_blob_centroid
     ros2_yolos_cpp
     vision_msgs
+    image_geometry
+    depth_image_proc
+    pcl_ros
+    pcl_conversions
 )
 
 foreach(pkg IN LISTS dependencies_pkgs)
@@ -37,6 +41,7 @@ set(behavior_cpp_files
     src/pixels_to_depth.cpp
     src/segmentor.cpp
     src/cvmat_to_depth.cpp
+    src/depth_to_pointcloud.cpp
     src/plugins.cpp
 )
 
