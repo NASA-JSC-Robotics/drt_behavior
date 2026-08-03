@@ -60,7 +60,7 @@ public:
 private:
   std::weak_ptr<rclcpp::Node> node_;
 
-  bool done = false;
+  bool done_ = false;
 
   float conf_, nms_;
 
@@ -94,6 +94,9 @@ private:
   static constexpr auto kPoses = "poses";
   static constexpr auto kDepthTopic = "depth_topic";
 
+  double subscription_timeout;
+  std::chrono::steady_clock::time_point start_time;
+  static constexpr auto kSubTimeout = "subscription_timeout";
   // static constexpr auto kInputImage = "input_image";
 
   // static constexpr auto kDebugImage = "debug_image";

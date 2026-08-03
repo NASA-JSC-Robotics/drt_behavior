@@ -60,7 +60,7 @@ public:
 private:
   std::weak_ptr<rclcpp::Node> node_;
 
-  bool done = false;
+  bool done_ = false;
 
   float conf_, nms_;
 
@@ -78,6 +78,10 @@ private:
   bool publish_debug_image = false;
 
   std::vector<ros2_yolos_cpp::SegmentationResult> segmentation_result;
+
+  double subscription_timeout;
+  std::chrono::steady_clock::time_point start_time;
+  static constexpr auto kSubTimeout = "subscription_timeout";
 
   static constexpr auto kSegmentationResult = "segmentation_result";
   static constexpr auto kDepthTopic = "depth_topic";

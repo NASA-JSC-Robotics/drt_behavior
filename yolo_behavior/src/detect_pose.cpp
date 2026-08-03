@@ -28,7 +28,8 @@ DetectPose::DetectPose(const std::string& name, const BT::NodeConfiguration& con
 
 BT::PortsList DetectPose::providedPorts()
 {
-  return { // Yolo Config
+  return { BT::InputPort<double>(kSubTimeout, 0.5, "N/A"),
+           // Yolo Config
            BT::InputPort<std::string>(kModelPath, "/path/to/model", "Path to model."),
            BT::InputPort<std::string>(kLabelsPath, "/path/to/label", "Path to label."),
 
@@ -40,12 +41,13 @@ BT::PortsList DetectPose::providedPorts()
            BT::InputPort<std::string>(kImageTopic, "image_topic", "image topic."),
            BT::InputPort<std::string>(kDebugImageTopic, "~/debug_image", "image topic."),
 
-           BT::OutputPort<std::vector<ros2_yolos_cpp::PoseResult>>(kPoseResults, "{pose_results}", "Depth image")
-  };
+           BT::OutputPort<std::vector<ros2_yolos_cpp::PoseResult>>(kPoseResults, "{pose_results}", "Depth image") };
 }
 
 BT::NodeStatus DetectPose::onStart()
 {
+  getInput<double>(kSubTimeout, subscription_timeout);
+
   ros2_yolos_cpp::YolosConfig c;
 
   getInput<std::string>(kModelPath, c.model_path);
@@ -82,6 +84,7 @@ BT::NodeStatus DetectPose::onStart()
     auto qos = rclcpp::QoS(rclcpp::KeepLast(1)).reliable().transient_local();
     debug_publisher = node_raw_ptr->create_publisher<sensor_msgs::msg::Image>(debug_image_topic, qos);
   }
+  start_time = std::chrono::steady_clock::now();
 
   return BT::NodeStatus::RUNNING;
 }
@@ -124,19 +127,26 @@ void DetectPose::imageCB(const sensor_msgs::msg::Image::SharedPtr msg)
       // std::cout << "Publishing images" << std::endl;
       debug_publisher->publish(*cv_bridge::CvImage(msg->header, "bgr8", d).toImageMsg());
     }
-    detection_done = true;
+    done_ = true;
     unsubscribeTopics();
   }
 }
 
 BT::NodeStatus DetectPose::onRunning()
 {
-  while (!detection_done)
+  auto elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - start_time).count();
+  if (!done_ && elapsed < subscription_timeout)
   {
     return BT::NodeStatus::RUNNING;
   }
-
-  return BT::NodeStatus::SUCCESS;
+  else if (elapsed >= subscription_timeout)
+  {
+    return BT::NodeStatus::FAILURE;
+  }
+  else
+  {
+    return BT::NodeStatus::SUCCESS;
+  }
 }
 
 void DetectPose::onHalted()

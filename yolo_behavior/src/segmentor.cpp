@@ -28,7 +28,8 @@ Segmentor::Segmentor(const std::string& name, const BT::NodeConfiguration& confi
 
 BT::PortsList Segmentor::providedPorts()
 {
-  return { // Yolo Config
+  return { BT::InputPort<double>(kSubTimeout, 0.5, "N/A"),
+           // Yolo Config
            BT::InputPort<std::string>(kModelPath, "/path/to/model", "Path to model."),
            BT::InputPort<std::string>(kLabelsPath, "/path/to/label", "Path to label."),
 
@@ -41,12 +42,13 @@ BT::PortsList Segmentor::providedPorts()
            BT::InputPort<std::string>(kDebugImageTopic, "~/debug_image", "image topic."),
 
            BT::OutputPort<std::vector<ros2_yolos_cpp::SegmentationResult>>(kSegmentationResults,
-                                                                           "{segmentation_results}", "Depth image")
-  };
+                                                                           "{segmentation_results}", "Depth image") };
 }
 
 BT::NodeStatus Segmentor::onStart()
 {
+  getInput<double>(kSubTimeout, subscription_timeout);
+
   ros2_yolos_cpp::YolosConfig c;
 
   getInput<std::string>(kModelPath, c.model_path);
@@ -84,6 +86,7 @@ BT::NodeStatus Segmentor::onStart()
     debug_publisher = node_raw_ptr->create_publisher<sensor_msgs::msg::Image>(debug_image_topic, qos);
   }
 
+  start_time = std::chrono::steady_clock::now();
   return BT::NodeStatus::RUNNING;
 }
 
@@ -111,10 +114,12 @@ void Segmentor::imageCB(const sensor_msgs::msg::Image::SharedPtr msg)
         segmentor_->drawSegmentations(d, segs);
         // debug_pub_->publish(*cv_bridge::CvImage(msg->header, "bgr8", d).toImageMsg());
       }
+      success_ = false;
       setOutput(kSegmentationResults, segs);
     }
     else
     {
+      success_ = false;
       // std::cout << "Pose not detected" << std::endl;
     }
     if (publish_debug_image)
@@ -122,19 +127,36 @@ void Segmentor::imageCB(const sensor_msgs::msg::Image::SharedPtr msg)
       // std::cout << "Publishing images" << std::endl;
       debug_publisher->publish(*cv_bridge::CvImage(msg->header, "bgr8", d).toImageMsg());
     }
-    detection_done = true;
+    done_ = true;
     unsubscribeTopics();
   }
 }
 
 BT::NodeStatus Segmentor::onRunning()
 {
-  while (!detection_done)
+  auto elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - start_time).count();
+  if (elapsed < subscription_timeout)
   {
-    return BT::NodeStatus::RUNNING;
+    if (done_)
+    {
+      if (success_)
+      {
+        return BT::NodeStatus::SUCCESS;
+      }
+      else
+      {
+        return BT::NodeStatus::FAILURE;
+      }
+    }
+    else
+    {
+      return BT::NodeStatus::RUNNING;
+    }
   }
-
-  return BT::NodeStatus::SUCCESS;
+  else
+  {
+    return BT::NodeStatus::FAILURE;
+  }
 }
 
 void Segmentor::onHalted()

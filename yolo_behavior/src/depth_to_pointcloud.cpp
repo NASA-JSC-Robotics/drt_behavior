@@ -29,6 +29,7 @@ DepthToPointcloud::DepthToPointcloud(const std::string& name, const BT::NodeConf
 BT::PortsList DepthToPointcloud::providedPorts()
 {
   return {
+    BT::InputPort<double>(kSubTimeout, 0.5, "N/A"),
     // Yolo Config
     BT::InputPort<std::string>(kCameraInfoTopic, "camera_info", "image topic."),
     BT::InputPort<double>(kInvalidDepth, 0.0, "image topic."),
@@ -40,6 +41,8 @@ BT::PortsList DepthToPointcloud::providedPorts()
 
 BT::NodeStatus DepthToPointcloud::onStart()
 {
+  getInput<double>(kSubTimeout, subscription_timeout);
+
   getInput<std::string>(kCameraInfoTopic, camera_info_topic);
   getInput<double>(kInvalidDepth, invalid_depth);
   getInput<sensor_msgs::msg::Image::SharedPtr>(kDepthImage, depth_msg);
@@ -62,6 +65,8 @@ BT::NodeStatus DepthToPointcloud::onStart()
     auto qos = rclcpp::QoS(rclcpp::KeepLast(1)).reliable().transient_local();
     debug_publisher = node_raw_ptr->create_publisher<sensor_msgs::msg::Image>(debug_image_topic, qos);
   }
+  start_time = std::chrono::steady_clock::now();
+
   return BT::NodeStatus::RUNNING;
 }
 
@@ -70,6 +75,7 @@ void DepthToPointcloud::unsubscribeTopics()
 
 void DepthToPointcloud::cameraInfoCB(const sensor_msgs::msg::CameraInfo::SharedPtr msg)
 {
+  std::cout << "Got camera info " << std::endl;
   // Update camera model
   image_geometry::PinholeCameraModel model_;
   model_.fromCameraInfo(msg);
@@ -117,18 +123,28 @@ void DepthToPointcloud::cameraInfoCB(const sensor_msgs::msg::CameraInfo::SharedP
   t_stamped.transform.rotation.w = 1.0;
   setOutput("transform_stamped", t_stamped);
 
-  detection_done = true;
+  done_ = true;
   unsubscribeTopics();
 }
 
 BT::NodeStatus DepthToPointcloud::onRunning()
 {
-  while (!detection_done)
+  auto elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - start_time).count();
+  if (elapsed < subscription_timeout)
   {
-    return BT::NodeStatus::RUNNING;
+    if (done_)
+    {
+      return BT::NodeStatus::SUCCESS;
+    }
+    else
+    {
+      return BT::NodeStatus::RUNNING;
+    }
   }
-
-  return BT::NodeStatus::SUCCESS;
+  else
+  {
+    return BT::NodeStatus::FAILURE;
+  }
 }
 
 void DepthToPointcloud::onHalted()

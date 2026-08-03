@@ -29,6 +29,7 @@ CVMatToDepth::CVMatToDepth(const std::string& name, const BT::NodeConfiguration&
 BT::PortsList CVMatToDepth::providedPorts()
 {
   return {
+    BT::InputPort<double>(kSubTimeout, 0.5, "N/A"),
     BT::InputPort<std::vector<ros2_yolos_cpp::SegmentationResult>>(kSegmentationResult, "{segmentation_result}",
                                                                    "Depth image"),
     BT::InputPort<std::string>(kDepthTopic, "depth_topic", "image topic."),
@@ -38,6 +39,8 @@ BT::PortsList CVMatToDepth::providedPorts()
 
 BT::NodeStatus CVMatToDepth::onStart()
 {
+  getInput<double>(kSubTimeout, subscription_timeout);
+
   getInput<std::vector<ros2_yolos_cpp::SegmentationResult>>(kSegmentationResult, segmentation_result);
 
   // Start subscribers and synchronizer.
@@ -49,6 +52,8 @@ BT::NodeStatus CVMatToDepth::onStart()
   getInput<std::string>(kDepthTopic, depth_topic);
   depth_subscriber = node_raw_ptr->create_subscription<sensor_msgs::msg::Image>(
       depth_topic, 1, std::bind(&CVMatToDepth::imageCB, this, std::placeholders::_1));
+
+  start_time = std::chrono::steady_clock::now();
   return BT::NodeStatus::RUNNING;
 }
 
@@ -78,17 +83,32 @@ void CVMatToDepth::imageCB(const sensor_msgs::msg::Image::SharedPtr msg)
     // RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
   }
 
-  done = true;
+  done_ = true;
   unsubscribeTopics();
 }
 
 BT::NodeStatus CVMatToDepth::onRunning()
 {
-  while (!done)
+  auto elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - start_time).count();
+  std::cout << elapsed << " " << subscription_timeout << std::endl;
+  if (elapsed < subscription_timeout)
   {
-    return BT::NodeStatus::RUNNING;
+    if (done_)
+    {
+      std::cout << "SUCCESS " << std::endl;
+      return BT::NodeStatus::SUCCESS;
+    }
+    else
+    {
+      std::cout << "RUNNING" << std::endl;
+      return BT::NodeStatus::RUNNING;
+    }
   }
-  return BT::NodeStatus::SUCCESS;
+  else
+  {
+    std::cout << "FALURE" << std::endl;
+    return BT::NodeStatus::FAILURE;
+  }
 }
 
 void CVMatToDepth::onHalted()

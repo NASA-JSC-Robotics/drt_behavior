@@ -29,6 +29,7 @@ PixelsToDepth::PixelsToDepth(const std::string& name, const BT::NodeConfiguratio
 BT::PortsList PixelsToDepth::providedPorts()
 {
   return {
+    BT::InputPort<double>(kSubTimeout, 0.5, "N/A"),
     BT::InputPort<std::vector<ros2_yolos_cpp::PoseResult>>(kPoses, "{poses}", "Depth image"),
     BT::InputPort<std::string>(kDepthTopic, "depth_topic", "image topic."),
   };
@@ -36,6 +37,8 @@ BT::PortsList PixelsToDepth::providedPorts()
 
 BT::NodeStatus PixelsToDepth::onStart()
 {
+  getInput<double>(kSubTimeout, subscription_timeout);
+
   getInput<std::vector<ros2_yolos_cpp::PoseResult>>(kPoses, poses);
 
   // Start subscribers and synchronizer.
@@ -55,6 +58,7 @@ BT::NodeStatus PixelsToDepth::onStart()
   // {
   //   debug_publisher = node_raw_ptr->create_publisher<sensor_msgs::msg::Image>(debug_image_topic, 1);
   // }
+  start_time = std::chrono::steady_clock::now();
 
   return BT::NodeStatus::RUNNING;
 }
@@ -111,17 +115,25 @@ void PixelsToDepth::imageCB(const sensor_msgs::msg::Image::SharedPtr msg)
     // RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
   }
 
-  done = true;
+  done_ = true;
   unsubscribeTopics();
 }
 
 BT::NodeStatus PixelsToDepth::onRunning()
 {
-  while (!done)
+  auto elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - start_time).count();
+  if (!done_ && elapsed < subscription_timeout)
   {
     return BT::NodeStatus::RUNNING;
   }
-  return BT::NodeStatus::SUCCESS;
+  else if (elapsed >= subscription_timeout)
+  {
+    return BT::NodeStatus::FAILURE;
+  }
+  else
+  {
+    return BT::NodeStatus::SUCCESS;
+  }
 }
 
 void PixelsToDepth::onHalted()

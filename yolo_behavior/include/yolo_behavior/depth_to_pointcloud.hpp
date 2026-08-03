@@ -83,7 +83,7 @@ public:
 private:
   std::weak_ptr<rclcpp::Node> node_;
 
-  bool detection_done = false;
+  bool done_ = false;
 
   float conf_, nms_;
 
@@ -110,6 +110,9 @@ private:
   static constexpr auto kInvalidDepth = "invalid_depth";
   static constexpr auto kDepthImage = "depth_image";
 
+  double subscription_timeout;
+  std::chrono::steady_clock::time_point start_time;
+  static constexpr auto kSubTimeout = "subscription_timeout";
   // static constexpr auto kModelPath = "model_path";
   // static constexpr auto kLabelsPath = "labels_path";
 
