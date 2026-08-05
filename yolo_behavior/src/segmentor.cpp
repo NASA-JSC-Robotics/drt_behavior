@@ -101,6 +101,7 @@ void Segmentor::imageCB(const sensor_msgs::msg::Image::SharedPtr msg)
   if (!segmentor_ || !segmentor_->isInitialized()) {}
   else
   {
+
     cv::Mat d;
     auto cv = cv_bridge::toCvShare(msg, "bgr8");
     std::vector<ros2_yolos_cpp::SegmentationResult> segs = segmentor_->segment(cv->image, conf_, nms_);
@@ -114,7 +115,7 @@ void Segmentor::imageCB(const sensor_msgs::msg::Image::SharedPtr msg)
         segmentor_->drawSegmentations(d, segs);
         // debug_pub_->publish(*cv_bridge::CvImage(msg->header, "bgr8", d).toImageMsg());
       }
-      success_ = false;
+      success_ = true;
       setOutput(kSegmentationResults, segs);
     }
     else
