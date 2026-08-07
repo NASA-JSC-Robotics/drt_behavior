@@ -43,7 +43,21 @@ def launch_setup(context, *args, **kwargs):
         parameters=[bt_config, use_sim_time],
     )
 
-    return [behavior_executor]
+    # # Custom ACM Modifier Node
+    # acm_modifier = Node(
+    #     package="clr_behavior_pick_and_place_demo",
+    #     executable="acm_modifier_node",
+    #     name="acm_modifier_node",
+    #     output="both",
+    #     parameters=[
+    #         use_sim_time,
+    #         {
+    #             "gripper_links": ["finger_1_link", "finger_2_link", "gripper_base_link"]
+    #         }
+    #     ],
+    # )
+
+    return [behavior_executor]             
 
 
 def generate_launch_description():

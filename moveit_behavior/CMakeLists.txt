@@ -12,6 +12,11 @@ set(dependencies_pkgs
     behaviortree_cpp
     behaviortree_ros2
     btcpp_ros2_interfaces
+    std_srvs 
+    moveit_core
+    moveit_visual_tools
+    moveit_ros_planning
+    moveit_ros_planning_interface
 )
 
 foreach(pkg IN LISTS dependencies_pkgs)
@@ -23,10 +28,14 @@ set(behavior_cpp_files
     src/plan_to_joint_state.cpp
     src/plan_to_pose.cpp
     src/publish_trajectory.cpp
+    # src/toggle_collision_action.cpp
+    src/get_planning_scene.cpp
+    src/modify_collisions.cpp
     src/plugins.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${behavior_cpp_files})
+
 target_compile_definitions(${PROJECT_NAME} PRIVATE BT_PLUGIN_EXPORT)
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
