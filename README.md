@@ -32,7 +32,7 @@ Generally behavior names should be self-explanatory, but to understand how to us
   * Color Blob Find
   * Detect Color Blobs
   * Get Synced Image Pointcloud Depth
-  * DRT Behavior
+* DRT Behavior
   * Check Param
 * Geometry Behavior
   * Align Transform
