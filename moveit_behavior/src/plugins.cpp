@@ -22,7 +22,6 @@
 #include "moveit_behavior/plan_to_joint_state.hpp"
 #include "moveit_behavior/plan_to_pose.hpp"
 #include "moveit_behavior/publish_trajectory.hpp"
-// #include "moveit_behavior/toggle_collision_action.hpp"
 #include "moveit_behavior/get_planning_scene.hpp"
 #include "moveit_behavior/modify_collisions.hpp"
 
@@ -36,10 +35,4 @@ BTCPP_EXPORT void BT_RegisterRosNodeFromPlugin(BT::BehaviorTreeFactory& factory,
   factory.registerNodeType<moveit_behavior::PlanToPose>("PlanToPose", params);
   factory.registerNodeType<moveit_behavior::PublishDisplayTrajectory>("PublishDisplayTrajectory", params);
 
-  // // Set the default service mapping parameters cleanly
-  // BT::RosNodeParams collision_params = params;
-  // collision_params.default_port_value = "/acm_modifier_node/toggle_collision";
-
-  // // // Registers the node under the direct XML tag name "ToggleCollision"
-  // factory.registerNodeType<moveit_behavior::ToggleCollisionAction>("ToggleCollision", collision_params);
 }
