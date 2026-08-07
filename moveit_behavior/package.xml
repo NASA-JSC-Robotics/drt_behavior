@@ -12,6 +12,7 @@
 
     <depend>rclcpp</depend>
     <depend>moveit_msgs</depend>
+    <depend>moveit_core</depend>
     <depend>behaviortree_cpp</depend>
     <depend>behaviortree_ros2</depend>
     <depend>btcpp_ros2_interfaces</depend>

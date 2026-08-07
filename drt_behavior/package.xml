@@ -7,8 +7,6 @@
     <maintainer email="nathan.b.dunkelberger@nasa.gov">Nathan Dunkelberger</maintainer>
     <license>Apache-2.0</license>
 
-    <buildtool_depend>ament_cmake_ros</buildtool_depend>
-
     <depend>rclcpp</depend>
     <depend>std_srvs</depend>
     <depend>tf2_ros</depend>
