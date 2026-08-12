@@ -44,9 +44,14 @@ DRTBehaviorBtcppLogger::~DRTBehaviorBtcppLogger()
 void DRTBehaviorBtcppLogger::callback(BT::Duration /*timestamp*/, const BT::TreeNode& node, BT::NodeStatus prev_status,
                                       BT::NodeStatus status)
 {
-  // we want to stay shown as success, not show idle again, so leave it as is
-  if (prev_status == BT::NodeStatus::SUCCESS && status == BT::NodeStatus::IDLE)
-    return;
+  if (status == BT::NodeStatus::IDLE)
+  {
+    // we want to stay shown as success or failure, not show idle again, so leave it as is
+    if (prev_status == BT::NodeStatus::FAILURE || prev_status == BT::NodeStatus::SUCCESS)
+    {
+      return;
+    }
+  }
 
   log_statuses_[node.UID()].status = status;
 
