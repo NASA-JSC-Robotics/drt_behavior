@@ -70,18 +70,34 @@ void DRTBehaviorBtcppExecutor::onTreeCreated(BT::Tree& tree)
   running_ = true;
 }
 
-std::optional<std::string> DRTBehaviorBtcppExecutor::onTreeExecutionCompleted(BT::NodeStatus /*status*/,
+std::optional<std::string> DRTBehaviorBtcppExecutor::onTreeExecutionCompleted(BT::NodeStatus status,
                                                                               bool /*was_cancelled*/)
 {
+  std::stringstream combined_user_log;
   // Clear the context, which should remove references. The blackboard will be deconstructed next run,
   // but remaining pointers should be useless
   if (context_)
   {
+    if (context_->user_logs.size())
+    {
+      combined_user_log << "Tree finished with status: " << BT::toStr(status);
+      for (auto user_log : context_->user_logs)
+      {
+        combined_user_log << "\n" << user_log;
+      }
+    }
+
     context_->teardown(executor_);
     context_.reset();
   }
 
   running_ = false;
+
+  if (combined_user_log.str().size())
+  {
+    return combined_user_log.str();
+  }
+
   return std::nullopt;
 }
 

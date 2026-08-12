@@ -39,6 +39,9 @@ struct DRTTreeContext
   /// Transform listener that feeds tf_buffer.
   std::shared_ptr<tf2_ros::TransformListener> tf_listener;
 
+  // User logs
+  std::vector<std::string> user_logs;
+
   /**
    * @brief Factory function to create a fully-initialised context and add its node to the executor.
    * @param executor The executor to spin the relevant context items.
