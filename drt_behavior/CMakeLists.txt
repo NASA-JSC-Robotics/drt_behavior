@@ -22,6 +22,7 @@ endforeach()
 set(behavior_cpp_files
     src/behaviors/check_param.cpp
     src/behaviors/call_trigger_service.cpp
+    src/behaviors/add_user_log.cpp
 )
 
 add_library(drt_behavior
