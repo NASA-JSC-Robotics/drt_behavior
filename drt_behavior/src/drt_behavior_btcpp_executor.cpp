@@ -23,6 +23,7 @@
 // ROS
 #include "rclcpp/rclcpp.hpp"
 // local
+#include "drt_behavior/behaviors/add_user_log.hpp"
 #include "drt_behavior/behaviors/call_trigger_service.hpp"
 #include "drt_behavior/behaviors/check_param.hpp"
 
@@ -39,6 +40,7 @@ DRTBehaviorBtcppExecutor::DRTBehaviorBtcppExecutor(std::shared_ptr<rclcpp::execu
 void DRTBehaviorBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory& factory)
 {
   factory.registerNodeType<CheckParam>("CheckParam");
+  factory.registerNodeType<AddUserLog>("AddUserLog");
 
   BT::RosNodeParams call_trigger_params(node());
   call_trigger_params.server_timeout = std::chrono::milliseconds(600 * 1000);
