@@ -28,6 +28,7 @@ set(behavior_cpp_files
     src/pose_to_transform.cpp
     src/create_random_transform.cpp
     src/publish_transform.cpp
+    src/wrench_check.cpp
     src/plugins.cpp
 )
 
