@@ -42,6 +42,19 @@ BT::NodeStatus ExecuteTrajectory::onResultReceived(const RosActionNode::WrappedR
   }
 }
 
+void ExecuteTrajectory::halt()
+{
+  if (auto node = node_.lock())
+  {
+    auto pub = node->create_publisher<std_msgs::msg::String>("/trajectory_execution_event", 1);
+    auto message = std_msgs::msg::String();
+    message.data = "stop";
+    pub->publish(message);
+    pub.reset();
+  }
+  BT::RosActionNode<ExecTraj>::halt();
+}
+
 BT::NodeStatus ExecuteTrajectory::onFailure(BT::ActionNodeErrorCode error)
 {
   RCLCPP_ERROR(logger(), "%s: onFailure with error: %s", name().c_str(), toStr(error));

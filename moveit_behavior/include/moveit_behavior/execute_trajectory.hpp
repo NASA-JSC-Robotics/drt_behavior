@@ -25,6 +25,8 @@
 #include <behaviortree_ros2/bt_action_node.hpp>
 #include <behaviortree_ros2/plugins.hpp>
 
+
+#include "std_msgs/msg/string.hpp"
 #include "moveit_msgs/action/execute_trajectory.hpp"
 #include "moveit_msgs/msg/move_it_error_codes.hpp"
 #include "moveit_msgs/msg/robot_trajectory.hpp"
@@ -55,6 +57,8 @@ public:
   bool setGoal(Goal& goal) override;
 
   BT::NodeStatus onResultReceived(const WrappedResult& wr) override;
+
+  void halt() override;
 
   virtual BT::NodeStatus onFailure(BT::ActionNodeErrorCode error) override;
 };
