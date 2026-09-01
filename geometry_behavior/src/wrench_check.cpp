@@ -87,7 +87,7 @@ BT::NodeStatus WrenchCheck::onRunning()
     }
     else
     {
-      return BT::NodeStatus::RUNNING;
+      return BT::NodeStatus::FAILURE;
     }
 
     setOutput("wrench_stamped", last_msg);
