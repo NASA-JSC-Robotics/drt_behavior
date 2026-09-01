@@ -26,6 +26,7 @@
 #include "drt_behavior/behaviors/add_user_log.hpp"
 #include "drt_behavior/behaviors/call_trigger_service.hpp"
 #include "drt_behavior/behaviors/check_param.hpp"
+#include "drt_behavior/behaviors/publish_string.hpp"
 
 #include "drt_behavior/drt_behavior_btcpp_executor.hpp"
 
@@ -46,6 +47,8 @@ void DRTBehaviorBtcppExecutor::registerNodesIntoFactory(BT::BehaviorTreeFactory&
   call_trigger_params.server_timeout = std::chrono::milliseconds(600 * 1000);
 
   factory.registerNodeType<CallTriggerService>("CallTriggerService", call_trigger_params);
+  factory.registerNodeType<PublishString>("PublishString", call_trigger_params);
+
   return;
 }
 
