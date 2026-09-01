@@ -28,7 +28,8 @@ WrenchCheck::WrenchCheck(const std::string& name, const BT::NodeConfig& config) 
 BT::PortsList WrenchCheck::providedPorts()
 {
   return { // input params
-           BT::InputPort<std::string>("topic_name"), BT::InputPort<std::string>("queue_size"),
+           BT::InputPort<std::string>("topic_name"), //
+           BT::InputPort<std::string>("queue_size"),
            BT::InputPort<double>("threshold"),
            BT::OutputPort<std::shared_ptr<geometry_msgs::msg::WrenchStamped>>("wrench_stamped")
   };
@@ -81,6 +82,8 @@ BT::NodeStatus WrenchCheck::onRunning()
     }
     Eigen::Vector3d avg_vector = sum / forces.size();
 
+    setOutput("wrench_stamped", last_msg);
+
     if (avg_vector(2) > threshold)
     {
       return BT::NodeStatus::SUCCESS;
@@ -89,8 +92,6 @@ BT::NodeStatus WrenchCheck::onRunning()
     {
       return BT::NodeStatus::FAILURE;
     }
-
-    setOutput("wrench_stamped", last_msg);
   }
 
   return BT::NodeStatus::RUNNING;

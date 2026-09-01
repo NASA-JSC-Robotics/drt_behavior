@@ -29,8 +29,19 @@
 namespace geometry_behavior
 {
 /**
- * @brief Behavior to do a TF lookup based on a tf name
+ * @brief Subscribes to the `topic_name` topic of type `geometry_msgs::msg::WrenchStamped`, accumilates `queue_size`
+ * number of message and uses their average to evaluate against `threshold`.
+ * NOTE: This superficial implementation of the behavior, it doesn't consider the world frame and just evaluates the z
+ * component of the force. 
+ * USE WITH CAUTION.
  *
+ * @details
+ * | Data Port Name             | Port Type | Object Type                        |
+ * | ---------------------------|-----------|------------------------------------|
+ * | topic_name                 | Input     | std::string                        |
+ * | queue_size                 | Input     | int                                |
+ * | threshold                  | Input     | double                             |
+ * | wrench_stamepd             | Input     | geometry_msgs::msg::WrenchStamped  |
  */
 class WrenchCheck : public BT::StatefulActionNode
 {
