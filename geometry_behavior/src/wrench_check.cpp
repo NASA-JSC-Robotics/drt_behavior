@@ -55,7 +55,7 @@ BT::NodeStatus WrenchCheck::onStart()
   auto context = this->config().blackboard->get<std::shared_ptr<drt_behavior::DRTTreeContext>>("@drt_context");
   wrench_subscriber = context->node->create_subscription<geometry_msgs::msg::WrenchStamped>(
       topic_name, 1, std::bind(&WrenchCheck::subCB, this, std::placeholders::_1));
-
+  
   forces.clear();
   return BT::NodeStatus::RUNNING;
 }
@@ -63,10 +63,20 @@ BT::NodeStatus WrenchCheck::onStart()
 void WrenchCheck::subCB(geometry_msgs::msg::WrenchStamped::SharedPtr msg_ptr)
 {
   last_msg = msg_ptr;
-  Eigen::Vector3d force(last_msg->wrench.force.x, last_msg->wrench.force.y, last_msg->wrench.force.z);
-  forces.push_back(force);
-
-  setOutput("wrench_stamped", last_msg);
+  geometry_msgs::msg::WrenchStamped world_wrench_ft;
+  auto context = this->config().blackboard->get<std::shared_ptr<drt_behavior::DRTTreeContext>>("@drt_context");
+  try{
+    auto transform = context->tf_buffer->lookupTransform("world", last_msg->header.frame_id, tf2::TimePointZero);
+    tf2::doTransform(*last_msg, world_wrench_ft, transform);
+    setOutput("wrench_stamped", world_wrench_ft);
+    Eigen::Vector3d force(world_wrench_ft.wrench.force.x, world_wrench_ft.wrench.force.y, world_wrench_ft.wrench.force.z);
+    forces.push_back(force);
+  }
+  catch (const tf2::TransformException &ex) 
+  {
+    std::cout << "Failed to find the transform" << std::endl;
+  }
+  return;
 }
 
 BT::NodeStatus WrenchCheck::onRunning()
@@ -75,16 +85,18 @@ BT::NodeStatus WrenchCheck::onRunning()
   {
     forces.erase(forces.begin());
 
-    Eigen::Vector3d sum = Eigen::Vector3d::Zero();
+    // Eigen::Vector3d sum = Eigen::Vector3d::Zero();
+    double sum = 0.0;
     for (const auto& v : forces)
     {
-      sum += v;
+      sum += v.norm();
     }
-    Eigen::Vector3d avg_vector = sum / forces.size();
-
+    // Eigen::Vector3d avg_vector = sum / forces.size();
+    double avg_vector = sum / forces.size();
+    std::cout << "AVERAGE VECTOR:\n" << avg_vector << std::endl; 
     setOutput("wrench_stamped", last_msg);
 
-    if (avg_vector(2) > threshold)
+    if (avg_vector > threshold)
     {
       return BT::NodeStatus::SUCCESS;
     }

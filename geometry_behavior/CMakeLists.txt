@@ -12,7 +12,10 @@ set(dependencies_pkgs
     behaviortree_ros2
     btcpp_ros2_interfaces
     geometry_msgs
+    tf2
+    tf2_ros
     tf2_eigen
+    tf2_geometry_msgs
     drt_behavior
 )
 
@@ -37,6 +40,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE BT_PLUGIN_EXPORT)
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+target_link_libraries(${PROJECT_NAME} INTERFACE tf2::tf2 tf2_ros::tf2_ros)
 ament_target_dependencies(${PROJECT_NAME} PUBLIC ${dependencies_pkgs})
 
 install(
