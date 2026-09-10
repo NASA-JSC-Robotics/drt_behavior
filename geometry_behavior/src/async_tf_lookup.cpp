@@ -30,6 +30,7 @@ AsyncTfLookup::AsyncTfLookup(const std::string& name, const BT::NodeConfig& conf
 BT::PortsList AsyncTfLookup::providedPorts()
 {
   return { // input params
+           BT::InputPort<double>("lookup_timeout", 1.0, "N/A"),
            BT::InputPort<std::string>("base_frame"), BT::InputPort<std::string>("target_frame"),
            // output params
            BT::OutputPort<geometry_msgs::msg::TransformStamped>("tf")
@@ -37,6 +38,9 @@ BT::PortsList AsyncTfLookup::providedPorts()
 }
 BT::NodeStatus AsyncTfLookup::onStart()
 {
+  getInput<double>("lookup_timeout", lookup_timeout);
+
+
   if (!getInput("base_frame", base_frame))
   {
     throw BT::RuntimeError("Could not access blackboard input [base_frame]");
@@ -51,29 +55,39 @@ BT::NodeStatus AsyncTfLookup::onStart()
   {
     auto result = context->tf_buffer->lookupTransform(base_frame, target_frame, tf2::TimePointZero);
     setOutput("tf", result);
+    start_time = std::chrono::steady_clock::now();
     return BT::NodeStatus::SUCCESS;
   }
   catch (const tf2::TransformException& ex)
   {
+    start_time = std::chrono::steady_clock::now();
     return BT::NodeStatus::RUNNING;
   }
 }
 
 BT::NodeStatus AsyncTfLookup::onRunning()
 {
-  auto context = this->config().blackboard->get<std::shared_ptr<drt_behavior::DRTTreeContext>>("@drt_context");
-  try
+  auto elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - start_time).count();
+  if (elapsed < lookup_timeout)
   {
-    auto result = context->tf_buffer->lookupTransform(base_frame, target_frame, tf2::TimePointZero);
-    setOutput("tf", result);
-    RCLCPP_DEBUG(context->node->get_logger(), "Found transform : %s -> %s", base_frame.c_str(), target_frame.c_str());
-    return BT::NodeStatus::SUCCESS;
+    auto context = this->config().blackboard->get<std::shared_ptr<drt_behavior::DRTTreeContext>>("@drt_context");
+    try
+    {
+      auto result = context->tf_buffer->lookupTransform(base_frame, target_frame, tf2::TimePointZero);
+      setOutput("tf", result);
+      RCLCPP_DEBUG(context->node->get_logger(), "Found transform : %s -> %s", base_frame.c_str(), target_frame.c_str());
+      return BT::NodeStatus::SUCCESS;
+    }
+    catch (const tf2::TransformException& ex)
+    {
+      RCLCPP_DEBUG(context->node->get_logger(), "Looking for transform : %s -> %s", base_frame.c_str(),
+                  target_frame.c_str());
+      return BT::NodeStatus::RUNNING;
+    }
   }
-  catch (const tf2::TransformException& ex)
+  else
   {
-    RCLCPP_DEBUG(context->node->get_logger(), "Looking for transform : %s -> %s", base_frame.c_str(),
-                 target_frame.c_str());
-    return BT::NodeStatus::RUNNING;
+    return BT::NodeStatus::FAILURE;
   }
 }
 

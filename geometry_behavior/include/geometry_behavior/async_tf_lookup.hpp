@@ -47,6 +47,9 @@ public:
   BT::NodeStatus onStart() override;
   BT::NodeStatus onRunning() override;
   void onHalted() override;
+
+  std::chrono::steady_clock::time_point start_time;
+  double lookup_timeout;
 };
 
 };  // namespace geometry_behavior
